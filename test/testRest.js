@@ -12,6 +12,9 @@ connectApp.use( rest.rester() );
 
 rest.post('*', function(content){
 	console.log( 'Received:' + JSON.stringify(content) );
+});
+rest.post('*', function(content){
+	console.log( 'Received:' + JSON.stringify(content) );
 	return 'ok';
 });
 
