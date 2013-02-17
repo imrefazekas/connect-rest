@@ -23,8 +23,9 @@ After each assign function you might pass wth followings:
 	Every handler function receives
 	- a 'request' object containing headers and parameters values and 
 	- an optional 'content' object which is a JSON-parsed http body payload. 
-Please, see examples below...
-The return value of rest functions will be sent back to the client as a json string.
+	
+	Please, see examples below...
+	The return value of rest functions will be sent back to the client as a json string.
 
 ## Versioning:
 As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
