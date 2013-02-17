@@ -15,10 +15,10 @@ Assign your rest modules by one of the http request functions: head, get, post, 
 After each assign function you might pass wth followings:
 - path description
 	connect-rest supports many options to be used as path description.
-	Simple path: '/peek'
-	Versioned path: { path: '/make', version: '>=1.0.0' }
-	Multiple path: [ '/act', '/do' ]
-	Miltiple versioned path: [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
+	- Simple path: '/peek'
+	- Versioned path: { path: '/make', version: '>=1.0.0' }
+	- Multiple path: [ '/act', '/do' ]
+	- Miltiple versioned path: [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
 - rest function to be called.
 	Every handler function receives a 'request' object containing headers and parameters values and an optional 'content' object which is a JSON-parsed http body payload. Please, see examples below...
 	The return value will be sent back to the client as a json string.
