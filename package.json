@@ -1,12 +1,13 @@
 {
     "name": "connect-rest",
     "version": "0.0.1",
-    "description": "Response redirect middleware for Connect.",
+    "description": "RESTful web services middleware for Connect.",
     "keywords": [
         "connect",
-        "express",
-        "redirect"
+        "rest",
+        "restful"
     ],
+    "homepage": "https://github.com/imrefazekas/connect-rest",
     "repository": {
         "type": "git",
         "url": "git://github.com/imrefazekas/connect-rest.git"
@@ -24,20 +25,20 @@
             "url": "http://www.opensource.org/licenses/MIT"
         }
     ],
-    "main": "./lib",
+    "main": "./lib/connect-rest.js",
     "dependencies": {
-        "response-redirect": "0.0.x"
+        "async": ">=0.1.22",
+        "underscore":"~1",
+        "underscore.string":"~2"
     },
-    "devDependencies": {
-        "vows": "0.6.x"
-    },
-    "scripts": {
-        "test": "NODE_PATH=lib node_modules/.bin/vows test/*-test.js"
+    "devDependencies":{
+        "connect": "~2"
     },
     "engines": {
-        "node": ">= 0.4.0"
+        "node": ">= 0.8.0"
     },
-    "_id": "connect-redirection@0.0.1",
-    "readme": "ERROR: No README.md file found!",
-    "_from": "connect-redirection@>=0.0.1"
+    "readmeFilename": "README.md",
+    "readme": "README.md",
+    "_id": "connect-rest@0.0.1",
+    "_from": "connect-rest@>=0.0.1"
 }
