@@ -20,7 +20,10 @@ After each assign function you might pass wth followings:
 	- Multiple path: [ '/act', '/do' ]
 	- Miltiple versioned path: [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
 - rest function to be called.
-	Every handler function receives a 'request' object containing headers and parameters values and an optional 'content' object which is a JSON-parsed http body payload. Please, see examples below...
+	Every handler function receives
+	- a 'request' object containing headers and parameters values and 
+	- an optional 'content' object which is a JSON-parsed http body payload. 
+	Please, see examples below...
 	The return value will be sent back to the client as a json string.
 
 ## Versioning:
