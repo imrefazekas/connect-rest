@@ -29,7 +29,8 @@
     "dependencies": {
         "async": ">=0.1.22",
         "underscore":"~1",
-        "underscore.string":"~2"
+        "underscore.string":"~2",
+        "semver": "~1"
     },
     "devDependencies":{
         "connect": "~2"

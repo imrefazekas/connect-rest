@@ -23,12 +23,14 @@ var server = http.createServer( connectApp );
 server.listen( 8080 );
 
 
-
 var options = {
   hostname: 'localhost',
   port: 8080,
   path: '/upload',
-  method: 'POST'
+  method: 'POST',
+  headers: {
+    'Accept-Version': '*'
+  }
 };
 var req = http.request(options, function(res) {
   console.log('STATUS: ' + res.statusCode);
