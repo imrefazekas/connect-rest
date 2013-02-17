@@ -40,4 +40,3 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 ## ToDo
 
 - Parameter mappigns
-- Full test / sample codes
