@@ -131,7 +131,7 @@ otherwise error response will be sent with status code 401 claiming: 'API_KEY is
 	};
 	connectApp.use( rest.rester( options ) );
 
-	rest.get('/books/:title', functionN0 );
+	rest.get('/books/:title/:chapter', functionN0 );
 
 	rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
 
