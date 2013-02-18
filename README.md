@@ -187,10 +187,10 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 ## ToDo
 
 - logging services should be added properly
-- optional parameters [chapter]
 
 ## Changelog
 
+- 0.0.5 : optional parameter added
 - 0.0.4 : API_KEY management added
 - 0.0.3 : discovery managemenet added
 - 0.0.2 : named parameters added
