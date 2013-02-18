@@ -76,7 +76,7 @@ So sending a get request to the uri '/api/books/AliceInWonderland/1', will resul
 ## Context
 connect-rest also supports uri prefix if you want to put every REST function behind the same context:
 
-	rest.context( '/api' ); // means that ever rest calls need to be sent to '/api/X' path.
+	rest.context( '/api' ); // means that every rest calls need to be sent to '/api/X' path.
 
 ## Discover services
 connect-rest provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 

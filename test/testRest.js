@@ -35,6 +35,6 @@ async.parallel([
   async.apply( caller.testCall6, http, _ )
   ], function(err, results){
     console.log('Tests finished.');
-    //server.close();
+    server.close();
     assert.ifError( err );
 });
