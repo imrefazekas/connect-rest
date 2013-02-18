@@ -25,8 +25,9 @@ After each assign function you might pass wth followings:
 	- Versioned path: { path: '/make', version: '>=1.0.0' }
 	- Multiple path: [ '/act', '/do' ]
 	- Multiple versioned path: 
-	
-		[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
+		[ 
+			{ path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } 
+		]
 
 - rest function to be called.
 	Every handler function receives
