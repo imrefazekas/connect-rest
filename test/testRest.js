@@ -15,7 +15,7 @@ global.server = connectApp;
 connectApp.use( connect.query() );
 
 var options = {
-    'apiKeys': [],
+    'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
     'discoverPath': 'discover'
 };
 connectApp.use( rest.rester( options ) );

@@ -100,6 +100,21 @@ would retrieve all services which can be called using version 3.0.0 (non-version
 		"DELETE":[]
 	}
 
+## API_KEY management
+The option passed to the connect-rest might contain an array enumerating accepted api_keys:
+
+	var options = {
+    	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+    	'discoverPath': 'discover'
+	};
+
+If property 'apiKeys' is present, the associated array of strings will be used as the list of api keys demanded regarding every incoming calls.
+So having such option, a call should look like this:
+
+	'/api/books/AliceInWonderland/1?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'
+
+, otherwise error response will be sent with status code 401 claiming: 'API_KEY is required.'.
+
 
 ## Server - extracted from the tests
 
@@ -158,10 +173,11 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 ## ToDo
 
 - logging services should be added properly
-- api_key management
+- optional parameters [chapter]
 
 ## Changelog
 
+- 0.0.4 : API_KEY management added
 - 0.0.3 : discovery managemenet added
 - 0.0.2 : named parameters added
 - 0.0.1 : initial release

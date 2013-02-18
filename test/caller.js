@@ -29,7 +29,7 @@ function testCallZero(http, _, callback, options, payload){
 }
 function testCall1(http, _, callback){ 
 	var voptions = _.clone( options );
-	voptions.path = '/api/peek';
+	voptions.path = '/api/peek?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'HEAD';
 
 	testCallZero( http, _, callback, voptions );
@@ -37,7 +37,7 @@ function testCall1(http, _, callback){
 
 function testCall2(http, _, callback){
 	var voptions = _.clone( options );
-	voptions.path = '/api/books/AliceInWonderland/1';
+	voptions.path = '/api/books/AliceInWonderland/1?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'GET';
 
 	testCallZero( http, _, callback, voptions );
