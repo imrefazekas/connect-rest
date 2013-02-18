@@ -10,10 +10,13 @@ Assign your rest modules by one of the http request functions: head, get, post, 
 
 Example:
 
-	rest.head('/peek', function( request ){
-		console.log( 'Received:' + JSON.stringify('ok') );
+	function service( request, payload ){
+		console.log( 'Received headers:' + JSON.stringify( request.headers ) );
+		console.log( 'Received parameters:' + JSON.stringify( request.parameters ) );
+		console.log( 'Received payload:' + JSON.stringify( payload ) );
 		return 'ok';
-	});
+	}
+	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
 
 After each assign function you might pass wth followings:
 - path description
@@ -21,7 +24,7 @@ After each assign function you might pass wth followings:
 	- Simple path: '/peek'
 	- Versioned path: { path: '/make', version: '>=1.0.0' }
 	- Multiple path: [ '/act', '/do' ]
-	- Miltiple versioned path: [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
+	- Miltiple versioned path: [ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
 - rest function to be called.
 	Every handler function receives
 	- a 'request' object containing headers and parameters values and 
@@ -37,7 +40,7 @@ As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
 You can use the character '*' for both path and version too to make generic bindings:
 
 	{ path: '*', version: '*' }
-	
+
 Be aware, that this path will be matched to all paths within the defined context.
 
 ## Context: 
@@ -55,22 +58,13 @@ connect-rest also supports uri prefix if you want to put every REST function beh
 	connectApp.use( connect.query() );
 	connectApp.use( rest.rester() );
 
-	rest.get('/books', function( request ){
-		console.log( 'Received:' + JSON.stringify('ok') );
-		return 'ok';
-	});
-	rest.post( { path: '/make', version: '>=1.0.0' }, function( request, content ){
-		console.log( 'Received:' + JSON.stringify(content) );
-		return JSON.stringify(content);
-	});
-	rest.post( [ '/act', '/do' ], function( request, content ){
-		console.log( 'Received:' + JSON.stringify(content) );
-		return JSON.stringify(content);
-	});
-	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content ){
-		console.log( 'Received:' + JSON.stringify(content) );
-		return JSON.stringify(content);
-	});
+	rest.get('/books', functionN0 );
+
+	rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
+
+	rest.post( [ '/act', '/do' ], functionN2 );
+	
+	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN3 );
 
 
 # Installation
