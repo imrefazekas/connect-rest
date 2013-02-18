@@ -29,7 +29,8 @@ restBuilder.buildUpRestAPI( rest );
 async.parallel([
   async.apply( caller.testCall1, http, _ ),
   async.apply( caller.testCall2, http, _ ),
-  async.apply( caller.testCall3, http, _ ),
+  async.apply( caller.testCall3a, http, _ ),
+  async.apply( caller.testCall3b, http, _ ),
   async.apply( caller.testCall4, http, _ ),
   async.apply( caller.testCall5, http, _ ),
   async.apply( caller.testCall6, http, _ )

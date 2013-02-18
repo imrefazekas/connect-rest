@@ -1,4 +1,4 @@
-[connect-rest](https://github.com/imrefazekas/connect-rest) is a small middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs.
+[connect-rest](https://github.com/imrefazekas/connect-rest) is a middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs providing service discovery and path-based parameter mapping as well.
 
 # Usage
 
@@ -72,6 +72,20 @@ So sending a get request to the uri '/api/books/AliceInWonderland/1', will resul
 
 	{"headers": ...,"parameters":{"title":"AliceInWonderland", "chapter": "1"}}
 
+## Optinal parameter
+
+	rest.post('/store/[id]', functionN );
+
+This definition allows you to define one optional parameter at the end of the path. It might be called using
+
+	'/store'
+
+or using
+
+	'/store/108'
+
+paths. Both HTTP calls will be directed to the same functionN service.
+In latter case, the '108' will be set as a parameter in the request object with the value of '108'.
 
 ## Context
 connect-rest also supports uri prefix if you want to put every REST function behind the same context:
@@ -138,7 +152,6 @@ otherwise error response will be sent with status code 401 claiming: 'API_KEY is
 	rest.post( [ '/act', '/do' ], functionN2 );
 	
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN3 );
-
 
 # Installation
 
