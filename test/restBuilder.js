@@ -2,11 +2,11 @@ function buildUpRestAPI(rest){
 	rest.context( '/api' );
 
 	rest.head('/peek', function( request ){
-		console.log( 'Received:' + JSON.stringify('ok') );
+		console.log( 'Received:' + JSON.stringify( request ) );
 		return 'ok';
 	});
-	rest.get('/books', function( request ){
-		console.log( 'Received:' + JSON.stringify('ok') );
+	rest.get('/books/:title', function( request ){
+		console.log( 'Received:' + JSON.stringify( request ) );
 		return 'ok';
 	});
 	rest.post('/store', function( request, content ){
