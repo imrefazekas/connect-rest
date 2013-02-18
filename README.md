@@ -86,13 +86,19 @@ connect-rest provides a built-in service: discover. Via a simple get request, it
 	};
 	connectApp.use( rest.rester( options ) );
 
-This will enable this service on the path 'discover/:version'. Sending a get request to - lets say - this path 
+This will enable this service - considering the context descrived above - on the path '/api/discover/:version'. Sending a get request to - lets say - this path 
 
 	http://localhost:8080/api/discover/3.0.0
 
 would retrieve all services which can be called using version 3.0.0 (non-versioned and matching versioned services). The returned JSON is the following:
 
-	{"HEAD":["/peek"],"GET":["discover/:version","/books/:title/:chapter"],"POST":["/store",{"path":"/make","version":">=1.0.0"},"/act","/do",{"path":"/shake","version":">=2.0.0"},{"path":"/twist","version":">=2.1.1"}],"PUT":[],"DELETE":[]}
+	{
+		"HEAD":["/peek"],
+		"GET":["discover/:version","/books/:title/:chapter"],
+		"POST":["/store",{"path":"/make","version":">=1.0.0"},"/act","/do",{"path":"/shake","version":">=2.0.0"},{"path":"/twist","version":">=2.1.1"}],
+		"PUT":[],
+		"DELETE":[]
+	}
 
 
 ## Server - extracted from the tests
