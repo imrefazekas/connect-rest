@@ -70,7 +70,7 @@ connect-rest also supports uri prefix if you want to put every REST function beh
 	connectApp.use( connect.query() );
 	connectApp.use( rest.rester() );
 
-	rest.get('/books', functionN0 );
+	rest.get('/books/:title', functionN0 );
 
 	rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
 
