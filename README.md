@@ -73,10 +73,27 @@ So sending a get request to the uri '/api/books/AliceInWonderland/1', will resul
 	{"headers": ...,"parameters":{"title":"AliceInWonderland", "chapter": "1"}}
 
 
-## Context: 
+## Context
 connect-rest also supports uri prefix if you want to put every REST function behind the same context:
 
 	rest.context( '/api' ); // means that ever rest calls need to be sent to '/api/X' path.
+
+## Discover services
+connect-rest provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 
+
+	var options = {
+	    'discoverPath': 'discover'
+	};
+	connectApp.use( rest.rester( options ) );
+
+This will enable this service on the path 'discover/:version'. Sending a get request to - lets say - this path 
+
+	http://localhost:8080/api/discover/3.0.0
+
+would retrieve all services which can be called using version 3.0.0 (non-versioned and matching versioned services). The returned JSON is the following:
+
+	{"HEAD":["/peek"],"GET":["discover/:version","/books/:title/:chapter"],"POST":["/store",{"path":"/make","version":">=1.0.0"},"/act","/do",{"path":"/shake","version":">=2.0.0"},{"path":"/twist","version":">=2.1.1"}],"PUT":[],"DELETE":[]}
+
 
 ## Server - extracted from the tests
 
@@ -86,7 +103,11 @@ connect-rest also supports uri prefix if you want to put every REST function beh
 	var connectApp = connect();
 
 	connectApp.use( connect.query() );
-	connectApp.use( rest.rester() );
+
+	var options = {
+	    'discoverPath': 'discover'
+	};
+	connectApp.use( rest.rester( options ) );
 
 	rest.get('/books/:title', functionN0 );
 
@@ -129,3 +150,12 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## ToDo
+
+- logging services should be added properly
+- api_key management
+
+## Changelog
+
+- 0.0.3 : discovery managemenet added
+- 0.0.2 : named parameters added
+- 0.0.1 : initial release

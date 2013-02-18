@@ -14,7 +14,11 @@ global.server = connectApp;
 
 connectApp.use( connect.query() );
 
-connectApp.use( rest.rester() );
+var options = {
+    'apiKeys': [],
+    'discoverPath': 'discover'
+};
+connectApp.use( rest.rester( options ) );
 
 var server = http.createServer( connectApp );
 
@@ -31,6 +35,6 @@ async.parallel([
   async.apply( caller.testCall6, http, _ )
   ], function(err, results){
     console.log('Tests finished.');
-    server.close();
+    //server.close();
     assert.ifError( err );
 });
