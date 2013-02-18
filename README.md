@@ -9,6 +9,7 @@ The aim is to focus on the business logic, so connect-rest is managing body payl
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
 
 Example:
+
 	rest.head('/peek', function( request ){
 		console.log( 'Received:' + JSON.stringify('ok') );
 		return 'ok';
@@ -34,11 +35,14 @@ As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
 
 ## Special assigns:
 You can use the character '*' for both path and version too to make generic bindings:
+
 	{ path: '*', version: '*' }
+	
 Be aware, that this path will be matched to all paths within the defined context.
 
 ## Context: 
 connect-rest also supports uri prefix if you want to put every REST function behind the same context:
+
 	rest.context( '/api' ); // means that ever rest calls need to be sent to '/api/X' path.
 
 ## Server - extracted from the tests
