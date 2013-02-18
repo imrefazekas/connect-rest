@@ -61,12 +61,16 @@ Be aware, that this path will be matched to all paths within the defined context
 
 	rest.get('/books/:title', functionN0 );
 
+or
+
+	rest.get('/books/:title/:chapter', functionN0 );
+
 You can define parametrised paths for services to accept REST variables from the caller.
-In this case, whatever string is after the 'books', will be interpret as a variable and passed to the service function via the request object.
+In this case, whatever string is after the 'books', will be interpret as variable(s) and passed to the service function via the request object.
 
-So sending a get request to the uri '/api/books/AliceInWonderland', will result the following request object:
+So sending a get request to the uri '/api/books/AliceInWonderland/1', will result the following request object:
 
-	{"headers": ...,"parameters":{"title":"AliceInWonderland"}}
+	{"headers": ...,"parameters":{"title":"AliceInWonderland", "chapter": "1"}}
 
 
 ## Context: 

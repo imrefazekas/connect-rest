@@ -37,7 +37,7 @@ function testCall1(http, _, callback){
 
 function testCall2(http, _, callback){
 	var voptions = _.clone( options );
-	voptions.path = '/api/books/AliceInWonderland';
+	voptions.path = '/api/books/AliceInWonderland/1';
 	voptions.method = 'GET';
 
 	testCallZero( http, _, callback, voptions );

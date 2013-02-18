@@ -5,7 +5,7 @@ function buildUpRestAPI(rest){
 		console.log( 'Received:' + JSON.stringify( request ) );
 		return 'ok';
 	});
-	rest.get('/books/:title', function( request ){
+	rest.get('/books/:title/:chapter', function( request ){
 		console.log( 'Received:' + JSON.stringify( request ) );
 		return 'ok';
 	});
