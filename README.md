@@ -6,7 +6,9 @@ The connect-rest is a simple, yet powerful middleware for [connect](http://www.s
 The aim is to focus on the business logic, so connect-rest is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
 
 ## Assign
-Assign your rest modules by one of the http request functions: head, get, post, put, delete. Example:
+Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
+
+Example:
 	rest.head('/peek', function( request ){
 		console.log( 'Received:' + JSON.stringify('ok') );
 		return 'ok';
@@ -29,6 +31,11 @@ After each assign function you might pass wth followings:
 
 ## Versioning:
 As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
+
+## Special assigns:
+You can use the character '*' for both path and version too to make generic bindings:
+	{ path: '*', version: '*' }
+Be aware, that this path will be matched to all paths within the defined context.
 
 ## Context: 
 connect-rest also supports uri prefix if you want to put every REST function behind the same context:
