@@ -2,7 +2,7 @@
 
 # Usage
 
-The connect-rest is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inheriting ideas from [restify](http://mcavage.github.com/node-restify/). 
+The connect-rest is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/). 
 The aim is to focus on the business logic, so connect-rest is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
 
 ## Assign
@@ -32,7 +32,7 @@ As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
 
 ## Context: 
 connect-rest also supports uri prefix if you want to put every REST function behind the same context:
-	rest.context( '/api' ); // means that ever rest calls need to be sent to '/api/X' path
+	rest.context( '/api' ); // means that ever rest calls need to be sent to '/api/X' path.
 
 ## Server - extracted from the tests
 
