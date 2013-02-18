@@ -43,6 +43,18 @@ You can use the character '*' for both path and version too to make generic bind
 
 Be aware, that this path will be matched to all paths within the defined context.
 
+## Named parameters
+
+	rest.get('/books/:title', functionN0 );
+
+You can define parametrised paths for services to accept REST variables from the caller.
+In this case, whatever string is after the 'books', will be interpret as a variable and passed to the service function via the request object.
+
+So sending a get request to the uri '/api/books/AliceInWonderland', will result the following request object:
+
+	{"headers": ...,"parameters":{"title":"AliceInWonderland"}}
+
+
 ## Context: 
 connect-rest also supports uri prefix if you want to put every REST function behind the same context:
 
@@ -99,5 +111,3 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## ToDo
-
-- Parameter mappigns like /:name
