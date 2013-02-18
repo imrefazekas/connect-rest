@@ -113,7 +113,7 @@ So having such option, a call should look like this:
 
 	'/api/books/AliceInWonderland/1?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'
 
-, otherwise error response will be sent with status code 401 claiming: 'API_KEY is required.'.
+otherwise error response will be sent with status code 401 claiming: 'API_KEY is required.'.
 
 
 ## Server - extracted from the tests
@@ -126,7 +126,8 @@ So having such option, a call should look like this:
 	connectApp.use( connect.query() );
 
 	var options = {
-	    'discoverPath': 'discover'
+    	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+    	'discoverPath': 'discover'
 	};
 	connectApp.use( rest.rester( options ) );
 
