@@ -4,21 +4,22 @@
 
 The connect-rest is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/). 
 The aim is to focus on the business logic, so connect-rest is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
+The payload of the body - if exists - will be interpret as JSON object and will be parsed and passed to the service function you assign to.
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
 
 Example:
 
-	function service( request, payload ){
+	function service( request, payloadObject ){
 		console.log( 'Received headers:' + JSON.stringify( request.headers ) );
 		console.log( 'Received parameters:' + JSON.stringify( request.parameters ) );
-		console.log( 'Received payload:' + JSON.stringify( payload ) );
+		console.log( 'Received JSON object:' + JSON.stringify( payloadObject ) );
 		return 'ok';
 	}
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
 
-After each assign function you might pass wth followings:
+After each assign function you might pass the followings: path descriptor and a function to be called.
 
 ### Path description
 	connect-rest supports many options to be used as path description.
@@ -39,10 +40,10 @@ Multiple versioned path:
 
 	[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
 
-- rest function to be called.
+### Rest function.
 	Every handler function receives
 	- a 'request' object containing headers and parameters values and 
-	- an optional 'content' object which is a JSON-parsed http body payload. 
+	- an optional 'payload' object which is the JSON-parsed object extracted from the http body's payload. 
 	
 	The return value of rest functions will be sent back to the client as a json string.
 	Please, see examples below...
