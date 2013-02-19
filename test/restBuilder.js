@@ -1,4 +1,4 @@
-function buildUpRestAPI(rest){
+function buildUpRestAPI( rest, _ ){
 	rest.context( '/api' );
 
 	rest.head('/peek', function( request ){

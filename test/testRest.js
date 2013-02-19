@@ -14,6 +14,8 @@ global.server = connectApp;
 
 connectApp.use( connect.query() );
 
+var SERVICE_METHOD_PATTERN = /^[a-zA-Z]([a-zA-Z]|\d|_)*$/g;
+
 var options = {
     'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
     'discoverPath': 'discover',
@@ -25,7 +27,7 @@ var server = http.createServer( connectApp );
 
 server.listen( 8080 );
 
-restBuilder.buildUpRestAPI( rest );
+restBuilder.buildUpRestAPI( rest, _ );
 
 async.parallel([
   async.apply( caller.testCall1, http, _ ),

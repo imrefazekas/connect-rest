@@ -1,4 +1,4 @@
-[connect-rest](https://github.com/imrefazekas/connect-rest) is a middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs providing service discovery and path-based parameter mapping as well.
+[connect-rest](https://github.com/imrefazekas/connect-rest) is a middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs providing service discovery and path-based parameter mapping and "reflective" publishing as well.
 
 # Usage
 
@@ -156,6 +156,41 @@ You can set:
 
 In the absence of 'logger' property, no logs will be made.
 The connect-rest will use level 'info' for entry and exit points of services and 'debug' for the milestones of all internal processes.
+
+## Reflective publishing
+connect-rest allows you to have an extremely easy and fast way to publish your services. 
+
+You can define your own services like this in a file (services.js in this example):
+
+	function health( request ){
+		return 'ok';
+	};
+	function record( request, content ){
+		return 'saved';
+	}
+	exports.health = health;
+	exports.record = record;
+
+and publish them this way:
+
+	var services = require('./services');
+	...
+	rest.publish( services );
+
+This will discover all functions assigned to the exports having a name which conforms the following regular expression:
+	
+	/^[a-zA-Z]([a-zA-Z]|\d|_)*$/g
+
+The logic is simple. If the function has 
+- 1 parameter: it will be a 'get' method
+- 2 parameters: it will be a 'post' method
+
+and the path will be its name. So, by executing one single statement you will automatically have the following services:
+
+	/health on Get 
+	/record on Post
+
+If you have 100 services defined, then 100 rest api you will have automatically. Nice.
 
 ## Server - extracted from the tests
 
