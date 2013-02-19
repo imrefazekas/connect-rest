@@ -4,6 +4,7 @@
 
 The connect-rest is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/). 
 The aim is to focus on the business logic, so connect-rest is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
+
 The payload of the body - if exists - will be interpret as JSON object and will be parsed and passed to the service function you assign to.
 
 ## Assign
@@ -19,7 +20,9 @@ Example:
 	}
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
 
-After each assign function you might pass the followings: path descriptor and a function to be called.
+After each assign function you might pass the followings: 
+- path descriptor and 
+- a function to be called.
 
 ### Path description
 	connect-rest supports many options to be used as path description.
