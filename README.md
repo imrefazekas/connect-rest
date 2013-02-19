@@ -21,7 +21,7 @@ Example:
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
 
 After each assign function you might pass the followings: 
-- path descriptor and 
+- a path descriptor and 
 - a function to be called.
 
 ### Path description
@@ -133,6 +133,26 @@ So having such option, a call should look like this:
 
 otherwise error response will be sent with status code 401 claiming: 'API_KEY is required.'.
 
+## Logging
+In the option object passed to the constructore, , there is an optional parameter 'logger', which enables the logging functionality:
+
+	var options = {
+    	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+    	'discoverPath': 'discover',
+    	'logger': 'connect-rest'
+	};
+
+or
+
+	var options = {
+	    'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+	    'discoverPath': 'discover',
+	    'logger': loggerInstance
+	};
+
+You can set a string, which will be interpret as the name of the logger seen in the logs, or passing a bunyan instance to be used.
+In the absence of 'logger' property, no logs will be made.
+The connect-rest will use level 'info' for entry and exit points of services and 'debug' for the milestones of all internal processes.
 
 ## Server - extracted from the tests
 
@@ -190,10 +210,11 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## ToDo
 
-- logging services should be added properly
+- more detailed examples
 
 ## Changelog
 
+- 0.0.6 : logging added
 - 0.0.5 : optional parameter added
 - 0.0.4 : API_KEY management added
 - 0.0.3 : discovery managemenet added

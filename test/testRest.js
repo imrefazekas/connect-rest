@@ -16,7 +16,8 @@ connectApp.use( connect.query() );
 
 var options = {
     'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-    'discoverPath': 'discover'
+    'discoverPath': 'discover',
+    'logger': 'connect-rest'
 };
 connectApp.use( rest.rester( options ) );
 
