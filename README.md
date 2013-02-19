@@ -134,7 +134,7 @@ So having such option, a call should look like this:
 otherwise error response will be sent with status code 401 claiming: 'API_KEY is required.'.
 
 ## Logging
-In the option object passed to the constructore, , there is an optional parameter 'logger', which enables the logging functionality:
+In the option object passed to the constructor, there is an optional parameter 'logger', which enables the logging functionality:
 
 	var options = {
     	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
@@ -150,7 +150,10 @@ or
 	    'logger': loggerInstance
 	};
 
-You can set a string, which will be interpret as the name of the logger seen in the logs, or passing a bunyan instance to be used.
+You can set:
+- a string, which will be interpret as the name of the logger seen in the logs, or 
+- passing a bunyan instance to be used.
+
 In the absence of 'logger' property, no logs will be made.
 The connect-rest will use level 'info' for entry and exit points of services and 'debug' for the milestones of all internal processes.
 
