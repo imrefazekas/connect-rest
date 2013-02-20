@@ -5,7 +5,8 @@
 The connect-rest is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/). 
 The aim is to focus on the business logic, so connect-rest is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
 
-The payload of the body - if exists - will be interpret as JSON object and will be parsed and passed to the service function you assign to.
+The payload of the body - if exists - with proper mime-type will be interpret as JSON object and will be parsed and passed to the service function you assign to.
+If bodyparser or json or similar middleware is being used creating the req.body attribute, its content will be respected and delegated to the service functions as it is.
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
@@ -252,6 +253,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.8 : Other body parsing middlewares are respected
 - 0.0.6 : logging added
 - 0.0.5 : optional parameter added
 - 0.0.4 : API_KEY management added
