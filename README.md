@@ -9,19 +9,19 @@ The payload of the body - if exists - with proper mime-type will be interpret as
 
 If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](http://www.senchalabs.org/connect/json.html) or any similar connect middleware is being used creating the req.body attribute, its content will be respected and delegated to the service functions as it is.
 
-Topics:
+Features:
 - [Assign](#assign)
-- Path description
-- Rest functions
-- Versioning
-- Special assigns
-- Named parameters
-- Optinal parameter
-- Context
-- Discover services
-- API_KEY management
-- Logging
-- Reflective publishing
+- [Path description](#path-description)
+- [Rest functions](#rest-functions)
+- [Versioning](#versioning)
+- [Special assigns](#special-assigns)
+- [Named parameters](#named-parameters)
+- [Optinal parameter](#optinal-parameter)
+- [Context](#context)
+- [Discover services](#discover-services)
+- [API_KEY management](#api_key-management)
+- [Logging](#logging)
+- [Reflective publishing](#reflective-publishing)
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
