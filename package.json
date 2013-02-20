@@ -31,10 +31,10 @@
         "underscore":"~1",
         "underscore.string":"~2",
         "semver": "~1",
-        "bunyan": ">=0.18.0"
+        "bunyan": ">=0.18.0",
+        "connect": "~2"
     },
     "devDependencies":{
-        "connect": "~2"
     },
     "engines": {
         "node": ">= 0.8.0"

@@ -7,7 +7,21 @@ The aim is to focus on the business logic, so connect-rest is managing body payl
 
 The payload of the body - if exists - with proper mime-type will be interpret as JSON object and will be parsed and passed to the service function you assign to.
 
-If bodyparser or json or any similar connect middleware is being used creating the req.body attribute, its content will be respected and delegated to the service functions as it is.
+If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](http://www.senchalabs.org/connect/json.html) or any similar connect middleware is being used creating the req.body attribute, its content will be respected and delegated to the service functions as it is.
+
+Topics:
+- [Assign](#assign)
+- Path description
+- Rest functions
+- Versioning
+- Special assigns
+- Named parameters
+- Optinal parameter
+- Context
+- Discover services
+- API_KEY management
+- Logging
+- Reflective publishing
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
@@ -26,7 +40,7 @@ After each assign function you might pass the followings:
 - a path descriptor and 
 - a function to be called.
 
-### Path description
+## Path description
 	connect-rest supports many options to be used as path description.
 
 Simple path: 
@@ -45,7 +59,7 @@ Multiple versioned path:
 
 	[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
 
-### Rest function.
+## Rest function.
 	Every handler function receives
 	- a 'request' object containing headers and parameters values and 
 	- an optional 'payload' object which is the JSON-parsed object extracted from the http body's payload. 
