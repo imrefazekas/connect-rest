@@ -6,7 +6,8 @@ The connect-rest is a simple, yet powerful middleware for [connect](http://www.s
 The aim is to focus on the business logic, so connect-rest is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
 
 The payload of the body - if exists - with proper mime-type will be interpret as JSON object and will be parsed and passed to the service function you assign to.
-If bodyparser or json or similar middleware is being used creating the req.body attribute, its content will be respected and delegated to the service functions as it is.
+
+If bodyparser or json or any similar connect middleware is being used creating the req.body attribute, its content will be respected and delegated to the service functions as it is.
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
