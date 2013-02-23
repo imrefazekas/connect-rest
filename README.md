@@ -105,11 +105,14 @@ or using
 
 	'/store/108'
 
+paths. Both HTTP calls will be directed to the same functionN service.
+In latter case, the '108' will be set as a parameter in the request object with the value of '108'.
+
 ## General matcher
 
 	rest.get('/inquire/*book', functionM );
 
-This definitions gives you the possibility to define a general matcher allowig to have called with anything after the string
+This definition gives you the possibility to define a general matcher allowing to have been called with anything after the string
 
 	'/inquire'
 
@@ -117,18 +120,15 @@ so can be called using
 
 	'/inquire/alice/in/wonderland'
 
-or calling
+or using
 
 	'/inquire/oz/the/great/wizard'
 
-resulting to have the parameter 'book' with value 
+paths. This results to have the parameter 'book' with value 
 
-	'alice/in/wonderland' and 'oz/the/great/wizard' 
+	'alice/in/wonderland' or 'oz/the/great/wizard' 
 
 respectively. 
-
-paths. Both HTTP calls will be directed to the same functionN service.
-In latter case, the '108' will be set as a parameter in the request object with the value of '108'.
 
 ## Context
 connect-rest also supports uri prefix if you want to put every REST function behind the same context:
