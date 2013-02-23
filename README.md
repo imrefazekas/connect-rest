@@ -17,6 +17,7 @@ Features:
 - [Special assigns](#special-assigns)
 - [Named parameters](#named-parameters)
 - [Optinal parameter](#optinal-parameter)
+- [General matcher](#general-matcher)
 - [Context](#context)
 - [Discover services](#discover-services)
 - [API_KEY management](#api_key-management)
@@ -94,7 +95,7 @@ So sending a get request to the uri '/api/books/AliceInWonderland/1', will resul
 
 ## Optinal parameter
 
-	rest.post('/store/[id]', functionN );
+	rest.post('/store/?id', functionN );
 
 This definition allows you to define one optional parameter at the end of the path. It might be called using
 
@@ -103,6 +104,28 @@ This definition allows you to define one optional parameter at the end of the pa
 or using
 
 	'/store/108'
+
+## General matcher
+
+	rest.get('/inquire/*book', functionM );
+
+This definitions gives you the possibility to define a general matcher allowig to have called with anything after the string
+
+	'/inquire'
+
+so can be called using
+
+	'/inquire/alice/in/wonderland'
+
+or calling
+
+	'/inquire/oz/the/great/wizard'
+
+resulting to have the parameter 'book' with value 
+
+	'alice/in/wonderland' and 'oz/the/great/wizard' 
+
+respectively. 
 
 paths. Both HTTP calls will be directed to the same functionN service.
 In latter case, the '108' will be set as a parameter in the request object with the value of '108'.
@@ -268,6 +291,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.8 : General path matcher added, optional refined
 - 0.0.8 : Other body parsing middlewares are respected
 - 0.0.6 : logging added
 - 0.0.5 : optional parameter added

@@ -84,6 +84,15 @@ function testCall6(http, _, callback){
 	testCallZero( http, _, callback, voptions, {'message': 'ok'} );
 }
 
+function testCall7(http, _, callback){
+	var voptions = _.clone( options );
+	voptions.path = '/api/inquire/alice/in/wonderland?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+	voptions.method = 'GET';
+	voptions.headers['accept-version'] = '2.2.0';
+
+	testCallZero( http, _, callback, voptions, {'message': 'ok'} );
+}
+
 exports.testCall1 = testCall1;
 exports.testCall2 = testCall2;
 exports.testCall3a = testCall3a;
@@ -91,3 +100,4 @@ exports.testCall3b = testCall3b;
 exports.testCall4 = testCall4;
 exports.testCall5 = testCall5;
 exports.testCall6 = testCall6;
+exports.testCall7 = testCall7;

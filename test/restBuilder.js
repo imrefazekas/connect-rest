@@ -9,7 +9,11 @@ function buildUpRestAPI( rest, _ ){
 		console.log( 'Received:' + JSON.stringify( request ) );
 		return 'ok';
 	});
-	rest.post('/store/[id]', function( request, content ){
+	rest.post('/store/?id', function( request, content ){
+		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
+		return JSON.stringify(content);
+	});
+	rest.get('/inquire/*book', function( request, content ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
 		return JSON.stringify(content);
 	});
