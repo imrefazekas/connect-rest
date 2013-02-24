@@ -20,6 +20,7 @@ Features:
 - [General matcher](#general-matcher)
 - [Context](#context)
 - [Discover services](#discover-services)
+- [Prototype services](#prototype-services)
 - [API_KEY management](#api_key-management)
 - [Logging](#logging)
 - [Reflective publishing](#reflective-publishing)
@@ -156,6 +157,36 @@ would retrieve all services which can be called using version 3.0.0 (non-version
 		"PUT":[],
 		"DELETE":[]
 	}
+
+## Prototype services
+The assign-methods allows you to pass a third parameter, an object which can be considered as a prototype of the expected parameter of the service when a client wants to make a call.
+
+	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN, {'title': 'Alice in Wonderland'} );
+
+That parameter debriefs the client what structure the functionN expects to receive. To activate this feature, first you have to add a new attribute to the options object:
+
+	var options = {
+	    'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+	    'discoverPath': 'discover',
+	    'protoPath': 'proto',
+	    'logger': 'connect-rest'
+	};
+
+This 'protoPath' means that sending a request to the server on path:
+
+	'/api/proto/POST/2.3.0/api/twist?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'
+
+will retrieve the object 
+	
+	{'title': 'Alice in Wonderland'}
+
+because the service
+
+	on path '/api/twist' and method 'POST' with version '2.3.0'
+
+can be called and there is an assigned prototype object to it.
+Giving access method, version and path is mandatory for this feature.
+
 
 ## API_KEY management
 The option passed to the connect-rest might contain an array enumerating accepted api_keys:

@@ -19,6 +19,7 @@ var SERVICE_METHOD_PATTERN = /^[a-zA-Z]([a-zA-Z]|\d|_)*$/g;
 var options = {
     'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
     'discoverPath': 'discover',
+    'protoPath': 'proto',
     'logger': 'connect-rest'
 };
 connectApp.use( rest.rester( options ) );
@@ -37,7 +38,8 @@ async.parallel([
   async.apply( caller.testCall4, http, _ ),
   async.apply( caller.testCall5, http, _ ),
   async.apply( caller.testCall6, http, _ ),
-  async.apply( caller.testCall7, http, _ )
+  async.apply( caller.testCall7, http, _ ),
+  async.apply( caller.testCall8, http, _ )
   ], function(err, results){
     console.log('Tests finished.');
     server.close();
