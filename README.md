@@ -322,7 +322,8 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
-- 0.0.8 : General path matcher added, optional refined
+- 0.0.10 : Prototyping added
+- 0.0.9 : General path matcher added, optional now marked with '?'
 - 0.0.8 : Other body parsing middlewares are respected
 - 0.0.6 : logging added
 - 0.0.5 : optional parameter added
