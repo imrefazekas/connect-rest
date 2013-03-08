@@ -23,7 +23,7 @@ function buildUpRestAPI( rest, _ ){
 	});
 	rest.post( [ '/act', '/do' ], function( request, content ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		return JSON.stringify(content);
+		request.callback( JSON.stringify(content) );
 	});
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );

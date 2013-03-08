@@ -69,7 +69,7 @@ function testCall4(http, _, callback){
 
 function testCall5(http, _, callback){
 	var voptions = _.clone( options );
-	voptions.path = '/api/do';
+	voptions.path = '/api/do?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'POST';
 
 	testCallZero( http, _, callback, voptions, {'message': 'ok'} );

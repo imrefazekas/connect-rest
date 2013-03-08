@@ -63,7 +63,7 @@ Multiple versioned path:
 
 ## Rest function.
 	Every handler function receives
-	- a 'request' object containing headers and parameters values and 
+	- a 'request' object containing "headers" and "parameters" values and a "callback" function if the result is composed by asnyc operations 
 	- an optional 'payload' object which is the JSON-parsed object extracted from the http body's payload. 
 	
 	The return value of rest functions will be sent back to the client as a json string.
@@ -322,6 +322,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.11 : First request parameter now has a callback for async rest calls
 - 0.0.10 : Prototyping added
 - 0.0.9 : General path matcher added, optional now marked with '?'
 - 0.0.8 : Other body parsing middlewares are respected
