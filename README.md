@@ -61,7 +61,7 @@ Multiple versioned path:
 
 	[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
 
-## Rest function.
+## Rest functions
 	Every handler function receives
 	- a 'request' object containing "headers" and "parameters" values and a "callback" function if the result is composed by asnyc operations 
 	- an optional 'payload' object which is the JSON-parsed object extracted from the http body's payload. 
