@@ -77,7 +77,7 @@ function testCall5(http, _, callback){
 
 function testCall6(http, _, callback){
 	var voptions = _.clone( options );
-	voptions.path = '/api/twist';
+	voptions.path = '/api/twist?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'POST';
 	voptions.headers['accept-version'] = '2.2.0';
 

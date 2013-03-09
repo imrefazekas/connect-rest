@@ -9,39 +9,67 @@ var _ = require('underscore');
 var restBuilder = require('./restBuilder');
 var caller = require('./caller');
 
-var connectApp = connect();
-global.server = connectApp;
+var createDomain = require('domain').create;
 
-connectApp.use( connect.query() );
 
-var SERVICE_METHOD_PATTERN = /^[a-zA-Z]([a-zA-Z]|\d|_)*$/g;
+var serverDomain = createDomain();
+serverDomain.run(function() {
+	var connectApp = connect();
+	global.server = connectApp;
 
-var options = {
-    'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-    'discoverPath': 'discover',
-    'protoPath': 'proto',
-    'logger': 'connect-rest'
-};
-connectApp.use( rest.rester( options ) );
+	connectApp.use( function(req, res, next){
+		serverDomain.add(req);
+		serverDomain.add(res);
+		serverDomain.on('error', function(er) {
+			console.error('Error', er, req.url);
+			try {
+				res.writeHead(500);
+				res.end('Error occurred, sorry.');
+				res.on('close', function() {
+					serverDomain.dispose();
+				});
+			} catch (er) {
+				console.error('Error sending 500', er, req.url);
+				serverDomain.dispose();
+			}
+		});
+		next();
+	} );
+	connectApp.use( connect.query() );
 
-var server = http.createServer( connectApp );
+	var SERVICE_METHOD_PATTERN = /^[a-zA-Z]([a-zA-Z]|\d|_)*$/g;
 
-server.listen( 8080 );
+	var restDomain = createDomain();
+	serverDomain.add(restDomain);
+	var options = {
+		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+		discoverPath: 'discover',
+		protoPath: 'proto',
+		logger: 'connect-rest'
+		,domain: restDomain 
+	};
+	connectApp.use( rest.rester( options ) );
 
-restBuilder.buildUpRestAPI( rest, _ );
+	var server = http.createServer( connectApp );
 
-async.parallel([
-  async.apply( caller.testCall1, http, _ ),
-  async.apply( caller.testCall2, http, _ ),
-  async.apply( caller.testCall3a, http, _ ),
-  async.apply( caller.testCall3b, http, _ ),
-  async.apply( caller.testCall4, http, _ ),
-  async.apply( caller.testCall5, http, _ ),
-  async.apply( caller.testCall6, http, _ ),
-  async.apply( caller.testCall7, http, _ ),
-  async.apply( caller.testCall8, http, _ )
-  ], function(err, results){
-    console.log('Tests finished.');
-    server.close();
-    assert.ifError( err );
+	server.listen( 8080 );
+
+	restBuilder.buildUpRestAPI( rest, _ );
+
+	async.parallel([
+		//async.apply( caller.testCall1, http, _ ),
+		//async.apply( caller.testCall2, http, _ ),
+		//async.apply( caller.testCall3a, http, _ ),
+		//async.apply( caller.testCall3b, http, _ ),
+		//async.apply( caller.testCall4, http, _ ),
+		//async.apply( caller.testCall5, http, _ ),
+		async.apply( caller.testCall6, http, _ )
+		//async.apply( caller.testCall7, http, _ ),
+		//async.apply( caller.testCall8, http, _ )
+	], function(err, results){
+		console.log('Tests finished.');
+		server.close();
+		assert.ifError( err );
+	});
 });
+
