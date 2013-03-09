@@ -1,4 +1,4 @@
-[connect-rest](https://github.com/imrefazekas/connect-rest) is a middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs providing service discovery and path-based parameter mapping and "reflective" publishing as well.
+[connect-rest](https://github.com/imrefazekas/connect-rest) is a middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs providing service discovery and path-based parameter mapping and "reflective" publishing and node domains as well.
 
 # Usage
 
