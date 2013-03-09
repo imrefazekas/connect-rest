@@ -24,6 +24,7 @@ Features:
 - [API_KEY management](#api_key-management)
 - [Logging](#logging)
 - [Reflective publishing](#reflective-publishing)
+- [Domain support](#domain-support)
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
@@ -262,6 +263,25 @@ and the path will be its name. So, by executing one single statement you will au
 
 If you have 100 services defined, then 100 rest api you will have automatically. Nice.
 
+## Domain support
+connect-rest adds support for domain-based error handling. To the options object you can pass a domain too:
+
+	var createDomain = require('domain').create;
+	...
+	var superDomain = createDomain();
+	...
+	var restDomain = createDomain();
+	superDomain.add( restDomain );
+	var options = {
+		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+		discoverPath: 'discover',
+		protoPath: 'proto',
+		logger: 'connect-rest',
+		domain: restDomain 
+	};
+
+By passing the restDomain object, connect-rest will assign req and rest object to that domain and in any occurring error, it will be sent to the caller with HTTP status code 500.
+
 ## Server - extracted from the tests
 
 	var connect = require('connect');
@@ -322,6 +342,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.12 : Domain (introduced in Node 0.8.0) support added
 - 0.0.11 : First request parameter now has a callback for async rest calls
 - 0.0.10 : Prototyping added
 - 0.0.9 : General path matcher added, optional now marked with '?'
