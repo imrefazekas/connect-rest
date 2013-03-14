@@ -27,8 +27,8 @@ function buildUpRestAPI( rest, _ ){
 	});
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		throw new Error('Shake error...');
-		//return JSON.stringify(content);
+		//throw new Error('Shake error...');
+		return JSON.stringify(content);
 	}, {'title': 'Alice in Wonderland'} );
 }
 

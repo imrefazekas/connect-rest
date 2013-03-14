@@ -25,6 +25,7 @@ Features:
 - [Logging](#logging)
 - [Reflective publishing](#reflective-publishing)
 - [Domain support](#domain-support)
+- [Validation](#validation)
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
@@ -282,6 +283,15 @@ connect-rest adds support for domain-based error handling. To the options object
 
 By passing the restDomain object, connect-rest will assign req and rest object to that domain and in any occurring error, it will be sent to the caller with HTTP status code 500.
 
+## Validation
+
+When assigning routes with rest API you can pass a validation function as well, which can be used to determine if the REST function can be called in a given circumstances or should be ignored. This could mean authorization or ip address validation or other security concern.
+
+	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content ){
+		return JSON.stringify(content);
+	}, null, function(req, res){ return _.contains(req.user.roles, "superuser"); } );
+
+
 ## Server - extracted from the tests
 
 	var connect = require('connect');
@@ -342,6 +352,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.13 : Validator function can be also passed
 - 0.0.12 : Domain (introduced in Node 0.8.0) support added
 - 0.0.11 : First request parameter now has a callback for async rest calls
 - 0.0.10 : Prototyping added
