@@ -1,3 +1,32 @@
+var opt = {
+	hostname: 'localhost',
+	port: 8080,
+	path: '',
+	method: 'GET',
+	headers: {
+		'accept-version': '2.2.0'
+	}
+};
+function generalCall(http, voptions, callback, payload){
+	var req = http.request( voptions, function(res) {
+		console.log("Got response: " + res.statusCode);
+		var body = '';
+		res.on('data', function (chunk) {
+			body += chunk;
+		});
+		res.on('end', function ( ) {
+			callback(null, body);
+		});
+	});
+	req.on('error', function(err) {
+		console.log("Got error: " + e.message);
+		callback(err, 'failed.');
+	});
+	if( payload )
+		req.write( JSON.stringify( payload ) );
+	req.end();
+}
+
 var options = {
 	hostname: 'localhost',
 	port: 8080,
@@ -28,78 +57,75 @@ function testCallZero(http, _, callback, options, payload){
 	req.end();
 }
 function testCall1(http, _, callback){ 
-	var voptions = _.clone( options );
+	var voptions = _.clone( opt );
 	voptions.path = '/api/peek?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'HEAD';
 
-	testCallZero( http, _, callback, voptions );
+	generalCall( http, voptions, callback );
 }
 
 function testCall2(http, _, callback){
-	var voptions = _.clone( options );
+	var voptions = _.clone( opt );
 	voptions.path = '/api/books/AliceInWonderland/1?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'GET';
 
-	testCallZero( http, _, callback, voptions );
+	generalCall( http, voptions, callback );
 }
 
 function testCall3a(http, _, callback){
-	var voptions = _.clone( options );
+	var voptions = _.clone( opt );
 	voptions.path = '/api/store?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'POST';
 
-	testCallZero( http, _, callback, voptions, {'message': 'ok'} );
+	generalCall( http, voptions, callback, {'message': 'ok'} );
 }
 function testCall3b(http, _, callback){
-	var voptions = _.clone( options );
+	var voptions = _.clone( opt );
 	voptions.path = '/api/store/108?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'POST';
 
-	testCallZero( http, _, callback, voptions, {'message': 'ok'} );
+	generalCall( http, voptions, callback, {'message': 'ok'} );
 }
 
 function testCall4(http, _, callback){
-	var voptions = _.clone( options );
+	var voptions = _.clone( opt );
 	voptions.path = '/api/make';
 	voptions.method = 'POST';
 	voptions.headers['accept-version'] = '1.1';
 
-	testCallZero( http, _, callback, voptions, {'message': 'ok'} );
+	generalCall( http, voptions, callback, {'message': 'ok'} );
 }
 
 function testCall5(http, _, callback){
-	var voptions = _.clone( options );
+	var voptions = _.clone( opt );
 	voptions.path = '/api/do?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'POST';
 
-	testCallZero( http, _, callback, voptions, {'message': 'ok'} );
+	generalCall( http, voptions, callback, {'message': 'ok'} );
 }
 
 function testCall6(http, _, callback){
-	var voptions = _.clone( options );
+	var voptions = _.clone( opt );
 	voptions.path = '/api/twist?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'POST';
-	voptions.headers['accept-version'] = '2.2.0';
 
-	testCallZero( http, _, callback, voptions, {'message': 'ok'} );
+	generalCall( http, voptions, callback, {'message': 'ok'} );
 }
 
 function testCall7(http, _, callback){
-	var voptions = _.clone( options );
-	voptions.path = '/api/inquire/alice/in/wonderland?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+	var voptions = _.clone( opt );
 	voptions.method = 'GET';
-	voptions.headers['accept-version'] = '2.2.0';
+	voptions.path = '/api/inquire/alice/in/wonderland?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 
-	testCallZero( http, _, callback, voptions, {'message': 'ok'} );
+	generalCall( http, voptions, callback );
 }
 
 function testCall8(http, _, callback){
 	var voptions = _.clone( options );
-	voptions.path = '/api/proto/POST/2.3.0/api/twist?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'GET';
-	voptions.headers['accept-version'] = '2.2.0';
+	voptions.path = '/api/proto/POST/2.3.0/api/twist?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 
-	testCallZero( http, _, callback, voptions, {'message': 'ok'} );
+	generalCall( http, voptions, callback );
 }
 
 exports.testCall1 = testCall1;
