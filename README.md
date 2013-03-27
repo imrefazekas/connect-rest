@@ -353,8 +353,8 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
-- 0.0.15 : Adding grunt project files
-- 0.0.14 : Great changes from jgrenon, thank you. Standard callbacks introduced, better optional parameter handling and respecting error status code if exists
+- 0.0.15 : Great changes from Joel Grenon, thank you! Standard callbacks introduced, better optional parameter handling and respecting error status code if exists
+- 0.0.14 : Adding grunt project files
 - 0.0.13 : Validator function can be also passed
 - 0.0.12 : Domain (introduced in Node 0.8.0) support added
 - 0.0.11 : First request parameter now has a callback for async rest calls
