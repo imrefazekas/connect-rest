@@ -9,26 +9,26 @@ function buildUpRestAPI( rest, _ ){
 		console.log( 'Received:' + JSON.stringify( request ) );
 		return 'ok';
 	});
-	rest.post('/store/?id', function( request, content ){
+	rest.post('/store/?id', function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		return JSON.stringify(content);
+		callback(null, 'ok');
 	});
-	rest.get('/inquire/*book', function( request, content ){
+	rest.get('/inquire/*book', function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		return JSON.stringify(content);
+		callback(null, 'ok');
 	});
-	rest.post( { path: '/make', version: '>=1.0.0' }, function( request, content ){
+	rest.post( { path: '/make', version: '>=1.0.0' }, function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		return JSON.stringify(content);
+		callback(null, 'ok');
 	});
-	rest.post( [ '/act', '/do' ], function( request, content ){
+	rest.post( [ '/act', '/do' ], function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		request.callback( JSON.stringify(content) );
+		callback( null, 'ok' );
 	});
-	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content ){
+	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
 		//throw new Error('Shake error...');
-		return JSON.stringify(content);
+		callback(null, 'ok');
 	}, {'title': 'Alice in Wonderland'} );
 }
 

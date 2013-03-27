@@ -32,10 +32,10 @@ Assign your rest modules by one of the http request functions: head, get, post, 
 
 Example:
 
-	function service( request, payloadObject ){
+	function service( request, content, callback ){
 		console.log( 'Received headers:' + JSON.stringify( request.headers ) );
 		console.log( 'Received parameters:' + JSON.stringify( request.parameters ) );
-		console.log( 'Received JSON object:' + JSON.stringify( payloadObject ) );
+		console.log( 'Received JSON object:' + JSON.stringify( content ) );
 		return 'ok';
 	}
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
@@ -66,9 +66,10 @@ Multiple versioned path:
 ## Rest functions
 	Every handler function receives
 	- a 'request' object containing "headers" and "parameters" values and a "callback" function if the result is composed by asnyc operations 
-	- an optional 'payload' object which is the JSON-parsed object extracted from the http body's payload. 
-	
-	The return value of rest functions will be sent back to the client as a json string.
+	- an optional 'content' object which is the JSON-parsed object extracted from the http body's payload.
+	- an optional callback function. This is the 'node standard' way to manage callbacks if needed.
+
+	If callback is used as third parameter, needs to be called and pass the error or result object. Otherwise the return value of rest functions will be sent back to the client as a json string.
 	Please, see examples below...
 
 ## Versioning:
@@ -138,7 +139,7 @@ connect-rest also supports uri prefix if you want to put every REST function beh
 
 	rest.context( '/api' ); // means that every rest calls need to be sent to '/api/X' path.
 
-## Discover services
+## Discovery services
 connect-rest provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 
 
 	var options = {
@@ -352,6 +353,8 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.15 : Adding grunt project files
+- 0.0.14 : Great changes from jgrenon, thank you. Standard callbacks introduced, better optional parameter handling and respecting error status code if exists
 - 0.0.13 : Validator function can be also passed
 - 0.0.12 : Domain (introduced in Node 0.8.0) support added
 - 0.0.11 : First request parameter now has a callback for async rest calls

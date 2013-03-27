@@ -120,14 +120,6 @@ function testCall7(http, _, callback){
 	generalCall( http, voptions, callback );
 }
 
-function testCall8(http, _, callback){
-	var voptions = _.clone( options );
-	voptions.method = 'GET';
-	voptions.path = '/api/proto/POST/2.3.0/api/twist?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
-
-	generalCall( http, voptions, callback );
-}
-
 exports.testCall1 = testCall1;
 exports.testCall2 = testCall2;
 exports.testCall3a = testCall3a;
@@ -136,4 +128,3 @@ exports.testCall4 = testCall4;
 exports.testCall5 = testCall5;
 exports.testCall6 = testCall6;
 exports.testCall7 = testCall7;
-exports.testCall8 = testCall8;

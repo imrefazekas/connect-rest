@@ -64,8 +64,7 @@ serverDomain.run(function() {
 		async.apply( caller.testCall4, http, _ ),
 		async.apply( caller.testCall5, http, _ ),
 		async.apply( caller.testCall6, http, _ ),
-		async.apply( caller.testCall7, http, _ ),
-		async.apply( caller.testCall8, http, _ )
+		async.apply( caller.testCall7, http, _ )
 	], function(err, results){
 		console.log('Tests finished.');
 		server.close();
