@@ -89,7 +89,7 @@ function testCall3b(http, _, callback){
 
 function testCall4(http, _, callback){
 	var voptions = _.clone( opt );
-	voptions.path = '/api/make';
+	voptions.path = '/api/make?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
 	voptions.method = 'POST';
 	voptions.headers['accept-version'] = '1.1';
 
@@ -120,6 +120,28 @@ function testCall7(http, _, callback){
 	generalCall( http, voptions, callback );
 }
 
+function testCall8a(http, _, callback){
+	var voptions = _.clone( opt );
+	voptions.method = 'GET';
+	voptions.path = '/api/set?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+
+	generalCall( http, voptions, callback );
+}
+function testCall8b(http, _, callback){
+	var voptions = _.clone( opt );
+	voptions.method = 'GET';
+	voptions.path = '/api/set/abraka?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+
+	generalCall( http, voptions, callback );
+}
+function testCall8c(http, _, callback){
+	var voptions = _.clone( opt );
+	voptions.method = 'GET';
+	voptions.path = '/api/set/abraka/dabra?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+
+	generalCall( http, voptions, callback );
+}
+
 exports.testCall1 = testCall1;
 exports.testCall2 = testCall2;
 exports.testCall3a = testCall3a;
@@ -128,3 +150,7 @@ exports.testCall4 = testCall4;
 exports.testCall5 = testCall5;
 exports.testCall6 = testCall6;
 exports.testCall7 = testCall7;
+
+exports.testCall8a = testCall8a;
+exports.testCall8b = testCall8b;
+exports.testCall8c = testCall8c;

@@ -57,14 +57,17 @@ serverDomain.run(function() {
 	restBuilder.buildUpRestAPI( rest, _ );
 
 	async.parallel([
-		async.apply( caller.testCall1, http, _ ),
-		async.apply( caller.testCall2, http, _ ),
-		async.apply( caller.testCall3a, http, _ ),
-		async.apply( caller.testCall3b, http, _ ),
-		async.apply( caller.testCall4, http, _ ),
-		async.apply( caller.testCall5, http, _ ),
-		async.apply( caller.testCall6, http, _ ),
-		async.apply( caller.testCall7, http, _ )
+		// async.apply( caller.testCall1, http, _ ),
+		// async.apply( caller.testCall2, http, _ ),
+		// async.apply( caller.testCall3a, http, _ ),
+		// async.apply( caller.testCall3b, http, _ ),
+		// async.apply( caller.testCall4, http, _ ),
+		// async.apply( caller.testCall5, http, _ ),
+		// async.apply( caller.testCall6, http, _ ),
+		// async.apply( caller.testCall7, http, _ ),
+		async.apply( caller.testCall8a, http, _ ),
+		async.apply( caller.testCall8b, http, _ ),
+		async.apply( caller.testCall8c, http, _ )
 	], function(err, results){
 		console.log('Tests finished.');
 		server.close();

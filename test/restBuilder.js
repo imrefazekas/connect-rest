@@ -17,6 +17,10 @@ function buildUpRestAPI( rest, _ ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
 		callback(null, 'ok');
 	});
+	rest.get( '/set/?rid/?facet', function( request, content, callback ){
+		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
+		callback(null, 'ok');
+	});
 	rest.post( { path: '/make', version: '>=1.0.0' }, function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
 		callback(null, 'ok');
@@ -27,7 +31,6 @@ function buildUpRestAPI( rest, _ ){
 	});
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		//throw new Error('Shake error...');
 		callback(null, 'ok');
 	}, {'title': 'Alice in Wonderland'} );
 }
