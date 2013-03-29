@@ -25,7 +25,7 @@ Features:
 - [Logging](#logging)
 - [Reflective publishing](#reflective-publishing)
 - [Domain support](#domain-support)
-- [Validation](#validation)
+- [Customization: Validation and Response mime-types](#customization)
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
@@ -284,13 +284,22 @@ connect-rest adds support for domain-based error handling. To the options object
 
 By passing the restDomain object, connect-rest will assign req and rest object to that domain and in any occurring error, it will be sent to the caller with HTTP status code 500.
 
-## Validation
+## Customization
 
-When assigning routes with rest API you can pass a validation function as well, which can be used to determine if the REST function can be called in a given circumstances or should be ignored. This could mean authorization or ip address validation or other security concern.
+When assigning routes with rest API you can pass an object too. This object looks like this:
+
+	{ 
+		contentType: ''
+		validator: ...
+	}
+
+The contentType defines what the given REST service will retrieve. If not given, 'application/json' will be used.
+
+The validator is a function, which can be used to determine if the REST function can be called in a given circumstances or should be ignored. This could mean authorization or ip address validation or other security concern.
 
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content ){
 		return JSON.stringify(content);
-	}, null, function(req, res){ return _.contains(req.user.roles, "superuser"); } );
+	}, null, { contentType:'application/xml', validator: function(req, res){ return _.contains(req.user.roles, "superuser"); } } );
 
 
 ## Server - extracted from the tests
@@ -353,6 +362,9 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.16: 
+	- better optional parameter handling allowing to use optional parameter chain like: /set/?depoartment/?room
+	- rewritten assing services. instead of passing a single validator, one has to pass on optional object: { contentType: '', validator: ...} which allows one to define validator and answer return content mime-type as well.
 - 0.0.15 : Great changes from Joel Grenon, thank you! Standard callbacks introduced, better optional parameter handling and respecting error status code if exists
 - 0.0.14 : Adding grunt project files
 - 0.0.13 : Validator function can be also passed
