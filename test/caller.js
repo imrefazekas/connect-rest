@@ -27,16 +27,6 @@ function generalCall(http, voptions, callback, payload){
 	req.end();
 }
 
-var options = {
-	hostname: 'localhost',
-	port: 8080,
-	path: '',
-	method: 'GET',
-	headers: {
-		'accept-version': '*'
-	}
-};
-
 function testCallZero(http, _, callback, options, payload){ 
 	var req = http.request(options, function(res) {
 		var body = '';
