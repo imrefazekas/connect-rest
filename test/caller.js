@@ -132,6 +132,14 @@ function testCall8c(http, _, callback){
 	generalCall( http, voptions, callback );
 }
 
+function testCall9(http, _, callback){
+	var voptions = _.clone( opt );
+	voptions.method = 'GET';
+	voptions.path = '/api/data/items?ids%5B%5D=8&ids%5B%5D=9&api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+
+	generalCall( http, voptions, callback );
+}
+
 exports.testCall1 = testCall1;
 exports.testCall2 = testCall2;
 exports.testCall3a = testCall3a;
@@ -144,3 +152,4 @@ exports.testCall7 = testCall7;
 exports.testCall8a = testCall8a;
 exports.testCall8b = testCall8b;
 exports.testCall8c = testCall8c;
+exports.testCall9 = testCall9;

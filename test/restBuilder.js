@@ -33,6 +33,12 @@ function buildUpRestAPI( rest, _ ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
 		return callback(null, 'ok');
 	}, {'title': 'Alice in Wonderland'} );
+
+
+	rest.get( '/data/items', function( request, content, callback ){
+		console.log( 'Received::' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
+		return callback(null, 'ok');
+	}, { contentType:'text/plain', validator: function(req, res){ return true; } } );
 }
 
 exports.buildUpRestAPI = buildUpRestAPI;

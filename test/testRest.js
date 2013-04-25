@@ -45,8 +45,8 @@ serverDomain.run(function() {
 		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 		discoverPath: 'discover',
 		protoPath: 'proto',
-		logger: 'connect-rest'
-		,domain: restDomain 
+		logger: 'connect-rest',
+		domain: restDomain
 	};
 	connectApp.use( rest.rester( options ) );
 
@@ -65,9 +65,10 @@ serverDomain.run(function() {
 		// async.apply( caller.testCall5, http, _ ),
 		// async.apply( caller.testCall6, http, _ ),
 		// async.apply( caller.testCall7, http, _ ),
-		async.apply( caller.testCall8a, http, _ ),
-		async.apply( caller.testCall8b, http, _ ),
-		async.apply( caller.testCall8c, http, _ )
+		//async.apply( caller.testCall8a, http, _ ),
+		//async.apply( caller.testCall8b, http, _ ),
+		//async.apply( caller.testCall8c, http, _ ),
+		async.apply( caller.testCall9, http, _ )
 	], function(err, results){
 		console.log('Tests finished.');
 		server.close();

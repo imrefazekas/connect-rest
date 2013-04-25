@@ -362,6 +362,8 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.19: assign function introduced for bulk http-method assignments for a given rest function
+- 0.0.18: fixes
 - 0.0.16: 
 	- better optional parameter handling allowing to use optional parameter chain like: /set/?depoartment/?room
 	- rewritten assing services. instead of passing a single validator, one has to pass on optional object: { contentType: '', validator: ...} which allows one to define validator and answer return content mime-type as well.
