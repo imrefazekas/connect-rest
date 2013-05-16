@@ -13,6 +13,7 @@ Features:
 - [Assign](#assign)
 - [Path description](#path-description)
 - [Rest functions](#rest-functions)
+- [Status codes](#status-codes)
 - [Versioning](#versioning)
 - [Special assigns](#special-assigns)
 - [Named parameters](#named-parameters)
@@ -45,7 +46,7 @@ After each assign function you might pass the followings:
 - a function to be called.
 
 ## Path description
-	connect-rest supports many options to be used as path description.
+connect-rest supports many options to be used as path description.
 
 Simple path: 
 	
@@ -64,13 +65,20 @@ Multiple versioned path:
 	[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
 
 ## Rest functions
-	Every handler function receives
+
+Every handler function receives
 	- a 'request' object containing "headers" and "parameters" values and a "callback" function if the result is composed by asnyc operations 
 	- an optional 'content' object which is the JSON-parsed object extracted from the http body's payload.
 	- an optional callback function. This is the 'node standard' way to manage callbacks if needed.
 
 	If callback is used as third parameter, needs to be called and pass the error or result object. Otherwise the return value of rest functions will be sent back to the client as a json string.
 	Please, see examples below...
+
+## Status codes
+	IF one defines a rest function possessing 3 parameters, the third is a callback/next function which can be used to refine the result sent back to the client. This goes to the message and the http status as well.
+	- error case:
+	- special case when no error occurred, yet the http request's status has to be set:
+
 
 ## Versioning:
 As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
