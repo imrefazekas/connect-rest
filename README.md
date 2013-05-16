@@ -362,6 +362,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.20: callback/next function passed to the services methods can receive third parameter: statusCode setting the http status of the response
 - 0.0.19: assign function introduced for bulk http-method assignments for a given rest function
 - 0.0.18: fixes
 - 0.0.16: 
