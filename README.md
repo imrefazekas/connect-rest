@@ -77,7 +77,8 @@ Please, see examples below...
 ## Status codes
 
 IF one defines a rest function possessing 3 parameters, the third is a callback/next function which can be used to refine the result sent back to the client. This goes to the message and the http status as well.
-- error case:
+
+Error case:
 
 	rest.get( '/invalidPath', function( request, content, callback ){
 		var error = new Error('invalid path');
@@ -85,7 +86,7 @@ IF one defines a rest function possessing 3 parameters, the third is a callback/
 		return callback( error );
 	});
 
-- special case when no error occurred, yet the http request's status has to be set:
+Special case when no error occurred, yet the http request's status has to be set:
 
 	rest.get( '/special', function( request, content, callback ){
 		return callback( null, 'Hello world', 202 );
