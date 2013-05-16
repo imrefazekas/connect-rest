@@ -67,17 +67,29 @@ Multiple versioned path:
 ## Rest functions
 
 Every handler function receives
-	- a 'request' object containing "headers" and "parameters" values and a "callback" function if the result is composed by asnyc operations 
-	- an optional 'content' object which is the JSON-parsed object extracted from the http body's payload.
-	- an optional callback function. This is the 'node standard' way to manage callbacks if needed.
+- a 'request' object containing "headers" and "parameters" values and a "callback" function if the result is composed by asnyc operations 
+- an optional 'content' object which is the JSON-parsed object extracted from the http body's payload.
+- an optional callback function. This is the 'node standard' way to manage callbacks if needed.
 
-	If callback is used as third parameter, needs to be called and pass the error or result object. Otherwise the return value of rest functions will be sent back to the client as a json string.
-	Please, see examples below...
+If callback is used as third parameter, needs to be called and pass the error or result object. Otherwise the return value of rest functions will be sent back to the client as a json string.
+Please, see examples below...
 
 ## Status codes
-	IF one defines a rest function possessing 3 parameters, the third is a callback/next function which can be used to refine the result sent back to the client. This goes to the message and the http status as well.
-	- error case:
-	- special case when no error occurred, yet the http request's status has to be set:
+
+IF one defines a rest function possessing 3 parameters, the third is a callback/next function which can be used to refine the result sent back to the client. This goes to the message and the http status as well.
+- error case:
+
+	rest.get( '/invalidPath', function( request, content, callback ){
+		var error = new Error('invalid path');
+		error.statusCode = 404;
+		return callback( error );
+	});
+
+- special case when no error occurred, yet the http request's status has to be set:
+
+	rest.get( '/special', function( request, content, callback ){
+		return callback( null, 'Hello world', 202 );
+	});
 
 
 ## Versioning:
