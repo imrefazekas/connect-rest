@@ -71,7 +71,7 @@ serverDomain.run(function() {
 		async.apply( caller.testCall9, http, _ )
 	], function(err, results){
 		console.log('Tests finished.');
-		server.close();
+			server.close();
 		assert.ifError( err );
 	});
 });
