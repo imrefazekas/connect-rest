@@ -89,7 +89,7 @@ Error case:
 Special case when no error occurred, yet the http request's status has to be set:
 
 	rest.get( '/special', function( request, content, callback ){
-		return callback( null, 'Hello world', 202 );
+		return callback( null, 'Processing...', 202 );
 	});
 
 
