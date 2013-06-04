@@ -28,8 +28,8 @@ serverDomain.run(function() {
 				res.on('close', function() {
 					serverDomain.dispose();
 				});
-			} catch (er) {
-				console.error('Error sending 500', er, req.url);
+			} catch (err) {
+				console.error('Error sending 500', err, req.url);
 				serverDomain.dispose();
 			}
 		});
@@ -46,6 +46,7 @@ serverDomain.run(function() {
 		discoverPath: 'discover',
 		protoPath: 'proto',
 		logger: 'connect-rest',
+		logLevel: 'debug',
 		domain: restDomain
 	};
 	connectApp.use( rest.rester( options ) );

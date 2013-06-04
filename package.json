@@ -1,6 +1,6 @@
 {
     "name": "connect-rest",
-    "version": "0.0.20",
+    "version": "0.0.21",
     "description": "RESTful web services middleware for Connect.",
     "keywords": [
         "connect",
@@ -27,11 +27,11 @@
     ],
     "main": "./lib/connect-rest.js",
     "dependencies": {
-        "async": ">=0.1.22",
+        "async": ">=0.2.0",
         "underscore":"~1",
         "underscore.string":"~2",
         "semver": "~1",
-        "bunyan": ">=0.18.0",
+        "bunyan": ">=0.21.0",
         "connect": "~2"
     },
     "devDependencies": {
@@ -46,6 +46,6 @@
     },
     "readmeFilename": "README.md",
     "readme": "README.md",
-    "_id": "connect-rest@0.0.20",
-    "_from": "connect-rest@>=0.0.20"
+    "_id": "connect-rest@0.0.21",
+    "_from": "connect-rest@>=0.0.21"
 }
