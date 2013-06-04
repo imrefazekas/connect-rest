@@ -1,51 +1,51 @@
 {
-    "name": "connect-rest",
-    "version": "0.0.21",
-    "description": "RESTful web services middleware for Connect.",
-    "keywords": [
-        "connect",
-        "rest",
-        "restful"
-    ],
-    "homepage": "https://github.com/imrefazekas/connect-rest",
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/imrefazekas/connect-rest.git"
-    },
-    "bugs": {
-        "url": "http://github.com/imrefazekas/connect-rest/issues"
-    },
-    "author": {
-        "name": "Imre Fazekas",
-        "email": "imre.fazekas@gmail.com"
-    },
-    "licenses": [
-        {
-            "type": "MIT",
-            "url": "http://www.opensource.org/licenses/MIT"
-        }
-    ],
-    "main": "./lib/connect-rest.js",
-    "dependencies": {
-        "async": ">=0.2.0",
-        "underscore":"~1",
-        "underscore.string":"~2",
-        "semver": "~1",
-        "bunyan": ">=0.21.0",
-        "connect": "~2"
-    },
-    "devDependencies": {
-        "grunt": "~0.4.1", 
-        "grunt-contrib-jshint": "~0.2.0", 
-        "grunt-simple-mocha": "~0.3.2", 
-        "should": "~1.2.2", 
-        "async": ">=0.1.22"
-    }, 
-    "engines": {
-        "node": ">= 0.8.0"
-    },
-    "readmeFilename": "README.md",
-    "readme": "README.md",
-    "_id": "connect-rest@0.0.21",
-    "_from": "connect-rest@>=0.0.21"
+	"name": "connect-rest",
+	"version": "0.0.21",
+	"description": "RESTful web services middleware for Connect.",
+	"keywords": [
+		"connect",
+		"rest",
+		"restful"
+	],
+	"homepage": "https://github.com/imrefazekas/connect-rest",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/imrefazekas/connect-rest.git"
+	},
+	"bugs": {
+		"url": "http://github.com/imrefazekas/connect-rest/issues"
+	},
+	"author": {
+		"name": "Imre Fazekas",
+		"email": "imre.fazekas@gmail.com"
+	},
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://www.opensource.org/licenses/MIT"
+		}
+	],
+	"main": "./lib/connect-rest.js",
+	"dependencies": {
+		"async": ">=0.2.0",
+		"underscore":"~1",
+		"underscore.string":"~2",
+		"semver": "~1",
+		"bunyan": ">=0.21.0",
+		"connect": "~2"
+	},
+	"devDependencies": {
+		"grunt": "~0.4.1", 
+		"grunt-contrib-jshint": "~0.2.0", 
+		"grunt-simple-mocha": "~0.3.2", 
+		"should": "~1.2.2", 
+		"async": ">=0.1.22"
+	}, 
+	"engines": {
+		"node": ">= 0.8.0"
+	},
+	"readmeFilename": "README.md",
+	"readme": "README.md",
+	"_id": "connect-rest@0.0.21",
+	"_from": "connect-rest@>=0.0.21"
 }
