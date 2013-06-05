@@ -98,7 +98,7 @@ Special case when no error occurred, yet the http request's status has to be set
 To refine the headers in the response HTML, the way is the same as above: customize the third parameter of the callback function.
 
 	rest.get( '/special', function( request, content, callback ){
-		return callback( null, 'Processing...', { headers: { ETag: "10c24bc-4ab-457e1c1f" } } );
+		return callback( null, 'Content.', { headers: { ETag: "10c24bc-4ab-457e1c1f" } } );
 	});
 
 ## Versioning:
