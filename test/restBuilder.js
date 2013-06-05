@@ -36,7 +36,7 @@ function buildUpRestAPI( rest, _ ){
 
 	rest.get( '/data/items', function( request, content, callback ){
 		console.log( 'Received::' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		return callback(null, 'ok');
+		return callback(null, '', {statusCode:201} );
 	}, { contentType:'text/plain', validator: function(req, res){ return true; } } );
 }
 
