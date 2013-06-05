@@ -14,6 +14,7 @@ Features:
 - [Path description](#path-description)
 - [Rest functions](#rest-functions)
 - [Status codes](#status-codes)
+- [Response headers](#response-headers)
 - [Versioning](#versioning)
 - [Special assigns](#special-assigns)
 - [Named parameters](#named-parameters)
@@ -76,7 +77,7 @@ Please, see examples below...
 
 ## Status codes
 
-IF one defines a rest function possessing 3 parameters, the third is a callback/next function which can be used to refine the result sent back to the client. This goes to the message and the http status as well.
+IF one defines a rest function possessing 3 parameters, the third is an object aimed to contain to refine the HTTP response sent back to the client. As for status code, all you need to do is this:
 
 Error case:
 
@@ -89,9 +90,16 @@ Error case:
 Special case when no error occurred, yet the http request's status has to be set:
 
 	rest.get( '/special', function( request, content, callback ){
-		return callback( null, 'Processing...', 202 );
+		return callback( null, 'Processing...', { statusCode: 202 } );
 	});
 
+## Response headers
+
+To refine the headers in the response HTML, the way is the same as above: customize the third parameter of the callback function.
+
+	rest.get( '/special', function( request, content, callback ){
+		return callback( null, 'Processing...', { headers: { ETag: "10c24bc-4ab-457e1c1f" } } );
+	});
 
 ## Versioning:
 As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
@@ -383,6 +391,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.22: response header customization added 
 - 0.0.21: 
 	- async rest calling allowed by passing a http parameter: callbackURL
 	- and some logging fixes
