@@ -345,6 +345,7 @@ The validator is a function, which can be used to determine if the REST function
 ## Answering async rest requests
 
 [connect-rest](https://github.com/imrefazekas/connect-rest) provides a way to serve async rest requests. It might be important - especially between fragmented server-side environment - to call rest services and accept the answer on a specific callback URL specified by the requestor.
+
 The _client_ has to specify a request parameter _"callbackURL"_ possessing the callback URL where the answer has to be sent.
 Having sent the request, [connect-rest](https://github.com/imrefazekas/connect-rest) will answer it right away with status code _200_ and message _Ok._ and having the result created, it will sent via _HTTP POST_ to the URL given in the HTTP parameters.
 
