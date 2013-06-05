@@ -391,6 +391,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.23: small fix for content type management
 - 0.0.22: response header customization added 
 - 0.0.21: 
 	- async rest calling allowed by passing a http parameter: callbackURL
