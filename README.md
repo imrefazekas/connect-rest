@@ -2,14 +2,14 @@
 
 # Usage
 
-The connect-rest is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/). 
-The aim is to focus on the business logic, so connect-rest is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
+The [connect-rest](https://github.com/imrefazekas/connect-rest) is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/). 
+The aim is to focus on the business logic, so [connect-rest](https://github.com/imrefazekas/connect-rest) is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
 
 The payload of the body - if exists - with proper mime-type will be interpret as JSON object and will be parsed and passed to the service function you assign to.
 
 If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](http://www.senchalabs.org/connect/json.html) or any similar connect middleware is being used creating the req.body attribute, its content will be respected and delegated to the service functions as it is.
 
-Features:
+## Features:
 - [Assign](#assign)
 - [Path description](#path-description)
 - [Rest functions](#rest-functions)
@@ -28,6 +28,7 @@ Features:
 - [Reflective publishing](#reflective-publishing)
 - [Domain support](#domain-support)
 - [Customization: Validation and Response mime-types](#customization)
+- [Answering async rest requests](#answering-async-rest-requests)
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
@@ -47,7 +48,7 @@ After each assign function you might pass the followings:
 - a function to be called.
 
 ## Path description
-connect-rest supports many options to be used as path description.
+[connect-rest](https://github.com/imrefazekas/connect-rest) supports many options to be used as path description.
 
 Simple path: 
 	
@@ -64,6 +65,8 @@ Multiple path:
 Multiple versioned path: 
 
 	[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
+
+[Back to Feature list](#features)
 
 ## Rest functions
 
@@ -92,6 +95,8 @@ Special case when no error occurred, yet the http request's status has to be set
 	rest.get( '/special', function( request, content, callback ){
 		return callback( null, 'Processing...', { statusCode: 202 } );
 	});
+
+[Back to Feature list](#features)
 
 ## Response headers
 
@@ -163,13 +168,15 @@ paths. This results to have the parameter 'book' with value
 
 respectively. 
 
+[Back to Feature list](#features)
+
 ## Context
-connect-rest also supports uri prefix if you want to put every REST function behind the same context:
+[connect-rest](https://github.com/imrefazekas/connect-rest) also supports uri prefix if you want to put every REST function behind the same context:
 
 	rest.context( '/api' ); // means that every rest calls need to be sent to '/api/X' path.
 
 ## Discovery services
-connect-rest provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 
+[connect-rest](https://github.com/imrefazekas/connect-rest) provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 
 
 	var options = {
 	    'discoverPath': 'discover'
@@ -219,9 +226,10 @@ because the service
 can be called and there is an assigned prototype object to it.
 Giving access method, version and path is mandatory for this feature.
 
+[Back to Feature list](#features)
 
 ## API_KEY management
-The option passed to the connect-rest might contain an array enumerating accepted api_keys:
+The option passed to the [connect-rest](https://github.com/imrefazekas/connect-rest) might contain an array enumerating accepted api_keys:
 
 	var options = {
     	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
@@ -257,10 +265,12 @@ You can set:
 - passing a bunyan instance to be used.
 
 In the absence of 'logger' property, no logs will be made.
-The connect-rest will use level 'info' for entry and exit points of services and 'debug' for the milestones of all internal processes.
+The [connect-rest](https://github.com/imrefazekas/connect-rest) will use level 'info' for entry and exit points of services and 'debug' for the milestones of all internal processes.
+
+[Back to Feature list](#features)
 
 ## Reflective publishing
-connect-rest allows you to have an extremely easy and fast way to publish your services. 
+[connect-rest](https://github.com/imrefazekas/connect-rest) allows you to have an extremely easy and fast way to publish your services. 
 
 You can define your own services like this in a file (services.js in this example):
 
@@ -295,7 +305,7 @@ and the path will be its name. So, by executing one single statement you will au
 If you have 100 services defined, then 100 rest api you will have automatically. Nice.
 
 ## Domain support
-connect-rest adds support for domain-based error handling. To the options object you can pass a domain too:
+[connect-rest](https://github.com/imrefazekas/connect-rest) adds support for domain-based error handling. To the options object you can pass a domain too:
 
 	var createDomain = require('domain').create;
 	...
@@ -311,7 +321,9 @@ connect-rest adds support for domain-based error handling. To the options object
 		domain: restDomain 
 	};
 
-By passing the restDomain object, connect-rest will assign req and rest object to that domain and in any occurring error, it will be sent to the caller with HTTP status code 500.
+By passing the restDomain object, [connect-rest](https://github.com/imrefazekas/connect-rest) will assign req and rest object to that domain and in any occurring error, it will be sent to the caller with HTTP status code 500.
+
+[Back to Feature list](#features)
 
 ## Customization
 
@@ -330,6 +342,15 @@ The validator is a function, which can be used to determine if the REST function
 		return JSON.stringify(content);
 	}, null, { contentType:'application/xml', validator: function(req, res){ return _.contains(req.user.roles, "superuser"); } } );
 
+## Answering async rest requests
+
+[connect-rest](https://github.com/imrefazekas/connect-rest) provides a way to serve async rest requests. It might be important - especially between fragmented server-side environment - to call rest services and accept the answer on a specific callback URL specified by the requestor.
+The _client_ has to specify a request parameter _"callbackURL"_ possessing the callback URL where the answer has to be sent.
+Having sent the request, [connect-rest](https://github.com/imrefazekas/connect-rest) will answer it right away with status code _200_ and message _Ok._ and having the result created, it will sent via _HTTP POST_ to the URL given in the HTTP parameters.
+
+This process is performed behind the scenes, you do not have do anything special about it. If that parameter can be found in the HTTP request, the call will be threaten as async request.
+
+[Back to Feature list](#features)
 
 ## Server - extracted from the tests
 
@@ -391,6 +412,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.26: async request fix
 - 0.0.23-25: small fix for content type management
 - 0.0.22: response header customization added 
 - 0.0.21: 
