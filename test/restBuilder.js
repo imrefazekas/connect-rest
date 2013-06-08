@@ -1,5 +1,5 @@
 function buildUpRestAPI( rest, _ ){
-	rest.context( '/api' );
+	//rest.context( '/api' );
 
 	rest.head('/peek', function( request ){
 		console.log( 'Received:' + JSON.stringify( request ) );

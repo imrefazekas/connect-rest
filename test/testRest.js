@@ -47,6 +47,7 @@ serverDomain.run(function() {
 		protoPath: 'proto',
 		logger: 'connect-rest',
 		logLevel: 'debug',
+		context: '/api',
 		domain: restDomain
 	};
 	connectApp.use( rest.rester( options ) );
