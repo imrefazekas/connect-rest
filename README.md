@@ -9,6 +9,10 @@ The payload of the body - if exists - with proper mime-type will be interpret as
 
 If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](http://www.senchalabs.org/connect/json.html) or any similar connect middleware is being used creating the req.body attribute, its content will be respected and delegated to the service functions as it is.
 
+# Installation
+
+	$ npm install connect-rest
+
 ## Features:
 - [Assign](#assign)
 - [Path description](#path-description)
@@ -29,6 +33,8 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 - [Domain support](#domain-support)
 - [Customization: Validation and Response mime-types](#customization)
 - [Answering async rest requests](#answering-async-rest-requests)
+- [Usage](#usage)
+- [Changelog](#changelog)
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
@@ -39,7 +45,7 @@ Example:
 		console.log( 'Received headers:' + JSON.stringify( request.headers ) );
 		console.log( 'Received parameters:' + JSON.stringify( request.parameters ) );
 		console.log( 'Received JSON object:' + JSON.stringify( content ) );
-		return 'ok';
+		callback(null, 'ok');
 	}
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
 
@@ -65,6 +71,26 @@ Multiple path:
 Multiple versioned path: 
 
 	[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
+
+Mandatory variables: 
+
+	{ path: '/make/:uid', version: '>=1.0.0' }
+
+
+Optional path: 
+
+	{ path: '/delete/?id', version: '>=1.0.0' }
+
+	{ path: '/delete/?id/?date', version: '>=1.0.0' }
+
+General path:
+
+	{ path: '/rent/*bookTitle', version: '>=1.0.0' }
+
+Complex path:
+
+	[ { path: '/rent/?isbn/*bookTitle', version: '<2.0.0' }, { path: '/borrow/:uid/?isbn/?bookTitle', version: '>=2.1.1' } ]
+
 
 [Back to Feature list](#features)
 
@@ -168,12 +194,33 @@ paths. This results to have the parameter 'book' with value
 
 respectively. 
 
+You can make rather complex mixtures of those options as well:
+
+	'/borrow/:uid/?isbn/:bookTitle'
+
+One can call this with uri: 
+
+	'borrow/2/AliceInWonderland' or 'borrow/2/HG1232131/AliceInWonderland'
+
+The logic how [connect-rest](https://github.com/imrefazekas/connect-rest) is managing parameter replacement is the following:
+
+The parameters are processed in the path defintion order and any missing optional parameter will be filled with empty strings to keep the order of them keeping in sight all mandatory parameters put after the optional ones.
+
 [Back to Feature list](#features)
 
 ## Context
 [connect-rest](https://github.com/imrefazekas/connect-rest) also supports uri prefix if you want to put every REST function behind the same context:
 
 	rest.context( '/api' ); // means that every rest calls need to be sent to '/api/X' path.
+
+This value can be set through the option object as well:
+
+	var options = {
+		'context': '/api'
+	};
+	connectApp.use( rest.rester( options ) );
+
+Default _context_ is the empty string.
 
 ## Discovery services
 [connect-rest](https://github.com/imrefazekas/connect-rest) provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 
@@ -202,7 +249,8 @@ The assign-methods allows you to pass a third parameter, an object which can be 
 
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN, {'title': 'Alice in Wonderland'} );
 
-That parameter debriefs the client what structure the functionN expects to receive. To activate this feature, first you have to add a new attribute to the options object:
+That parameter debriefs the client what structure the functionN expects to receive. 
+To activate this feature, first you have to add a new attribute to the options object:
 
 	var options = {
 	    'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
@@ -353,7 +401,7 @@ This process is performed behind the scenes, you do not have do anything special
 
 [Back to Feature list](#features)
 
-## Server - extracted from the tests
+## Usage
 
 	var connect = require('connect');
 	var rest = require('connect-rest');
@@ -363,8 +411,12 @@ This process is performed behind the scenes, you do not have do anything special
 	connectApp.use( connect.query() );
 
 	var options = {
-    	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-    	'discoverPath': 'discover'
+		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+		discoverPath: 'discover',
+		protoPath: 'proto',
+		logger: 'connect-rest',
+		logLevel: 'debug',
+		context: '/api'
 	};
 	connectApp.use( rest.rester( options ) );
 
@@ -376,9 +428,7 @@ This process is performed behind the scenes, you do not have do anything special
 	
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN3 );
 
-# Installation
-
-    $ npm install connect-rest
+[Back to Feature list](#features)
 
 ## License
 
@@ -413,6 +463,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.30: minor fixes, refined documentation
 - 0.0.28.29: a case when mandatory parameter follows optional(s) has been fixed
 - 0.0.26-27: async request fix
 - 0.0.23-25: small fix for content type management
