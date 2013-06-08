@@ -69,7 +69,11 @@ serverDomain.run(function() {
 		//async.apply( caller.testCall8a, http, _ ),
 		//async.apply( caller.testCall8b, http, _ ),
 		//async.apply( caller.testCall8c, http, _ ),
-		async.apply( caller.testCall9, http, _ )
+		async.apply( caller.testCall9, http, _ ),
+		async.apply( caller.testCall10a, http, _ ),
+		async.apply( caller.testCall10b, http, _ ),
+		async.apply( caller.testCall10c, http, _ ),
+		async.apply( caller.testCall10d, http, _ )
 	], function(err, results){
 		console.log('Tests finished.');
 			server.close();

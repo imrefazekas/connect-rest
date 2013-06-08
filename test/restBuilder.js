@@ -38,6 +38,11 @@ function buildUpRestAPI( rest, _ ){
 		console.log( 'Received::' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
 		return callback(null, '', {statusCode:201} );
 	}, { contentType:'text/plain', validator: function(req, res){ return true; } } );
+
+	rest.get( '/:system/?entity/?version/:subject', function( request, content, callback ){
+		console.log( 'Received::' + JSON.stringify( request.parameters ) + ' ' + JSON.stringify(content) );
+		return callback(null, 'Done.', {statusCode:201} );
+	}, { contentType:'text/plain' } );
 }
 
 exports.buildUpRestAPI = buildUpRestAPI;

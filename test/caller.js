@@ -140,6 +140,31 @@ function testCall9(http, _, callback){
 	generalCall( http, voptions, callback );
 }
 
+function testCall10a(http, _, callback){
+	var voptions = _.clone( opt );
+	voptions.method = 'GET';
+	voptions.path = '/api/Skynet/Shira/1.0/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+	generalCall( http, voptions, callback );
+}
+function testCall10b(http, _, callback){
+	var voptions = _.clone( opt );
+	voptions.method = 'GET';
+	voptions.path = '/api/Skynet/Shira/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+	generalCall( http, voptions, callback );
+}
+function testCall10c(http, _, callback){
+	var voptions = _.clone( opt );
+	voptions.method = 'GET';
+	voptions.path = '/api/Skynet/1.0/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+	generalCall( http, voptions, callback );
+}
+function testCall10d(http, _, callback){
+	var voptions = _.clone( opt );
+	voptions.method = 'GET';
+	voptions.path = '/api/Skynet/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9';
+	generalCall( http, voptions, callback );
+}
+
 exports.testCall1 = testCall1;
 exports.testCall2 = testCall2;
 exports.testCall3a = testCall3a;
@@ -153,3 +178,8 @@ exports.testCall8a = testCall8a;
 exports.testCall8b = testCall8b;
 exports.testCall8c = testCall8c;
 exports.testCall9 = testCall9;
+
+exports.testCall10a = testCall10a;
+exports.testCall10b = testCall10b;
+exports.testCall10c = testCall10c;
+exports.testCall10d = testCall10d;
