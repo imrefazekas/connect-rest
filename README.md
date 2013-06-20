@@ -1,4 +1,16 @@
-[connect-rest](https://github.com/imrefazekas/connect-rest) is a middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs providing service discovery and path-based parameter mapping and "reflective" publishing and node domains as well.
+[connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The lib has a stunning feature list beyond basic rest functionality. 
+
+Just a few examples: (far from incomplete): 
+- execution branches: a single service can have multiple paths and a single incoming request can invoke multiple services
+- versioning: rest services can be versioned via many ways
+- regular expressions: path description can be given using regular expression
+- parameter mappings: path matchings can be bound as parameters 
+- service discovery: built-in rest service allowing one to discover what rest services are available in general or for a given version
+- "reflective" publishing: by providing a single object, its methods will be published as rest services automatically by simple logic
+- customizable HTTP management: HTTP status code, mime-types can be set at service and execution level
+- async services: a rest service can call back asynchronously when the answer is made
+- monitoring/measuring: every rest service execution can be enabled for measurement to be collected and populated internally or for external monitoring solutions
+
 
 # Usage
 
@@ -33,6 +45,7 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 - [Domain support](#domain-support)
 - [Customization: Validation and Response mime-types](#customization)
 - [Answering async rest requests](#answering-async-rest-requests)
+- [Monitoring](#monitoring)
 - [Usage](#usage)
 - [Changelog](#changelog)
 
@@ -400,6 +413,21 @@ Having sent the request, [connect-rest](https://github.com/imrefazekas/connect-r
 This process is performed behind the scenes, you do not have do anything special about it. If that parameter can be found in the HTTP request, the call will be threaten as async request.
 
 [Back to Feature list](#features)
+
+## Monitoring
+
+[connect-rest](https://github.com/imrefazekas/connect-rest) allows you to monitor and measure the execution of the published rest services. Every service execution measure the execution time and reports to a bus transparently. The commulated data is populated regularly as configured.
+
+	var options = {
+		...,
+		monitoring: {
+			populateInterval: 6000,
+			console: true
+		}
+	};
+
+By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs. The property _console_ - if present - will print the commulated execution times grouped/structured by paths and version to the console. [newrelic](https://newrelic.com) support is under heavy development ...
+
 
 ## Usage
 
