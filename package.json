@@ -1,6 +1,6 @@
 {
 	"name": "connect-rest",
-	"version": "0.0.32",
+	"version": "0.0.40",
 	"description": "RESTful web services middleware for Connect.",
 	"keywords": [
 		"connect",
@@ -46,6 +46,6 @@
 	},
 	"readmeFilename": "README.md",
 	"readme": "README.md",
-	"_id": "connect-rest@0.0.32",
-	"_from": "connect-rest@>=0.0.32"
+	"_id": "connect-rest@0.0.40",
+	"_from": "connect-rest@>=0.0.40"
 }

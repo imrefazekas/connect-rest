@@ -48,7 +48,11 @@ serverDomain.run(function() {
 		logger: 'connect-rest',
 		logLevel: 'debug',
 		context: '/api',
-		domain: restDomain
+		domain: restDomain,
+		monitoring: {
+			populateInterval: 6000,
+			console: true
+		}
 	};
 	connectApp.use( rest.rester( options ) );
 

@@ -463,7 +463,8 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
-- 0.0.30: minor fixes, refined documentation
+- 0.0.40: monitoring services (bus) added
+- 0.0.3X: minor fixes, refined documentation
 - 0.0.28.29: a case when mandatory parameter follows optional(s) has been fixed
 - 0.0.26-27: async request fix
 - 0.0.23-25: small fix for content type management
