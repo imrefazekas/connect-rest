@@ -1,4 +1,4 @@
-[connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The lib has a stunning feature list beyond basic rest functionality. 
+[connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality. 
 
 Just a few examples: (far from incomplete): 
 - execution branches: a single service can have multiple paths and a single incoming request can invoke multiple services
@@ -426,7 +426,9 @@ This process is performed behind the scenes, you do not have do anything special
 		}
 	};
 
-By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs. The property _console_ - if present - will print the commulated execution times grouped/structured by paths and version to the console. [newrelic](https://newrelic.com) support is under heavy development ...
+By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs. The property _console_ - if present - will print the commulated execution times grouped/structured by paths and version to the console. 
+
+Note: [newrelic](https://newrelic.com) support is under heavy development ...
 
 
 ## Usage
