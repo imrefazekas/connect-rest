@@ -51,7 +51,8 @@ serverDomain.run(function() {
 		domain: restDomain,
 		monitoring: {
 			populateInterval: 6000,
-			console: true
+			console: true,
+			listener: function(data){ console.log(data); }
 		}
 	};
 	connectApp.use( rest.rester( options ) );

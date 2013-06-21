@@ -422,11 +422,14 @@ This process is performed behind the scenes, you do not have do anything special
 		...,
 		monitoring: {
 			populateInterval: 6000,
-			console: true
+			console: true,
+			listener: function(data){ ... }
 		}
 	};
 
 By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs. The property _console_ - if present - will print the commulated execution times grouped/structured by paths and version to the console. 
+The property _listener_ - if present - allows you to pass a function which the populated data will be sent to. This way you can define own function to process the collected measurements.
+
 
 Note: [newrelic](https://newrelic.com) support is under heavy development ...
 
@@ -493,6 +496,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.41: listener for populated measurements can be set
 - 0.0.40: monitoring services (bus) added
 - 0.0.3X: minor fixes, refined documentation
 - 0.0.28.29: a case when mandatory parameter follows optional(s) has been fixed
