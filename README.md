@@ -427,7 +427,10 @@ This process is performed behind the scenes, you do not have do anything special
 		}
 	};
 
-By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs. The property _console_ - if present - will print the commulated execution times grouped/structured by paths and version to the console. 
+By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs.
+
+The property _console_ - if present - will print the commulated execution times grouped/structured by paths and version to the console. 
+
 The property _listener_ - if present - allows you to pass a function which the populated data will be sent to. This way you can define own function to process the collected measurements.
 
 
