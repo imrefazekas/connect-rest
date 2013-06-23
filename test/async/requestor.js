@@ -37,7 +37,7 @@ setTimeout( function(){
 
 	var serverURL = 'http://localhost:8095/service?' + result;
 	console.log('Service URL', serverURL);
-	httphelper.generalCall( http, null, url, _, serverURL, 'PORT', null, {Message:'Hello'}, null, function(er, response){
+	httphelper.generalCall( http, null, url, _, serverURL, 'POST', null, null, {Message:'Hello'}, null, function(er, response){
 		if(er)
 			console.error( er );
 		else

@@ -52,7 +52,12 @@ serverDomain.run(function() {
 		monitoring: {
 			populateInterval: 6000,
 			console: true,
-			listener: function(data){ console.log(data); }
+			listener: function(data){ console.log( '%j', data); }
+			/*, newrelic: {
+				platformApiUri: 'https://platform-api.newrelic.com/platform/v1/metrics',
+				licenseKey: '9977415341a161fae2e7b9a0a7ae8ce5328e6a1a',
+				pluginName: 'org.vii.connectrest.performancePlugin'
+			}*/
 		}
 	};
 	connectApp.use( rest.rester( options ) );
