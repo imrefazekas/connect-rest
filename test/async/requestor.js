@@ -2,13 +2,11 @@ var rest = require('../../lib/connect-rest');
 var httphelper = require('../../lib/http-helper');
 
 var http = require('http');
-var url = require('url');
 var querystring = require("querystring");
 
 var connect = require('connect');
 var assert = require('assert');
 var async = require('async');
-var _ = require('underscore');
 
 var connectApp = connect();
 global.server = connectApp;
@@ -37,7 +35,7 @@ setTimeout( function(){
 
 	var serverURL = 'http://localhost:8095/service?' + result;
 	console.log('Service URL', serverURL);
-	httphelper.generalCall( http, null, url, _, serverURL, 'POST', null, null, {Message:'Hello'}, null, function(er, response){
+	httphelper.generalCall( serverURL, 'POST', null, null, {Message:'Hello'}, null, function(er, response){
 		if(er)
 			console.error( er );
 		else
