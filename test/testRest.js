@@ -55,7 +55,7 @@ serverDomain.run(function() {
 			listener: function(data){ console.log( '%j', data); }
 			/*, newrelic: {
 				platformApiUri: 'https://platform-api.newrelic.com/platform/v1/metrics',
-				licenseKey: '9977415341a161fae2e7b9a0a7ae8ce5328e6a1a',
+				licenseKey: 'XXX',
 				pluginName: 'org.vii.connectrest.performancePlugin'
 			}*/
 		}
