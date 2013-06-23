@@ -424,6 +424,11 @@ This process is performed behind the scenes, you do not have do anything special
 			populateInterval: 6000,
 			console: true,
 			listener: function(data){ ... }
+			, newrelic: {
+				platformApiUri: 'https://platform-api.newrelic.com/platform/v1/metrics',
+				licenseKey: 'XXX',
+				pluginName: 'org.vii.connectrest.performancePlugin'
+			}
 		}
 	};
 
@@ -433,8 +438,9 @@ The property _console_ - if present - will print the commulated execution times 
 
 The property _listener_ - if present - allows you to pass a function which the populated data will be sent to. This way you can define own function to process the collected measurements.
 
+The property _newrelic_ - if present - activates the [newrelic](https://newrelic.com) services posting all metrics to the newrelic server. You have to give your license key to make it work properly. 
 
-Note: [newrelic](https://newrelic.com) support is under heavy development ...
+Note: [newrelic](https://newrelic.com) support is preliminary at this moment. Will be improved by time...
 
 
 ## Usage
