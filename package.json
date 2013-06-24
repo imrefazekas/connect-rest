@@ -44,8 +44,6 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "readmeFilename": "README.md",
-  "readme": "README.md",
   "_id": "connect-rest@0.0.42",
   "_from": "connect-rest@>=0.0.42"
 }
