@@ -11,7 +11,6 @@ var caller = require('./caller');
 
 var createDomain = require('domain').create;
 
-
 var serverDomain = createDomain();
 serverDomain.run(function() {
 	var connectApp = connect();
@@ -35,6 +34,8 @@ serverDomain.run(function() {
 		});
 		next();
 	} );
+	//connectApp.use( connect.static('www') );
+
 	connectApp.use( connect.query() );
 
 	var SERVICE_METHOD_PATTERN = /^[a-zA-Z]([a-zA-Z]|\d|_)*$/g;
@@ -51,8 +52,8 @@ serverDomain.run(function() {
 		domain: restDomain,
 		monitoring: {
 			populateInterval: 6000,
-			console: true,
-			listener: function(data){ console.log( '%j', data); }
+			console: false
+			//,listener: function(data){ console.log( '%j', data); }
 			/*, newrelic: {
 				platformApiUri: 'https://platform-api.newrelic.com/platform/v1/metrics',
 				licenseKey: 'XXX',
@@ -80,13 +81,14 @@ serverDomain.run(function() {
 		//async.apply( caller.testCall8a, http, _ ),
 		//async.apply( caller.testCall8b, http, _ ),
 		//async.apply( caller.testCall8c, http, _ ),
-		async.apply( caller.testCall9, http, _ ),
-		async.apply( caller.testCall10a, http, _ ),
-		async.apply( caller.testCall10b, http, _ ),
-		async.apply( caller.testCall10c, http, _ ),
-		async.apply( caller.testCall10d, http, _ )
+		async.apply( caller.testCall9, function(err, result, status){ console.log(err, result, status); } ),
+		async.apply( caller.testCall10a, function(err, result, status){ console.log(err, result, status); } ),
+		async.apply( caller.testCall10b, function(err, result, status){ console.log(err, result, status); } ),
+		async.apply( caller.testCall10c, function(err, result, status){ console.log(err, result, status); } ),
+		async.apply( caller.testCall10d, function(err, result, status){ console.log(err, result, status); } )
 	], function(err, results){
 		console.log('Tests finished.');
+			rest.shutdown();
 			server.close();
 		assert.ifError( err );
 	});
