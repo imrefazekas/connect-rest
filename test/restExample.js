@@ -68,29 +68,5 @@ serverDomain.run(function() {
 	server.listen( 8080 );
 
 	restBuilder.buildUpRestAPI( rest, _ );
-
-	async.parallel([
-		// async.apply( caller.testCall1, http, _ ),
-		// async.apply( caller.testCall2, http, _ ),
-		// async.apply( caller.testCall3a, http, _ ),
-		// async.apply( caller.testCall3b, http, _ ),
-		// async.apply( caller.testCall4, http, _ ),
-		// async.apply( caller.testCall5, http, _ ),
-		// async.apply( caller.testCall6, http, _ ),
-		// async.apply( caller.testCall7, http, _ ),
-		//async.apply( caller.testCall8a, http, _ ),
-		//async.apply( caller.testCall8b, http, _ ),
-		//async.apply( caller.testCall8c, http, _ ),
-		async.apply( caller.testCall9, function(err, result, status){ console.log(err, result, status); } ),
-		async.apply( caller.testCall10a, function(err, result, status){ console.log(err, result, status); } ),
-		async.apply( caller.testCall10b, function(err, result, status){ console.log(err, result, status); } ),
-		async.apply( caller.testCall10c, function(err, result, status){ console.log(err, result, status); } ),
-		async.apply( caller.testCall10d, function(err, result, status){ console.log(err, result, status); } )
-	], function(err, results){
-		console.log('Tests finished.');
-			rest.shutdown();
-			server.close();
-		assert.ifError( err );
-	});
 });
 

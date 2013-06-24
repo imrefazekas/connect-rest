@@ -1,17 +1,21 @@
-function buildUpRestAPI( rest, _ ){
+function buildUpRestAPI( rest ){
 	//rest.context( '/api' );
 
 	rest.head('/peek', function( request ){
 		console.log( 'Received:' + JSON.stringify( request ) );
 		return 'ok';
 	});
+	rest.get('/empty', function( request ){
+		console.log( 'Received:' + JSON.stringify( request ) );
+		return '';
+	});
 	rest.get('/books/:title/:chapter', function( request ){
 		console.log( 'Received:' + JSON.stringify( request ) );
-		return 'ok';
+		return request.parameters;
 	});
 	rest.post('/store/?id', function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		return callback(null, 'ok');
+		return callback(null, request.parameters);
 	});
 	rest.get('/inquire/*book', function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
@@ -19,7 +23,7 @@ function buildUpRestAPI( rest, _ ){
 	});
 	rest.get( '/set/?rid/?facet', function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		return callback(null, 'ok');
+		return callback(null, request.parameters );
 	});
 	rest.post( { path: '/make', version: '>=1.0.0' }, function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
@@ -36,13 +40,13 @@ function buildUpRestAPI( rest, _ ){
 
 	rest.get( '/data/items', function( request, content, callback ){
 		console.log( 'Received::' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		return callback(null, '', {statusCode:201} );
-	}, { contentType:'text/plain', validator: function(req, res){ return true; } } );
+		return callback(null, request.parameters, {statusCode:201} );
+	}, { contentType:'application/json', validator: function(req, res){ return true; } } );
 
-	rest.get( '/:system/?entity/?version/:subject', function( request, content, callback ){
+	rest.get( '/call/:system/?entity/?version/:subject', function( request, content, callback ){
 		console.log( 'Received::' + JSON.stringify( request.parameters ) + ' ' + JSON.stringify(content) );
-		return callback(null, 'Done.', {statusCode:201} );
-	}, { contentType:'text/plain' } );
+		return callback(null, request.parameters, {statusCode:201} );
+	}, { contentType:'application/json' } );
 }
 
 exports.buildUpRestAPI = buildUpRestAPI;
