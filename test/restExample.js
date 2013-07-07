@@ -7,7 +7,7 @@ var async = require('async');
 var _ = require('underscore');
 
 var restBuilder = require('./restBuilder');
-var caller = require('./caller');
+var caller = require('./nodeunit/caller');
 
 var createDomain = require('domain').create;
 
@@ -53,7 +53,7 @@ serverDomain.run(function() {
 		monitoring: {
 			populateInterval: 6000,
 			console: false
-			//,listener: function(data){ console.log( '%j', data); }
+			,listener: function(data){ console.log( '%j', data); }
 			/*, newrelic: {
 				platformApiUri: 'https://platform-api.newrelic.com/platform/v1/metrics',
 				licenseKey: 'XXX',
@@ -68,5 +68,10 @@ serverDomain.run(function() {
 	server.listen( 8080 );
 
 	restBuilder.buildUpRestAPI( rest, _ );
+
+	_.each( caller.group, function(value, key, list){
+		console.log('Executing: ', key);
+		value( {done:function(){console.log('Done.', arguments);} } );
+	} );
 });
 
