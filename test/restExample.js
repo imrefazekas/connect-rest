@@ -46,8 +46,7 @@ serverDomain.run(function() {
 		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 		discoverPath: 'discover',
 		protoPath: 'proto',
-		logger: 'connect-rest',
-		logLevel: 'debug',
+		logger: { name: 'connect-rest', level: 'debug' },
 		context: '/api',
 		domain: restDomain,
 		monitoring: {

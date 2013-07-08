@@ -505,6 +505,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.0.43-45: Serious fixes
 - 0.0.42: Incomint request count monitoring added
 - 0.0.41: listener for populated measurements can be set
 - 0.0.40: monitoring services (bus) added
