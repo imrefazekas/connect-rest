@@ -47,6 +47,11 @@ function buildUpRestAPI( rest ){
 		console.log( 'Received::' + JSON.stringify( request.parameters ) + ' ' + JSON.stringify(content) );
 		return callback(null, request.parameters, {statusCode:201} );
 	}, { contentType:'application/json' } );
+
+	rest.get( { path: '/unprotected', unprotected: true }, function( request, content, callback ){
+		console.log( 'Called unprotected zone...');
+		return callback(null, 'Welcome guest...', {statusCode:200} );
+	}, { contentType:'application/json' } );
 }
 
 exports.buildUpRestAPI = buildUpRestAPI;

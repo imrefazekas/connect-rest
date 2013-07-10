@@ -148,6 +148,13 @@ To refine the headers in the response HTML, the way is the same as above: custom
 ## Versioning:
 As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
 
+	rest.get( { path: '/special', version: '1.0.0' }, functionN0);
+
+## Unprotected REST service:
+You can turn off the API_KEY protection for a given service:
+
+	rest.get( { path: '/special', unprotected: true }, functionN0);
+
 ## Special assigns:
 You can use the character '*' for both path and version too to make generic bindings:
 
@@ -505,7 +512,8 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
-- 0.0.43-46: Various fixes/improvements
+- 0.0.48: An rest service can now be unprotected
+- 0.0.43-47: Various fixes/improvements
 - 0.0.42: Incomint request count monitoring added
 - 0.0.41: listener for populated measurements can be set
 - 0.0.40: monitoring services (bus) added

@@ -10,11 +10,11 @@ var logger = new DummyLogger();
 
 
 exports.group = {
-
 	testHead: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/peek?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'HEAD', null, null, null, logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
+				should.strictEqual(status.statusCode, 200);
 
 				test.done();
 			}
@@ -144,6 +144,18 @@ exports.group = {
 				test.done();
 			}
 		);
-	}
+	},
 
+	testUnprotectedZoneCalling: function(test){
+		httphelper.generalCall( 'http://localhost:8080/api/unprotected', 'GET', null, null, null, logger,
+			function(err, result, status){
+				should.not.exist(err); should.exist(result);
+
+				should.strictEqual(status.statusCode, 200);
+				should.strictEqual(result, 'Welcome guest...');
+
+				test.done();
+			}
+		);
+	}
 };
