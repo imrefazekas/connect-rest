@@ -311,6 +311,11 @@ So having such option, a call should look like this:
 
 otherwise error response will be sent with status code 401 claiming: 'API_KEY is required.'.
 
+Note: you can create special REST services not requiring API_KEYS to serve jade templates or anything you would like to as follows:
+
+	rest.get( { path: '/special', unprotected: true }, functionN0);
+
+
 ## Logging
 In the option object passed to the constructor, there is an optional parameter 'logger', which enables the logging functionality:
 
