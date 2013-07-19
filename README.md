@@ -7,7 +7,7 @@ Just a few examples: (far from incomplete):
 - parameter mappings: path matchings can be bound as parameters 
 - service discovery: built-in rest service allowing one to discover what rest services are available in general or for a given version
 - "reflective" publishing: by providing a single object, its methods will be published as rest services automatically by simple logic
-- customizable HTTP-layer management: HTTP status code, mime-types, headers can be set at service and execution level
+- customizable HTTP-layer management: HTTP status code, mime-types, headers, minifying can be set at service and execution level
 - async services: a rest service can call back asynchronously when the answer is made
 - monitoring/measuring: every rest service execution can be enabled for measurement to be collected and populated internally or for external monitoring solutions
 
