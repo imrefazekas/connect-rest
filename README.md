@@ -31,6 +31,7 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 - [Rest functions](#rest-functions)
 - [Status codes](#status-codes)
 - [Response headers](#response-headers)
+- [Minify response JSON](#minify-response-json)
 - [Versioning](#versioning)
 - [Special assigns](#special-assigns)
 - [Named parameters](#named-parameters)
@@ -143,6 +144,15 @@ To refine the headers in the response HTML, the way is the same as above: custom
 
 	rest.get( '/special', function( request, content, callback ){
 		return callback( null, 'Content.', { headers: { ETag: "10c24bc-4ab-457e1c1f" } } );
+	});
+
+## Minify response JSON
+
+You can make the response JSON object minified by passing a single boolean parameter to the callback's third optional parameter:
+
+	rest.get( '/special', function( request, content, callback ){
+		...
+		return callback( null, { ... }, { minify: true } );
 	});
 
 ## Versioning:
@@ -517,6 +527,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.5.0: minifying services added
 - 0.0.48: An rest service can now be unprotected
 - 0.0.43-47: Various fixes/improvements
 - 0.0.42: Incomint request count monitoring added
