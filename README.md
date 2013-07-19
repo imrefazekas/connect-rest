@@ -152,8 +152,14 @@ You can make the response JSON object minified by passing a single boolean param
 
 	rest.get( '/special', function( request, content, callback ){
 		...
-		return callback( null, { ... }, { minify: true } );
+		return callback( null, '{ "key"     :    "value" }', { minify: true } );
 	});
+
+This will send 
+	
+	{"key":"value"}
+
+to the client.
 
 ## Versioning:
 As for versioning, the syntax is the same you use for [npm](https://npmjs.org)

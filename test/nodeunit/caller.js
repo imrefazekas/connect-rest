@@ -93,8 +93,6 @@ exports.group = {
 	testOptionalParamers2: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/set/abraka/dabra?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
 			function(err, result, status){
-				console.log( '--------------------------', result );
-
 				result.should.have.property('rid', 'abraka');
 				result.should.have.property('facet', 'dabra');
 
