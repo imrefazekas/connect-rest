@@ -450,7 +450,7 @@ This process is performed behind the scenes, you do not have do anything special
 In some cases, you might face with a situation where other 3rd party connect library has to be used and the case might require for path-related logic to be used. [connect-rest](https://github.com/imrefazekas/connect-rest) is designed to be able to use as simple path processing helper library as well.
 
 	connectApp.use( rest.dispatcher( 'GET', '/dispatcher/:subject', function(req, res, next){
-		res.end( 'Dispatch call made....' );
+		res.end( 'Dispatch call made:' + req.params['subject'] );
 	} ) );
 
 This simple code makes is pretty straightforward. In case of a _'GET'_ HTTP request coming to the url _'/dispatcher'_, the given function is executed. That function can be any third party connect lib you want to use.
