@@ -56,8 +56,8 @@ function buildUpRestAPI( rest ){
 }
 
 function getDispatcher(rest){
-	return rest.dispatcher( 'GET', '/dispatcher', function(req, res, next){
-		res.end( 'Dispatch call made....' );
+	return rest.dispatcher( 'GET', '/dispatcher/:subject', function(req, res, next){
+		res.end( 'Dispatch call made:' + req.params['subject'] );
 	} );
 }
 

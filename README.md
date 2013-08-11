@@ -449,7 +449,7 @@ This process is performed behind the scenes, you do not have do anything special
 
 In some cases, you might face with a situation where other 3rd party connect library has to be used and the case might require for path-related logic to be used. [connect-rest](https://github.com/imrefazekas/connect-rest) is designed to be able to use as simple path processing helper library as well.
 
-	connectApp.use( rest.dispatcher( 'GET', '/dispatcher', function(req, res, next){
+	connectApp.use( rest.dispatcher( 'GET', '/dispatcher/:subject', function(req, res, next){
 		res.end( 'Dispatch call made....' );
 	} ) );
 

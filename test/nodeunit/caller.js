@@ -159,9 +159,9 @@ exports.group = {
 	},
 
 	testDispatcher: function(test){
-		httphelper.generalCall( 'http://localhost:8080/dispatcher?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/dispatcher/call?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
 			function(err, result, status){
-				should.strictEqual(result, 'Dispatch call made....');
+				should.strictEqual(result, 'Dispatch call made:call');
 				test.done();
 			}
 		);
