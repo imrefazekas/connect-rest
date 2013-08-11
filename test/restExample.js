@@ -51,8 +51,8 @@ serverDomain.run(function() {
 		domain: restDomain,
 		monitoring: {
 			populateInterval: 6000,
-			console: false
-			,listener: function(data){ console.log( '%j', data); }
+			console: false,
+			listener: function(data){ console.log( '%j', data); }
 			/*, newrelic: {
 				platformApiUri: 'https://platform-api.newrelic.com/platform/v1/metrics',
 				licenseKey: 'XXX',
@@ -67,6 +67,8 @@ serverDomain.run(function() {
 	server.listen( 8080 );
 
 	restBuilder.buildUpRestAPI( rest, _ );
+
+	connectApp.use( restBuilder.getDispatcher( rest ) );
 
 	_.each( caller.group, function(value, key, list){
 		console.log('Executing: ', key);

@@ -52,6 +52,14 @@ function buildUpRestAPI( rest ){
 		console.log( 'Called unprotected zone...');
 		return callback(null, 'Welcome guest...', {statusCode:200} );
 	}, { contentType:'application/json' } );
+
+}
+
+function getDispatcher(rest){
+	return rest.dispatcher( 'GET', '/dispatcher', function(req, res, next){
+		res.end( 'Dispatch call made....' );
+	} );
 }
 
 exports.buildUpRestAPI = buildUpRestAPI;
+exports.getDispatcher = getDispatcher;

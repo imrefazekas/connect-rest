@@ -11,6 +11,7 @@ Just a few examples: (far from incomplete):
 - async services: a rest service can call back asynchronously when the answer is made
 - monitoring/measuring: every rest service execution can be enabled for measurement to be collected and populated internally or for external monitoring solutions
 
+!Note: connect-rest's concept is to provide one req-res-next function to connect and be as a framework for your rest services carrying only about content and business logic, nothing else. However, in case of need for interoperability, the need might cause you to use only the path-related features alone. This can be done using [dispatchers](#dispatchers).
 
 # Usage
 
@@ -46,6 +47,7 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 - [Domain support](#domain-support)
 - [Customization: Validation and Response mime-types](#customization)
 - [Answering async rest requests](#answering-async-rest-requests)
+- [Dispatchers](#dispatchers)
 - [Monitoring](#monitoring)
 - [Usage](#usage)
 - [Changelog](#changelog)
@@ -442,6 +444,20 @@ This process is performed behind the scenes, you do not have do anything special
 
 [Back to Feature list](#features)
 
+
+## Dispatchers
+
+In some cases, you might face with a situation where other 3rd party connect library has to be used and the case might require for path-related logic to be used. [connect-rest](https://github.com/imrefazekas/connect-rest) is designed to be able to use as simple path processing helper library as well.
+
+	connectApp.use( rest.dispatcher( 'GET', '/dispatcher', function(req, res, next){
+		res.end( 'Dispatch call made....' );
+	} ) );
+
+This simple code makes is pretty straightforward. In case of a _'GET'_ HTTP request coming to the url _'/dispatcher'_, the given function is executed. That function can be any third party connect lib you want to use.
+
+[Back to Feature list](#features)
+
+
 ## Monitoring
 
 [connect-rest](https://github.com/imrefazekas/connect-rest) allows you to monitor and measure the execution of the published rest services. Every service execution measure the execution time and reports to a bus transparently. The commulated data is populated regularly as configured.
@@ -533,6 +549,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.6.0: dispatchers added
 - 0.5.0: minifying services added
 - 0.0.48: An rest service can now be unprotected
 - 0.0.43-47: Various fixes/improvements
