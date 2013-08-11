@@ -11,7 +11,7 @@ Just a few examples: (far from incomplete):
 - async services: a rest service can call back asynchronously when the answer is made
 - monitoring/measuring: every rest service execution can be enabled for measurement to be collected and populated internally or for external monitoring solutions
 
-!Note: connect-rest's concept is to provide one req-res-next function to connect and be as a framework for your rest services carrying only about content and business logic, nothing else. However, in case of need for interoperability, the need might cause you to use only the path-related features alone. This can be done using [dispatchers](#dispatchers).
+!Note: connect-rest's concept is - as for integration - to provide a connect plugin and - as for user aspect - to be a framework for your rest services carrying only about content and business logic, nothing else. However, in case of need for interoperability, the need might cause you to use only the path-related features alone. This can be done using [dispatchers](#dispatchers).
 
 # Usage
 
