@@ -23,6 +23,14 @@ function buildUpRestAPI( rest ){
 	});
 	rest.get( '/set/?rid/?facet', function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
+		return callback(null, request.params, { minify: true } );
+	});
+	rest.get( { path: '/eset/?rid/?facet', version: '*'}, function( request, content, callback ){
+		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
+		return callback(null, request.params, { minify: true } );
+	});
+	rest.get( '/minify', function( request, content, callback ){
+		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
 		return callback(null, '{ "key"     :    "value" }', { minify: true } );
 	});
 	rest.post( { path: '/make', version: '>=1.0.0' }, function( request, content, callback ){

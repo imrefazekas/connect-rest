@@ -16,7 +16,7 @@ exports.group = {
 				should.not.exist(err); should.exist(result);
 				should.strictEqual(status.statusCode, 200);
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -26,7 +26,7 @@ exports.group = {
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -38,7 +38,7 @@ exports.group = {
 				result.should.have.property('title', 'AliceInWonderland');
 				result.should.have.property('chapter', '1');
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -50,7 +50,7 @@ exports.group = {
 
 				result.should.not.have.property('id');
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -62,7 +62,7 @@ exports.group = {
 
 				result.should.have.property('id', '108');
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -73,7 +73,7 @@ exports.group = {
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -84,7 +84,7 @@ exports.group = {
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -93,10 +93,12 @@ exports.group = {
 	testOptionalParamers2: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/set/abraka/dabra?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
 			function(err, result, status){
+				should.not.exist(err); should.exist(result);
+
 				result.should.have.property('rid', 'abraka');
 				result.should.have.property('facet', 'dabra');
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -104,11 +106,12 @@ exports.group = {
 	testParameterPassing: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/data/items?ids%5B%5D=8&ids%5B%5D=9&api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
 			function(err, result, status){
+				should.not.exist(err); should.exist(result);
 				should.strictEqual(status.statusCode, 201);
 
 				result.ids.should.eql( ['8','9'] );
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -125,7 +128,7 @@ exports.group = {
 				result.should.have.property('version', '1.0');
 				result.should.have.property('subject', 'request');
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -140,7 +143,20 @@ exports.group = {
 				result.should.have.property('system', 'Skynet');
 				result.should.have.property('subject', 'request');
 
-				test.done();
+				test.done( result );
+			}
+		);
+	},
+
+	testEmbeddedParamMapping: function(test){
+		httphelper.generalCall( 'http://localhost:8080/api/eset/abraka/dabra?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+			function(err, result, status){
+				should.not.exist(err); should.exist(result);
+
+				result.should.have.property('rid', 'abraka');
+				result.should.have.property('facet', 'dabra');
+
+				test.done( result );
 			}
 		);
 	},
@@ -153,7 +169,7 @@ exports.group = {
 				should.strictEqual(status.statusCode, 200);
 				should.strictEqual(result, 'Welcome guest...');
 
-				test.done();
+				test.done( result );
 			}
 		);
 	},
@@ -162,7 +178,7 @@ exports.group = {
 		httphelper.generalCall( 'http://localhost:8080/dispatcher/call?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
 			function(err, result, status){
 				should.strictEqual(result, 'Dispatch call made:call');
-				test.done();
+				test.done( result );
 			}
 		);
 	}

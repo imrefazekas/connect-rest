@@ -72,7 +72,7 @@ serverDomain.run(function() {
 
 	_.each( caller.group, function(value, key, list){
 		console.log('Executing: ', key);
-		value( {done:function(){console.log('Done.', arguments);} } );
+		value( { done: function(){ console.log('Done.', arguments); } } );
 	} );
 });
 

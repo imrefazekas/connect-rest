@@ -549,6 +549,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.6.x: fixes...
 - 0.6.0: dispatchers added
 - 0.5.0: minifying services added
 - 0.0.48: An rest service can now be unprotected
