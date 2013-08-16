@@ -49,6 +49,7 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 - [Answering async rest requests](#answering-async-rest-requests)
 - [Dispatchers](#dispatchers)
 - [Monitoring](#monitoring)
+- [File Upload](#file-upload)
 - [Usage](#usage)
 - [Changelog](#changelog)
 
@@ -487,6 +488,20 @@ The property _newrelic_ - if present - activates the [newrelic](https://newrelic
 Note: [newrelic](https://newrelic.com) support is preliminary at this moment. Will be improved by time...
 
 
+## File upload
+
+The connect [bodyparser](http://www.senchalabs.org/connect/middleware-bodyParser.html) middleware manages content parsing for a given request. To manage the upload of files, your task is very simple:
+
+	rest.post( '/upload', function( request, content, callback ){
+		console.log( 'Upload called:' + JSON.stringify( request.files ) );
+		return callback(null, 'ok');
+	} );
+
+The middleware manages the file storage and every stored file can be found in the _files_ attribute of _request_ object. For further configuration, please find the [bodyparser's page](http://www.senchalabs.org/connect/middleware-bodyParser.html).
+
+[Back to Feature list](#features)
+
+
 ## Usage
 
 	var connect = require('connect');
@@ -494,6 +509,7 @@ Note: [newrelic](https://newrelic.com) support is preliminary at this moment. Wi
 	
 	var connectApp = connect();
 
+	connectApp.use( connect.bodyParser({ uploadDir: './storage' }) );
 	connectApp.use( connect.query() );
 
 	var options = {
