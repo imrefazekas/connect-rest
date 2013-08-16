@@ -36,6 +36,8 @@ serverDomain.run(function() {
 	} );
 	//connectApp.use( connect.static('www') );
 
+	//connectApp.use( connect.bodyParser() );
+	connectApp.use( rest.bodyParser() );
 	connectApp.use( connect.query() );
 
 	var SERVICE_METHOD_PATTERN = /^[a-zA-Z]([a-zA-Z]|\d|_)*$/g;
@@ -70,9 +72,12 @@ serverDomain.run(function() {
 
 	connectApp.use( restBuilder.getDispatcher( rest ) );
 
+	caller.group.testOptionalParameterMapping1( { done: function(){ console.log('Done.', arguments); } } );
+	/*
 	_.each( caller.group, function(value, key, list){
 		console.log('Executing: ', key);
 		value( { done: function(){ console.log('Done.', arguments); } } );
 	} );
+	*/
 });
 

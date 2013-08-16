@@ -32,7 +32,9 @@
     "underscore.string": "~2",
     "semver": "~1",
     "bunyan": ">=0.21.0",
-    "connect": "~2"
+    "connect": "~2",
+    "qs": "~0.6.5",
+    "puid": "~0.4.4"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
