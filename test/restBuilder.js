@@ -15,7 +15,7 @@ function buildUpRestAPI( rest ){
 	});
 	rest.post('/store/?id', function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
-		return callback(null, request.parameters);
+		return callback(null, { params: request.parameters, content: content} );
 	});
 	rest.get('/inquire/*book', function( request, content, callback ){
 		console.log( 'Received:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
@@ -61,6 +61,10 @@ function buildUpRestAPI( rest ){
 		return callback(null, 'Welcome guest...', {statusCode:200} );
 	}, { contentType:'application/json' } );
 
+	rest.post( '/upload', function( request, content, callback ){
+		console.log( 'Upload called:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
+		return callback(null, 'ok');
+	} );
 }
 
 function getDispatcher(rest){
