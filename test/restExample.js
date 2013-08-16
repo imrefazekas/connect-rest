@@ -36,7 +36,8 @@ serverDomain.run(function() {
 	} );
 	//connectApp.use( connect.static('www') );
 
-	connectApp.use( connect.bodyParser() );
+	connectApp.use( connect.limit('10.0mb') );
+	connectApp.use( connect.bodyParser({ uploadDir: './test/data' }) );
 	connectApp.use( connect.query() );
 
 	var SERVICE_METHOD_PATTERN = /^[a-zA-Z]([a-zA-Z]|\d|_)*$/g;
