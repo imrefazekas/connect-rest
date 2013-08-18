@@ -73,12 +73,9 @@ serverDomain.run(function() {
 
 	connectApp.use( restBuilder.getDispatcher( rest ) );
 
-	caller.group.testOptionalParameterMapping1( { done: function(){ console.log('Done.', arguments); } } );
-	/*
 	_.each( caller.group, function(value, key, list){
 		console.log('Executing: ', key);
 		value( { done: function(){ console.log('Done.', arguments); } } );
 	} );
-	*/
 });
 

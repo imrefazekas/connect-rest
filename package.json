@@ -1,11 +1,13 @@
 {
   "name": "connect-rest",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
     "rest",
-    "restful"
+    "restful",
+    "router",
+    "api"
   ],
   "homepage": "https://github.com/imrefazekas/connect-rest",
   "repository": {
@@ -46,5 +48,5 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "_id": "connect-rest@0.6.2"
+  "_id": "connect-rest@0.6.3"
 }
