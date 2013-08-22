@@ -21,6 +21,7 @@ exports.group = {
 		);
 	},
 
+
 	testEmpty: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/empty?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
 			function(err, result, status){
@@ -30,6 +31,7 @@ exports.group = {
 			}
 		);
 	},
+
 	testMandatoryParameterMapping: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/books/AliceInWonderland/1?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
 			function(err, result, status){
@@ -48,7 +50,7 @@ exports.group = {
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
-				result.should.not.have.property('id');
+				should.not.exist( result.params.id );
 
 				test.done( result );
 			}
@@ -60,13 +62,12 @@ exports.group = {
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
-				result.should.have.property('id', '108');
+				result.params.should.have.property('id', '108' );
 
 				test.done( result );
 			}
 		);
 	},
-
 
 	testVersioning: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/make?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'POST', {'accept-version':'1.1.0'}, null, {'message': 'ok'}, logger,
@@ -78,7 +79,6 @@ exports.group = {
 		);
 	},
 
-
 	testOptionalParamers1: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/set?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
 			function(err, result, status){
@@ -88,7 +88,6 @@ exports.group = {
 			}
 		);
 	},
-
 
 	testOptionalParamers2: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/set/abraka/dabra?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
