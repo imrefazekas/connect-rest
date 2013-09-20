@@ -24,7 +24,8 @@ module.exports = function(grunt) {
 						};
 						var middlewares = [
 							connect.query(),
-							rest.rester( restOptions )
+							rest.rester( restOptions ),
+							restBuilder.getDispatcher( rest )
 						];
 						restBuilder.buildUpRestAPI( rest );
 

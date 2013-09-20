@@ -10,13 +10,14 @@ var logger = new DummyLogger();
 
 
 exports.group = {
+
 	testHead: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/peek?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'HEAD', null, null, null, logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 				should.strictEqual(status.statusCode, 200);
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -27,7 +28,7 @@ exports.group = {
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -40,7 +41,7 @@ exports.group = {
 				result.should.have.property('title', 'AliceInWonderland');
 				result.should.have.property('chapter', '1');
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -52,7 +53,7 @@ exports.group = {
 
 				should.not.exist( result.params.id );
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -64,7 +65,7 @@ exports.group = {
 
 				result.params.should.have.property('id', '108' );
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -74,7 +75,7 @@ exports.group = {
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -84,7 +85,7 @@ exports.group = {
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -97,7 +98,7 @@ exports.group = {
 				result.should.have.property('rid', 'abraka');
 				result.should.have.property('facet', 'dabra');
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -110,7 +111,7 @@ exports.group = {
 
 				result.ids.should.eql( ['8','9'] );
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -127,7 +128,7 @@ exports.group = {
 				result.should.have.property('version', '1.0');
 				result.should.have.property('subject', 'request');
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -142,7 +143,7 @@ exports.group = {
 				result.should.have.property('system', 'Skynet');
 				result.should.have.property('subject', 'request');
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -155,7 +156,7 @@ exports.group = {
 				result.should.have.property('rid', 'abraka');
 				result.should.have.property('facet', 'dabra');
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -168,7 +169,7 @@ exports.group = {
 				should.strictEqual(status.statusCode, 200);
 				should.strictEqual(result, 'Welcome guest...');
 
-				test.done( result );
+				test.done( );
 			}
 		);
 	},
@@ -177,8 +178,9 @@ exports.group = {
 		httphelper.generalCall( 'http://localhost:8080/dispatcher/call?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
 			function(err, result, status){
 				should.strictEqual(result, 'Dispatch call made:call');
-				test.done( result );
+				test.done( );
 			}
 		);
 	}
+
 };
