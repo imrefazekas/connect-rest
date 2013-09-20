@@ -565,7 +565,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
-- 0.7.0: undefinedNotTolerated added
+- 0.7.x: fixes...
 - 0.6.x: fixes...
 - 0.6.0: dispatchers added
 - 0.5.0: minifying services added
