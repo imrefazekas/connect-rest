@@ -189,14 +189,14 @@ or
 
 	rest.get('/books/:title/:chapter', functionN0 );
 
-You can define parametrised paths for services to accept REST variables from the caller.
+You can define parametrized paths for services to accept REST variables from the caller.
 In this case, whatever string is after the 'books', will be interpret as variable(s) and passed to the service function via the request object.
 
 So sending a get request to the uri '/api/books/AliceInWonderland/1', will result the following request object:
 
 	{"headers": ...,"parameters":{"title":"AliceInWonderland", "chapter": "1"}}
 
-## Optinal parameter
+## Optional parameter
 
 	rest.post('/store/?id', functionN );
 
@@ -269,7 +269,7 @@ Default _context_ is the empty string.
 	};
 	connectApp.use( rest.rester( options ) );
 
-This will enable this service - considering the context descrived above - on the path '/api/discover/:version'. Sending a get request to - lets say - this path 
+This will enable this service - considering the context described above - on the path '/api/discover/:version'. Sending a get request to - let's say - this path 
 
 	http://localhost:8080/api/discover/3.0.0
 
@@ -479,7 +479,7 @@ This simple code makes is pretty straightforward. In case of a _'GET'_ HTTP requ
 
 By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs.
 
-The property _console_ - if present - will print the commulated execution times grouped/structured by paths and version to the console. 
+The property _console_ - if present - will print the cumulated execution times grouped/structured by paths and version to the console. 
 
 The property _listener_ - if present - allows you to pass a function which the populated data will be sent to. This way you can define own function to process the collected measurements.
 
