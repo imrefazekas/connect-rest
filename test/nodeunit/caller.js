@@ -12,7 +12,7 @@ var logger = new DummyLogger();
 exports.group = {
 
 	testHead: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/peek?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'HEAD', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/peek?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'HEAD', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 				should.strictEqual(status.statusCode, 200);
@@ -24,7 +24,7 @@ exports.group = {
 
 
 	testEmpty: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/empty?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/empty?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -34,7 +34,7 @@ exports.group = {
 	},
 
 	testMandatoryParameterMapping: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/books/AliceInWonderland/1?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/books/AliceInWonderland/1?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -47,7 +47,7 @@ exports.group = {
 	},
 
 	testOptionalParameterMapping1: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/store?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'POST', null, null, {'message': 'ok'}, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/store?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'POST', null, null, {'message': 'ok'}, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -59,7 +59,7 @@ exports.group = {
 	},
 
 	testOptionalParameterMapping2: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/store/108?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'POST', null, null, {'message': 'ok'}, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/store/108?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'POST', null, null, {'message': 'ok'}, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -71,7 +71,7 @@ exports.group = {
 	},
 
 	testVersioning: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/make?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'POST', {'accept-version':'1.1.0'}, null, {'message': 'ok'}, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/make?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'POST', {'accept-version':'1.1.0'}, null, {'message': 'ok'}, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -81,7 +81,7 @@ exports.group = {
 	},
 
 	testOptionalParamers1: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/set?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/set?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -91,7 +91,7 @@ exports.group = {
 	},
 
 	testOptionalParamers2: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/set/abraka/dabra?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/set/abraka/dabra?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -104,7 +104,7 @@ exports.group = {
 	},
 
 	testParameterPassing: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/data/items?ids%5B%5D=8&ids%5B%5D=9&api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/data/items?ids%5B%5D=8&ids%5B%5D=9&api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 				should.strictEqual(status.statusCode, 201);
@@ -117,7 +117,7 @@ exports.group = {
 	},
 
 	testFullParamMapping: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/call/Skynet/Shira/1.0/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/call/Skynet/Shira/1.0/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -134,7 +134,7 @@ exports.group = {
 	},
 
 	testEntityAndVersionlessParamMapping: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/call/Skynet/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/call/Skynet/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -149,7 +149,7 @@ exports.group = {
 	},
 
 	testEmbeddedParamMapping: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/eset/abraka/dabra?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/eset/abraka/dabra?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -162,7 +162,7 @@ exports.group = {
 	},
 
 	testUnprotectedZoneCalling: function(test){
-		httphelper.generalCall( 'http://localhost:8080/api/unprotected', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/api/unprotected', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.not.exist(err); should.exist(result);
 
@@ -175,7 +175,7 @@ exports.group = {
 	},
 
 	testDispatcher: function(test){
-		httphelper.generalCall( 'http://localhost:8080/dispatcher/call?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, logger,
+		httphelper.generalCall( 'http://localhost:8080/dispatcher/call?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
 				should.strictEqual(result, 'Dispatch call made:call');
 				test.done( );

@@ -1,10 +1,10 @@
-[connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality. 
+[connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality.
 
-Just a few examples: (far from incomplete): 
+Just a few examples: (far from incomplete):
 - execution branches: a single service can have multiple paths and a single incoming request can invoke multiple services
 - versioning: rest services can be versioned via many ways
 - regular expressions: path description can be given using regular expression
-- parameter mappings: path matchings can be bound as parameters 
+- parameter mappings: path matchings can be bound as parameters
 - service discovery: built-in rest service allowing one to discover what rest services are available in general or for a given version
 - "reflective" publishing: by providing a single object, its methods will be published as rest services automatically by simple logic
 - customizable HTTP-layer management: HTTP status code, mime-types, headers, minifying can be set at service and execution level
@@ -15,7 +15,7 @@ Just a few examples: (far from incomplete):
 
 # Usage
 
-The [connect-rest](https://github.com/imrefazekas/connect-rest) is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/). 
+The [connect-rest](https://github.com/imrefazekas/connect-rest) is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/).
 The aim is to focus on the business logic, so [connect-rest](https://github.com/imrefazekas/connect-rest) is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
 
 The payload of the body - if exists - with proper mime-type will be interpret as JSON object and will be parsed and passed to the service function you assign to.
@@ -66,35 +66,35 @@ Example:
 	}
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
 
-After each assign function you might pass the followings: 
-- a path descriptor and 
+After each assign function you might pass the followings:
+- a path descriptor and
 - a function to be called.
 
 ## Path description
 [connect-rest](https://github.com/imrefazekas/connect-rest) supports many options to be used as path description.
 
-Simple path: 
-	
+Simple path:
+
 	'/peek'
 
-Versioned path: 
+Versioned path:
 
 	{ path: '/make', version: '>=1.0.0' }
 
-Multiple path: 
+Multiple path:
 
 	[ '/act', '/do' ]
 
-Multiple versioned path: 
+Multiple versioned path:
 
 	[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
 
-Mandatory variables: 
+Mandatory variables:
 
 	{ path: '/make/:uid', version: '>=1.0.0' }
 
 
-Optional path: 
+Optional path:
 
 	{ path: '/delete/?id', version: '>=1.0.0' }
 
@@ -158,8 +158,8 @@ You can make the response JSON object minified by passing a single boolean param
 		return callback( null, '{ "key"     :    "value" }', { minify: true } );
 	});
 
-This will send 
-	
+This will send
+
 	{"key":"value"}
 
 to the client.
@@ -243,7 +243,7 @@ One can call this with uri:
 
 The logic how [connect-rest](https://github.com/imrefazekas/connect-rest) is managing parameter replacement is the following:
 
-The parameters are processed in the path defintion order and any missing optional parameter will be filled with empty strings to keep the order of them keeping in sight all mandatory parameters put after the optional ones.
+The parameters are processed in the path definition order and any missing optional parameter will be filled with empty strings to keep the order of them keeping in sight all mandatory parameters put after the optional ones.
 
 [Back to Feature list](#features)
 
@@ -302,8 +302,8 @@ This 'protoPath' means that sending a request to the server on path:
 
 	'/api/proto/POST/2.3.0/api/twist?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'
 
-will retrieve the object 
-	
+will retrieve the object
+
 	{'title': 'Alice in Wonderland'}
 
 because the service
@@ -382,7 +382,7 @@ and publish them this way:
 	rest.publish( services );
 
 This will discover all functions assigned to the exports having a name which conforms the following regular expression:
-	
+
 	/^[a-zA-Z]([a-zA-Z]|\d|_)*$/g
 
 The logic is simple. If the function has 
@@ -391,7 +391,7 @@ The logic is simple. If the function has
 
 and the path will be its name. So, by executing one single statement you will automatically have the following services:
 
-	/health on Get 
+	/health on Get
 	/record on Post
 
 If you have 100 services defined, then 100 rest api you will have automatically. Nice.
@@ -479,7 +479,7 @@ This simple code makes is pretty straightforward. In case of a _'GET'_ HTTP requ
 
 By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs.
 
-The property _console_ - if present - will print the cumulated execution times grouped/structured by paths and version to the console. 
+The property _console_ - if present - will print the cumulated execution times grouped/structured by paths and version to the console.
 
 The property _listener_ - if present - allows you to pass a function which the populated data will be sent to. This way you can define own function to process the collected measurements.
 
@@ -506,7 +506,7 @@ The middleware manages the file storage and every stored file can be found in th
 
 	var connect = require('connect');
 	var rest = require('connect-rest');
-	
+
 	var connectApp = connect();
 
 	connectApp.use( connect.bodyParser({ uploadDir: './storage' }) );
@@ -527,7 +527,7 @@ The middleware manages the file storage and every stored file can be found in th
 	rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
 
 	rest.post( [ '/act', '/do' ], functionN2 );
-	
+
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN3 );
 
 [Back to Feature list](#features)
@@ -571,7 +571,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 - 0.5.0: minifying services added
 - 0.0.48: An rest service can now be unprotected
 - 0.0.43-47: Various fixes/improvements
-- 0.0.42: Incomint request count monitoring added
+- 0.0.42: Incoming request count monitoring added
 - 0.0.41: listener for populated measurements can be set
 - 0.0.40: monitoring services (bus) added
 - 0.0.3X: minor fixes, refined documentation
@@ -579,14 +579,14 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 - 0.0.26-27: async request fix
 - 0.0.23-25: small fix for content type management
 - 0.0.22: response header customization added 
-- 0.0.21: 
+- 0.0.21:
 	- async rest calling allowed by passing a http parameter: callbackURL
 	- and some logging fixes
 - 0.0.20: callback/next function passed to the services methods can receive third parameter: statusCode setting the http status of the response
 - 0.0.19: assign function introduced for bulk http-method assignments for a given rest function
 - 0.0.18: fixes
-- 0.0.16: 
-	- better optional parameter handling allowing to use optional parameter chain like: /set/?depoartment/?room
+- 0.0.16:
+	- better optional parameter handling allowing to use optional parameter chain like: /set/?department/?room
 	- rewritten assing services. instead of passing a single validator, one has to pass on optional object: { contentType: '', validator: ...} which allows one to define validator and answer return content mime-type as well.
 - 0.0.15 : Great changes from Joel Grenon, thank you! Standard callbacks introduced, better optional parameter handling and respecting error status code if exists
 - 0.0.14 : Adding grunt project files
