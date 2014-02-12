@@ -34,6 +34,8 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 - [Response headers](#response-headers)
 - [Minify response JSON](#minify-response-json)
 - [Versioning](#versioning)
+- [Unprotected rest service](#unprotected-rest-service)
+- [Protector](#protector)
 - [Special assigns](#special-assigns)
 - [Named parameters](#named-parameters)
 - [Optinal parameter](#optinal-parameter)
@@ -164,15 +166,22 @@ This will send
 
 to the client.
 
-## Versioning:
+## Versioning
 As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
 
 	rest.get( { path: '/special', version: '1.0.0' }, functionN0);
 
-## Unprotected REST service:
+## Unprotected REST service
 You can turn off the API_KEY protection for a given service:
 
 	rest.get( { path: '/special', unprotected: true }, functionN0);
+
+## Protector
+Protector is a function which can be passed when creating a rest services. Protector is called in every rest call when the given path is evaluated. This way you can dynamically decide if the call should take place or blocked by some security reason.
+
+	rest.get( { path: '/special', protector: function(req, pathname, version){ return true; } }, functionN0);
+
+The _req_ object, the _pathname_ and api call _version_ is passed and the returning boolean version tells if call is allowed to be performed.
 
 ## Special assigns:
 You can use the character '*' for both path and version too to make generic bindings:
@@ -565,6 +574,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.8.0: protector introduced
 - 0.7.7: check function added. Now you can test if a given call would/allowed to take place.
 - 0.7.x: fixes...
 - 0.6.x: fixes...
