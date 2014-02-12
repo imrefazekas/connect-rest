@@ -575,6 +575,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.8.x: fixes...
 - 0.8.0: protector introduced
 - 0.7.7: check function added. Now you can test if a given call would/allowed to take place.
 - 0.7.x: fixes...
