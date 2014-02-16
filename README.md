@@ -282,7 +282,9 @@ This REST function can be called by sending a _GET_ request to the address of
 
 	/pages/workspace
 
-This way you can easily manage dynamic templates not being forced to be in the same context as API calls or other awesome features your are working on. You can orchestrate the contexts of your architecture as it pleases you.
+This way you can easily manage dynamic templates not being forced to be in the same context as API calls or other awesome features your are working on.
+
+__You can orchestrate the contexts of your architecture as it pleases you.__
 
 ## Discovery services
 [connect-rest](https://github.com/imrefazekas/connect-rest) provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 

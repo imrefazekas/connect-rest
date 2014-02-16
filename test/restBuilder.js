@@ -65,6 +65,11 @@ function buildUpRestAPI( rest ){
 		console.log( 'Upload called:' + JSON.stringify( request ) + ' ' + JSON.stringify(content) );
 		return callback(null, 'ok');
 	} );
+
+	rest.get( { path: '/workspace', context:'/pages', unprotected: true }, function( request, content, callback ){
+		console.log( 'Calling under spec context');
+		return callback(null, 'ok');
+	} );
 }
 
 function getDispatcher(rest){

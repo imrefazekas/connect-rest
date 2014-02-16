@@ -181,6 +181,19 @@ exports.group = {
 				test.done( );
 			}
 		);
+	},
+
+	testUnprotectedZoneCalling: function(test){
+		httphelper.generalCall( 'http://localhost:8080/pages/workspace', 'GET', null, null, null, 'application/json', logger,
+			function(err, result, status){
+				should.not.exist(err); should.exist(result);
+
+				should.strictEqual(status.statusCode, 200);
+				should.strictEqual(result, 'ok');
+
+				test.done( );
+			}
+		);
 	}
 
 };
