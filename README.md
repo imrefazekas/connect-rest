@@ -42,6 +42,7 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 - [Optinal parameter](#optinal-parameter)
 - [General matcher](#general-matcher)
 - [Context](#context)
+- [Orchestrating the contexts](#orchestrating-the-contexts)
 - [Discover services](#discover-services)
 - [Prototype services](#prototype-services)
 - [API_KEY management](#api_key-management)
@@ -270,6 +271,18 @@ This value can be set through the option object as well:
 	connectApp.use( rest.rester( options ) );
 
 Default _context_ is the empty string.
+
+#### Orchestrating the contexts
+
+The [connect-rest](https://github.com/imrefazekas/connect-rest) also allows you to  specify the context at REST function level. Let me show you:
+
+	rest.get( { path: '/workspace', context: '/pages' }, functionN0);
+
+This REST function can be called by sending a _GET_ request to the address of
+
+	/pages/workspace
+
+This way you can easily manage dynamic templates not being forced to be in the same context as API calls or other awesome features your are working on. You can orchestrate the contexts of your architecture as it pleases you.
 
 ## Discovery services
 [connect-rest](https://github.com/imrefazekas/connect-rest) provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 
@@ -575,6 +588,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.9.0: context specification at REST function level is allowed.
 - 0.8.x: fixes...
 - 0.8.0: protector introduced
 - 0.7.7: check function added. Now you can test if a given call would/allowed to take place.
