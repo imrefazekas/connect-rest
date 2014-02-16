@@ -591,6 +591,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 0.9.1: fixes...
 - 0.9.0: context specification at REST function level is allowed.
 - 0.8.x: fixes...
 - 0.8.0: protector introduced
