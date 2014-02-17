@@ -133,6 +133,20 @@ exports.group = {
 		);
 	},
 
+	testVersionlessParamMapping: function(test){
+		httphelper.generalCall( 'http://localhost:8080/api/call/Skynet/Shira/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
+			function(err, result, status){
+				should.not.exist(err); should.exist(result);
+
+				should.strictEqual(status.statusCode, 201);
+
+				result.should.have.property('system', 'Skynet');
+				result.should.have.property('subject', 'request');
+
+				test.done( );
+			}
+		);
+	},
 	testEntityAndVersionlessParamMapping: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/call/Skynet/request?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){
