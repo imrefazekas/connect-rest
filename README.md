@@ -22,7 +22,6 @@ The aim is to focus on the business logic, so [connect-rest](https://github.com/
 
 The payload of the body - if exists - with proper mime-type will be interpret as JSON object and will be parsed and passed to the service function you assign to.
 
-If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](http://www.senchalabs.org/connect/json.html) or any similar connect middleware is being used creating the req.body attribute, its content will be respected and delegated to the service functions as it is.
 
 # Installation
 
