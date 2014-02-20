@@ -29,6 +29,7 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 	$ npm install connect-rest
 
 ## Features:
+- [Quick usage](#quick-setup)
 - [Assign](#assign)
 - [Path description](#path-description)
 - [Rest functions](#rest-functions)
@@ -54,9 +55,40 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 - [Answering async rest requests](#answering-async-rest-requests)
 - [Dispatchers](#dispatchers)
 - [Monitoring](#monitoring)
-- [File Upload](#file-upload)
-- [Usage](#usage)
 - [Changelog](#changelog)
+
+
+## Quick setup
+
+	var connect = require('connect');
+	var rest = require('connect-rest');
+
+	var connectApp = connect();
+		.use( connect.query() )
+		.use( connect.urlencoded() )
+		.use( connect.json() )
+	;
+
+	var options = {
+		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+		discoverPath: 'discover',
+		protoPath: 'proto',
+		logger: 'connect-rest',
+		logLevel: 'debug',
+		context: '/api'
+	};
+	connectApp.use( rest.rester( options ) );
+
+	rest.get('/books/:title/:chapter', functionN0 );
+
+	rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
+
+	rest.post( [ '/act', '/do' ], functionN2 );
+
+	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN3 );
+
+[Back to Feature list](#features)
+
 
 ## Assign
 Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
@@ -513,50 +545,6 @@ The property _newrelic_ - if present - activates the [newrelic](https://newrelic
 
 Note: [newrelic](https://newrelic.com) support is preliminary at this moment. Will be improved by time...
 
-
-## File upload
-
-The connect [bodyparser](http://www.senchalabs.org/connect/middleware-bodyParser.html) middleware manages content parsing for a given request. To manage the upload of files, your task is very simple:
-
-	rest.post( '/upload', function( request, content, callback ){
-		console.log( 'Upload called:' + JSON.stringify( request.files ) );
-		return callback(null, 'ok');
-	} );
-
-The middleware manages the file storage and every stored file can be found in the _files_ attribute of _request_ object. For further configuration, please find the [bodyparser's page](http://www.senchalabs.org/connect/middleware-bodyParser.html).
-
-[Back to Feature list](#features)
-
-
-## Usage
-
-	var connect = require('connect');
-	var rest = require('connect-rest');
-
-	var connectApp = connect();
-
-	connectApp.use( connect.bodyParser({ uploadDir: './storage' }) );
-	connectApp.use( connect.query() );
-
-	var options = {
-		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-		discoverPath: 'discover',
-		protoPath: 'proto',
-		logger: 'connect-rest',
-		logLevel: 'debug',
-		context: '/api'
-	};
-	connectApp.use( rest.rester( options ) );
-
-	rest.get('/books/:title/:chapter', functionN0 );
-
-	rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
-
-	rest.post( [ '/act', '/do' ], functionN2 );
-
-	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN3 );
-
-[Back to Feature list](#features)
 
 ## License
 
