@@ -46,6 +46,8 @@ The aim is to give a really feature-rich tool allowing you to focus on the busin
 - [Answering async rest requests](#answering-async-rest-requests)
 - [Dispatchers](#dispatchers)
 - [Monitoring](#monitoring)
+- [More examples](#more-examples)
+- [License](#license)
 - [Changelog](#changelog)
 
 
@@ -586,6 +588,63 @@ The property _newrelic_ - if present - activates the [newrelic](https://newrelic
 Note: [newrelic](https://newrelic.com) support is preliminary at this moment. Will be improved by time...
 
 
+## More examples
+
+I have collected a few examples from some implementations submited by users of [connect-rest](https://github.com/imrefazekas/connect-rest).
+
+Might help to have a more complete picture about what you can reach and realize with this library. In case of any wanted scenario, please open a ticket and I will happily comply with it.
+
+Example, how to __restrict rest api calls__ to only those who logged in already, meaning to have some session info
+
+	var protectBySession = function(req, pathname, version){
+		return req.session && req.session.uid;
+	};
+	rest.get( { path: '/model/person', unprotected: true, protector: protectBySession, version: '1.0.0' }, function( request, content, callback ){
+		callback( null, personModel );
+	});
+
+Example to how define a __free-to-call rest function__ in a very restricted environment.
+__Dynamic templating__ is a typical scenario, no versioning is needed, nore api_key or session-based protection, must be put on a separate context and result has mime-type of "text/html"
+
+	var allower = function(req, pathname, version){
+		return true;
+	};
+	rest.get( { path: '/?page/?id', unprotected: true, protector: allower, context: '/pages' }, function( request, content, callback ){
+		// render some page
+		renderer.render( request.parameters.page, request.parameters.id, function(err, res){
+			callback( err, res );
+		} );
+	}, { contentType:'text/html' } );
+
+A fairly complex REST path which is needed in some cases and a custom return status code:
+
+	rest.get( '/call/:system/?entity/?version/:subject/*', function( request, content, callback ){
+		// Do some business logic
+		return callback(null, 'Done.', {statusCode:201} );
+	}, { contentType:'application/json' } );
+
+In this case you call this path by the following uris:
+
+	/call/library/books/AliceInWonderland
+	/call/library/books/2.0/AliceInWonderland
+	/call/library/AliceInWonderland
+	/call/library/AliceInWonderland/firstedition/chapter1
+
+Not a typical or strictly REST-conform scenario, but you might end up with the need of complex URIs.
+
+__Tip:__ To manage all calls not handled by connect-rest could be also important. The following code demonstrates how to define a small middleware, which is executed when no REST function is matched.
+
+	app.use( rest.rester( options ) );
+	app.use( function(req, res, next){
+		if(req.session)
+			req.session.destroy();
+		// render error page by some renderer...
+		renderer.render( 'error', {}, function(err, html){
+			res.writeHead( 500, { 'Content-Type' : 'text/html' } );
+			res.end( html );
+		} );
+	} );
+
 ## License
 
 (The MIT License)
@@ -613,9 +672,6 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 See <https://github.com/imrefazekas/connect-rest/issues>.
 
-## ToDo
-
-- more detailed examples
 
 ## Changelog
 
