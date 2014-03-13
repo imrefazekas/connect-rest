@@ -1,26 +1,24 @@
 [connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality.
 
 Just a few examples: (far from incomplete):
-- execution branches: a single service can have multiple paths and a single incoming request can invoke multiple services
-- versioning: rest services can be versioned via many ways
-- regular expressions: path description can be given using regular expression
-- parameter mappings: path matchings can be bound as parameters
-- service discovery: built-in rest service allowing one to discover what rest services are available in general or for a given version
-- "reflective" publishing: by providing a single object, its methods will be published as rest services automatically by simple logic
-- dynamic API protection by Protectors
-- Multiple contexts for flexible orchestrating
-- customizable HTTP-layer management: HTTP status code, mime-types, headers, minifying can be set at service and execution level
-- async services: a rest service can call back asynchronously when the answer is made
-- monitoring/measuring: every rest service execution can be enabled for measurement to be collected and populated internally or for external monitoring solutions
+- __execution branches__: a single service can have multiple paths and a single incoming request can invoke multiple services
+- __versioning__: rest services can be versioned via many ways
+- __regular expressions__: path description can be given using regular expression
+- __parameter mappings__: path matchings can be bound as parameters
+- __service discovery__: built-in rest service allowing one to discover what rest services are available in general or for a given version
+- __"reflective" publishing__: by providing a single object, its methods will be published as rest services automatically by simple logic
+- __dynamic API protection__ by Protectors
+- __Multiple contexts__ for flexible orchestrating
+- __customizable HTTP-layer management__: HTTP status code, mime-types, headers, minifying can be set at service and execution level
+- __async services__: a rest service can call back asynchronously when the answer is made
+- __monitoring/measuring__: every rest service execution can be enabled for measurement to be collected and populated internally or for external monitoring solutions
 
-!Note: connect-rest's concept is - as for integration - to provide a connect plugin and - as for user aspect - to be a framework for your rest services carrying only about content and business logic, nothing else. However, in case of need for interoperability, the need might cause you to use only the path-related features alone. This can be done using [dispatchers](#dispatchers).
+__!Note__: connect-rest's concept is - as for integration - to provide a connect plugin and to be a framework for your rest services carrying only about content and business logic, nothing else. However, in case of need for interoperability, the need might cause you to use only the path-related features alone. This can be done using [dispatchers](#dispatchers).
 
 # Usage
 
 The [connect-rest](https://github.com/imrefazekas/connect-rest) is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/).
-The aim is to focus on the business logic, so [connect-rest](https://github.com/imrefazekas/connect-rest) is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
-
-The payload of the body - if exists - with proper mime-type will be interpret as JSON object and will be parsed and passed to the service function you assign to.
+The aim is to give a really feature-rich tool allowing you to focus on the business logic only.
 
 
 # Installation
@@ -28,29 +26,23 @@ The payload of the body - if exists - with proper mime-type will be interpret as
 	$ npm install connect-rest
 
 ## Features:
-- [Quick usage](#quick-setup)
+- [Quick setup](#quick-setup)
 - [Assign](#assign)
 - [Path description](#path-description)
-- [Rest functions](#rest-functions)
-- [Status codes](#status-codes)
-- [Response headers](#response-headers)
-- [Minify response JSON](#minify-response-json)
 - [Versioning](#versioning)
+- [Rest functions](#rest-functions)
+- [Customize HTTP response](customize-http-response)
+- [Customize answers of REST functions](#customize-answers-of-rest-functions)
+- [API_KEY management](#api_key-management)
 - [Unprotected rest service](#unprotected-rest-service)
 - [Protector](#protector)
-- [Special assigns](#special-assigns)
-- [Named parameters](#named-parameters)
-- [Optinal parameter](#optinal-parameter)
-- [General matcher](#general-matcher)
 - [Context](#context)
 - [Orchestrating the contexts](#orchestrating-the-contexts)
 - [Discover services](#discover-services)
 - [Prototype services](#prototype-services)
-- [API_KEY management](#api_key-management)
 - [Logging](#logging)
 - [Reflective publishing](#reflective-publishing)
 - [Domain support](#domain-support)
-- [Customization: Validation and Response mime-types](#customization)
 - [Answering async rest requests](#answering-async-rest-requests)
 - [Dispatchers](#dispatchers)
 - [Monitoring](#monitoring)
@@ -59,25 +51,33 @@ The payload of the body - if exists - with proper mime-type will be interpret as
 
 ## Quick setup
 
+	// requires connect and connect-rest middleware
 	var connect = require('connect');
 	var rest = require('connect-rest');
 
+	// sets up connect and adds other middlewares to parse query, parameters, content and session
+	// use the ones you need
 	var connectApp = connect();
 		.use( connect.query() )
+		.use( connect.session( { ... } ) )
 		.use( connect.urlencoded() )
 		.use( connect.json() )
 	;
 
+	// initial configuration of connect-rest. all-of-them are optional.
+	// default context is /api, all services are off by default
 	var options = {
-		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-		discoverPath: 'discover',
-		protoPath: 'proto',
-		logger: 'connect-rest',
-		logLevel: 'debug',
-		context: '/api'
+		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ], // to set up api-key restriction
+		discoverPath: 'discover', // activates discovery service
+		protoPath: 'proto', // activates prototype service
+		logger:{ name: 'your appname', level: 'info' }, // activates logger
+		context: '/api' // general context used for URIs of connect-rest
 	};
+
+	// adds connect-rest middleware to connect
 	connectApp.use( rest.rester( options ) );
 
+	// defines a few sample rest services
 	rest.get('/books/:title/:chapter', functionN0 );
 
 	rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
@@ -90,7 +90,9 @@ The payload of the body - if exists - with proper mime-type will be interpret as
 
 
 ## Assign
-Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
+
+#### direct binding
+You can assign your rest modules by specifying the needed _http_ request functions: __head, get, post, put, delete__.
 
 Example:
 
@@ -102,64 +104,167 @@ Example:
 	}
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
 
-After each assign function you might pass the followings:
-- a path descriptor and
+#### assign function
+Other way to assign is to use the __assign function__ directly.
+
+Example:
+
+	function service( request, content, callback ){
+		...
+	}
+	// bind the service funciont to all http request types
+	rest.assign( '*', [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
+	...
+	// bind the service funciont to only the given http request types
+	rest.assign( ['head','get','post'], [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
+
+#### parameters
+
+After each assign function you might need to pass the followings:
+- a [path description](#path-description)
 - a function to be called.
 
 ## Path description
 [connect-rest](https://github.com/imrefazekas/connect-rest) supports many options to be used as path description.
 
-Simple path:
 
-	'/peek'
+### Named parameters
 
-Versioned path:
+	rest.get('/books/:title', functionN0 );
 
-	{ path: '/make', version: '>=1.0.0' }
+or
 
-Multiple path:
+	rest.get('/books/:title/:chapter', functionN0 );
 
-	[ '/act', '/do' ]
+You can define parametrized paths for services to accept REST variables from the caller.
+In this case, whatever string is after the 'books', will be interpret as variable(s) and passed to the service function via the request object.
 
-Multiple versioned path:
+So sending a get request to the uri '/api/books/AliceInWonderland/1', will result the following request object:
 
-	[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
+	{"headers": ...,"parameters":{"title":"AliceInWonderland", "chapter": "1"}}
 
-Mandatory variables:
+### Optional parameter
 
-	{ path: '/make/:uid', version: '>=1.0.0' }
+	rest.post('/store/?id', functionN );
+
+This definition allows you to define one optional parameter at the end of the path. It might be called using
+
+	'/store'
+
+or using
+
+	'/store/108'
+
+paths. Both HTTP calls will be directed to the same functionN service.
+In latter case, the '108' will be set as a parameter in the request object with the value of '108'.
+
+### General matcher
+
+	rest.get('/inquire/*book', functionM );
+
+This definition gives you the possibility to define a general matcher allowing to have been called with anything after the string
+
+	'/inquire'
+
+so can be called using
+
+	'/inquire/alice/in/wonderland'
+
+or using
+
+	'/inquire/oz/the/great/wizard'
+
+paths. This results to have the parameter 'book' with value
+
+	'alice/in/wonderland' or 'oz/the/great/wizard'
+
+respectively.
+
+You can make rather complex mixtures of those options as well:
+
+	'/borrow/:uid/?isbn/:bookTitle'
+
+One can call this with uri:
+
+	'borrow/2/AliceInWonderland' or 'borrow/2/HG1232131/AliceInWonderland'
+
+The character '*' can be used for both path and version too to make generic bindings:
+
+	{ path: '*', version: '*' }
+
+Be aware, that this path will be matched to all paths within the defined context.
 
 
-Optional path:
+### Special assigns:
+You can use the all options above at once.
 
-	{ path: '/delete/?id', version: '>=1.0.0' }
+	[ { path: '/rent/:country/?isbn/*bookTitle', version: '<2.0.0' }, { path: '/borrow/:uid/?isbn/?bookTitle', version: '>=2.1.1' } ]
 
-	{ path: '/delete/?id/?date', version: '>=1.0.0' }
+Just define what you really need. :)
 
-General path:
 
-	{ path: '/rent/*bookTitle', version: '>=1.0.0' }
+### Parameter processing
 
-Complex path:
+The logic how [connect-rest](https://github.com/imrefazekas/connect-rest) is managing parameter replacement is the following:
 
-	[ { path: '/rent/?isbn/*bookTitle', version: '<2.0.0' }, { path: '/borrow/:uid/?isbn/?bookTitle', version: '>=2.1.1' } ]
+The parameters are processed in the path definition order and any missing optional parameter will be filled with empty strings to keep the order of them keeping in sight all mandatory parameters put after the optional ones.
 
+
+## Versioning
+As for versioning, the syntax is [semantic versioning](http://semver.org), the same you use for [npm](https://npmjs.org)
+
+	rest.get( { path: '/special', version: '1.0.0' }, functionN0);
+
+So you can use different version specificaiton depending on your need:
+
+	version: '1.0.0 - 2.9999.9999'
+	version: '2.0.1'
+	version: '2.x'
+	version: '~1'
+	version: ">=1.0.2 <2.1.2"
+
+Only the requests defining the right version number will match the defined paths.
+
+[connect-rest](https://github.com/imrefazekas/connect-rest) ignores all unmatching calls which might fail by the badly given path or version.
 
 [Back to Feature list](#features)
 
+
 ## Rest functions
 
+A rest function is a normal JS function you can define easily.
+
 Every handler function receives
-- a 'request' object containing "headers" and "parameters" values and a "callback" function if the result is composed by asnyc operations 
-- an optional 'content' object which is the JSON-parsed object extracted from the http body's payload.
+- a 'request' object containing "headers", "parameters", "files", "session" properties
+- an optional 'content' object which is the object extracted from the http body's payload.
 - an optional callback function. This is the 'node standard' way to manage callbacks if needed.
 
 If callback is used as third parameter, needs to be called and pass the error or result object. Otherwise the return value of rest functions will be sent back to the client as a json string.
-Please, see examples below...
 
-## Status codes
+	rest.get( { path: '/personal/:uid', version: '1.0.0' }, function( request, content, callback ){
+		callback( null, { name: 'John Doe' } );
+	});
+	rest.get( '/purchases/:uid', function( request, content ){
+		return { purchases: [ ... ] };
+	});
 
-IF one defines a rest function possessing 3 parameters, the third is an object aimed to contain to refine the HTTP response sent back to the client. As for status code, all you need to do is this:
+The async way is __strongly encouraged__ to be used unless you have something really computation-free function...
+
+[Back to Feature list](#features)
+
+
+## Customize HTTP response
+
+If one defines a rest function possessing 3 parameters, the third is the callback allowing 3 parameters to send.
+The first and second parameters are the conventional error and result objects.
+
+The third one is an object aimed to contain to refine the HTTP response sent back to the client. This includes mime-types, status code, etc.
+
+
+### Status codes
+
+
+As for status code, all you need to do is this:
 
 Error case:
 
@@ -177,7 +282,7 @@ Special case when no error occurred, yet the http request's status has to be set
 
 [Back to Feature list](#features)
 
-## Response headers
+### Response headers
 
 To refine the headers in the response HTML, the way is the same as above: customize the third parameter of the callback function.
 
@@ -185,7 +290,7 @@ To refine the headers in the response HTML, the way is the same as above: custom
 		return callback( null, 'Content.', { headers: { ETag: "10c24bc-4ab-457e1c1f" } } );
 	});
 
-## Minify response JSON
+### Minify response JSON
 
 You can make the response JSON object minified by passing a single boolean parameter to the callback's third optional parameter:
 
@@ -200,113 +305,83 @@ This will send
 
 to the client.
 
-## Versioning
-As for versioning, the syntax is the same you use for [npm](https://npmjs.org)
 
-	rest.get( { path: '/special', version: '1.0.0' }, functionN0);
+## Customize answers of REST functions
+
+When assigning routes with rest API you can pass an object too. This object looks like this:
+
+	{
+		contentType: ''
+		validator: ...
+	}
+
+The contentType defines what the given REST service will retrieve. If not given, 'application/json' will be used.
+
+The validator is a function, which can be used to determine if the REST function can be called in a given circumstances or should be ignored. This could mean authorization or ip address validation or other security concern.
+
+	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content ){
+		return JSON.stringify(content);
+	}, null, { contentType:'application/xml', validator: function(req, res){ return _.contains(req.user.roles, "superuser"); } } );
+
+[Back to Feature list](#features)
+
+
+## API_KEY management
+
+The option passed to the [connect-rest](https://github.com/imrefazekas/connect-rest) might contain an array enumerating accepted api_keys:
+
+	var options = {
+		'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ]
+		...
+	};
+
+If property 'apiKeys' is present, the associated array of strings will be used as the list of api keys demanded regarding every incoming calls.
+So having such option, a call should look like this:
+
+	'/api/books/AliceInWonderland/1?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'
+
+otherwise error response will be sent with status code 401 claiming: 'API_KEY is required.'.
+
 
 ## Unprotected REST service
-You can turn off the API_KEY protection for a given service:
+When you are using API_KEYs, you still might want to have 'exceptions'.
+Functions which can be served out of the border os API_KEY restriction.
+You can turn off that protection for a given service like this:
 
 	rest.get( { path: '/special', unprotected: true }, functionN0);
 
+
 ## Protector
-Protector is a function which can be passed when creating a rest services. Protector is called in every rest call when the given path is evaluated. This way you can dynamically decide if the call should take place or blocked by some security reason.
+Protector is a function which can be passed when creating a rest services and decides if a given call is allowed or should be blocked and ignored.
+So the protector function called in every rest call when the given path is evaluated and matched and boolean return value of the function tells to the [connect-rest](https://github.com/imrefazekas/connect-rest) to allow the rest function's execution to take place or blocked by some security reason.
 
 	rest.get( { path: '/special', protector: function(req, pathname, version){ return true; } }, functionN0);
 
 The _req_ object, the _pathname_ and api call _version_ is passed and the returning boolean version tells if call is allowed to be performed.
-
-## Special assigns:
-You can use the character '*' for both path and version too to make generic bindings:
-
-	{ path: '*', version: '*' }
-
-Be aware, that this path will be matched to all paths within the defined context.
-
-## Named parameters
-
-	rest.get('/books/:title', functionN0 );
-
-or
-
-	rest.get('/books/:title/:chapter', functionN0 );
-
-You can define parametrized paths for services to accept REST variables from the caller.
-In this case, whatever string is after the 'books', will be interpret as variable(s) and passed to the service function via the request object.
-
-So sending a get request to the uri '/api/books/AliceInWonderland/1', will result the following request object:
-
-	{"headers": ...,"parameters":{"title":"AliceInWonderland", "chapter": "1"}}
-
-## Optional parameter
-
-	rest.post('/store/?id', functionN );
-
-This definition allows you to define one optional parameter at the end of the path. It might be called using
-
-	'/store'
-
-or using
-
-	'/store/108'
-
-paths. Both HTTP calls will be directed to the same functionN service.
-In latter case, the '108' will be set as a parameter in the request object with the value of '108'.
-
-## General matcher
-
-	rest.get('/inquire/*book', functionM );
-
-This definition gives you the possibility to define a general matcher allowing to have been called with anything after the string
-
-	'/inquire'
-
-so can be called using
-
-	'/inquire/alice/in/wonderland'
-
-or using
-
-	'/inquire/oz/the/great/wizard'
-
-paths. This results to have the parameter 'book' with value 
-
-	'alice/in/wonderland' or 'oz/the/great/wizard' 
-
-respectively. 
-
-You can make rather complex mixtures of those options as well:
-
-	'/borrow/:uid/?isbn/:bookTitle'
-
-One can call this with uri: 
-
-	'borrow/2/AliceInWonderland' or 'borrow/2/HG1232131/AliceInWonderland'
-
-The logic how [connect-rest](https://github.com/imrefazekas/connect-rest) is managing parameter replacement is the following:
-
-The parameters are processed in the path definition order and any missing optional parameter will be filled with empty strings to keep the order of them keeping in sight all mandatory parameters put after the optional ones.
+You can have such functions to define session-based dynamic protection or differentiate between widely available rest calls and restricted business-sensitive feature.
 
 [Back to Feature list](#features)
 
+
 ## Context
-[connect-rest](https://github.com/imrefazekas/connect-rest) also supports uri prefix if you want to put every REST function behind the same context:
+[connect-rest](https://github.com/imrefazekas/connect-rest) uses context uri prefix by default to create a speparated 'namespace' for the rest functions.
+You can define it dynamically:
 
 	rest.context( '/api' ); // means that every rest calls need to be sent to '/api/X' path.
 
-This value can be set through the option object as well:
+or through the option object as well when you add the middleware to the connect object:
 
 	var options = {
 		'context': '/api'
 	};
 	connectApp.use( rest.rester( options ) );
 
-Default _context_ is the empty string.
+Default _context_ is the '/api' string.
 
-#### Orchestrating the contexts
+## Orchestrating the contexts
 
-The [connect-rest](https://github.com/imrefazekas/connect-rest) also allows you to  specify the context at REST function level. Let me show you:
+The [connect-rest](https://github.com/imrefazekas/connect-rest) also allows you to  specify the context at REST function level. This helps if you want to orchestrate your functions using multiple contexts.
+Let me show you:
 
 	rest.get( { path: '/workspace', context: '/pages' }, functionN0);
 
@@ -314,19 +389,20 @@ This REST function can be called by sending a _GET_ request to the address of
 
 	/pages/workspace
 
-This way you can easily manage dynamic templates not being forced to be in the same context as API calls or other awesome features your are working on.
+This way you can easily manage dynamic templates not being forced to be in the same context as API calls.
 
 __You can orchestrate the contexts of your architecture as it pleases you.__
 
+
 ## Discovery services
-[connect-rest](https://github.com/imrefazekas/connect-rest) provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 
+[connect-rest](https://github.com/imrefazekas/connect-rest) provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version.
 
 	var options = {
 	    'discoverPath': 'discover'
 	};
 	connectApp.use( rest.rester( options ) );
 
-This will enable this service - considering the context described above - on the path '/api/discover/:version'. Sending a get request to - let's say - this path 
+This will enable this service - considering the context described above - on the path '/api/discover/:version'. Sending a get request to - let's say - this path
 
 	http://localhost:8080/api/discover/3.0.0
 
@@ -345,7 +421,7 @@ The assign-methods allows you to pass a third parameter, an object which can be 
 
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN, {'title': 'Alice in Wonderland'} );
 
-That parameter debriefs the client what structure the functionN expects to receive. 
+That parameter debriefs the client what structure the functionN expects to receive.
 To activate this feature, first you have to add a new attribute to the options object:
 
 	var options = {
@@ -372,25 +448,6 @@ Giving access method, version and path is mandatory for this feature.
 
 [Back to Feature list](#features)
 
-## API_KEY management
-The option passed to the [connect-rest](https://github.com/imrefazekas/connect-rest) might contain an array enumerating accepted api_keys:
-
-	var options = {
-    	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-    	'discoverPath': 'discover'
-	};
-
-If property 'apiKeys' is present, the associated array of strings will be used as the list of api keys demanded regarding every incoming calls.
-So having such option, a call should look like this:
-
-	'/api/books/AliceInWonderland/1?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'
-
-otherwise error response will be sent with status code 401 claiming: 'API_KEY is required.'.
-
-Note: you can create special REST services not requiring API_KEYS to serve jade templates or anything you would like to as follows:
-
-	rest.get( { path: '/special', unprotected: true }, functionN0);
-
 
 ## Logging
 In the option object passed to the constructor, there is an optional parameter 'logger', which enables the logging functionality:
@@ -410,7 +467,7 @@ or
 	};
 
 You can set:
-- a string, which will be interpret as the name of the logger seen in the logs, or 
+- a string, which will be interpret as the name of the logger seen in the logs, or
 - passing a bunyan instance to be used.
 
 In the absence of 'logger' property, no logs will be made.
@@ -419,7 +476,7 @@ The [connect-rest](https://github.com/imrefazekas/connect-rest) will use level '
 [Back to Feature list](#features)
 
 ## Reflective publishing
-[connect-rest](https://github.com/imrefazekas/connect-rest) allows you to have an extremely easy and fast way to publish your services. 
+[connect-rest](https://github.com/imrefazekas/connect-rest) allows you to have an extremely easy and fast way to publish your services.
 
 You can define your own services like this in a file (services.js in this example):
 
@@ -442,7 +499,7 @@ This will discover all functions assigned to the exports having a name which con
 
 	/^[a-zA-Z]([a-zA-Z]|\d|_)*$/g
 
-The logic is simple. If the function has 
+The logic is simple. If the function has
 - 1 parameter: it will be a 'get' method
 - 2 parameters: it will be a 'post' method
 
@@ -467,29 +524,13 @@ If you have 100 services defined, then 100 rest api you will have automatically.
 		discoverPath: 'discover',
 		protoPath: 'proto',
 		logger: 'connect-rest',
-		domain: restDomain 
+		domain: restDomain
 	};
 
 By passing the restDomain object, [connect-rest](https://github.com/imrefazekas/connect-rest) will assign req and rest object to that domain and in any occurring error, it will be sent to the caller with HTTP status code 500.
 
 [Back to Feature list](#features)
 
-## Customization
-
-When assigning routes with rest API you can pass an object too. This object looks like this:
-
-	{ 
-		contentType: ''
-		validator: ...
-	}
-
-The contentType defines what the given REST service will retrieve. If not given, 'application/json' will be used.
-
-The validator is a function, which can be used to determine if the REST function can be called in a given circumstances or should be ignored. This could mean authorization or ip address validation or other security concern.
-
-	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function( request, content ){
-		return JSON.stringify(content);
-	}, null, { contentType:'application/xml', validator: function(req, res){ return _.contains(req.user.roles, "superuser"); } } );
 
 ## Answering async rest requests
 
@@ -540,7 +581,7 @@ The property _console_ - if present - will print the cumulated execution times g
 
 The property _listener_ - if present - allows you to pass a function which the populated data will be sent to. This way you can define own function to process the collected measurements.
 
-The property _newrelic_ - if present - activates the [newrelic](https://newrelic.com) services posting all metrics to the newrelic server. You have to give your license key to make it work properly. 
+The property _newrelic_ - if present - activates the [newrelic](https://newrelic.com) services posting all metrics to the newrelic server. You have to give your license key to make it work properly.
 
 Note: [newrelic](https://newrelic.com) support is preliminary at this moment. Will be improved by time...
 
@@ -596,7 +637,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 - 0.0.28.29: a case when mandatory parameter follows optional(s) has been fixed
 - 0.0.26-27: async request fix
 - 0.0.23-25: small fix for content type management
-- 0.0.22: response header customization added 
+- 0.0.22: response header customization added
 - 0.0.21:
 	- async rest calling allowed by passing a http parameter: callbackURL
 	- and some logging fixes
