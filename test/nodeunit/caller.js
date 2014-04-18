@@ -22,7 +22,6 @@ exports.group = {
 		);
 	},
 
-
 	testEmpty: function(test){
 		httphelper.generalCall( 'http://localhost:8080/api/empty?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9', 'GET', null, null, null, 'application/json', logger,
 			function(err, result, status){

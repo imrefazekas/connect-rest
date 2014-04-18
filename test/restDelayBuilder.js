@@ -63,6 +63,7 @@ function buildUpRestAPI( rest ){
 			callback(null, request.parameters, {statusCode:201} );
 		}, delay);
 	}, { contentType:'application/json' } );
+
 }
 
 exports.buildUpRestAPI = buildUpRestAPI;

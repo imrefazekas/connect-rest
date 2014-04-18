@@ -70,6 +70,7 @@ function buildUpRestAPI( rest ){
 		console.log( 'Calling under spec context');
 		return callback(null, 'ok');
 	} );
+
 }
 
 function getDispatcher(rest){

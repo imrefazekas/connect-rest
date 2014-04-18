@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -29,13 +29,13 @@
   ],
   "main": "./lib/connect-rest.js",
   "dependencies": {
-    "async": ">=0.2.9",
-    "underscore": "~1",
-    "underscore.string": "~2",
-    "semver": "~2",
+    "async": "latest",
     "bunyan": ">=0.22.0",
     "connect": "~2",
-    "qs": "~0.6"
+    "lodash": "latest",
+    "underscore.string": "latest",
+    "qs": "~0.6",
+    "semver": "~2"
   },
   "devDependencies": {
     "grunt": "~0.4",
@@ -47,5 +47,5 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "_id": "connect-rest@0.9.5"
+  "_id": "connect-rest@0.9.6"
 }

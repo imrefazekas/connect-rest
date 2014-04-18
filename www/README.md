@@ -1,10 +1,10 @@
-[connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality. 
+[connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality.
 
-Just a few examples: (far from incomplete): 
+Just a few examples: (far from incomplete):
 - execution branches: a single service can have multiple paths and a single incoming request can invoke multiple services
 - versioning: rest services can be versioned via many ways
 - regular expressions: path description can be given using regular expression
-- parameter mappings: path matchings can be bound as parameters 
+- parameter mappings: path matchings can be bound as parameters
 - service discovery: built-in rest service allowing one to discover what rest services are available in general or for a given version
 - "reflective" publishing: by providing a single object, its methods will be published as rest services automatically by simple logic
 - customizable HTTP-layer management: HTTP status code, mime-types, headers can be set at service and execution level
@@ -14,7 +14,7 @@ Just a few examples: (far from incomplete):
 
 # Usage
 
-The [connect-rest](https://github.com/imrefazekas/connect-rest) is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/). 
+The [connect-rest](https://github.com/imrefazekas/connect-rest) is a simple, yet powerful middleware for [connect](http://www.senchalabs.org/connect/), inspired by [restify](http://mcavage.github.com/node-restify/).
 The aim is to focus on the business logic, so [connect-rest](https://github.com/imrefazekas/connect-rest) is managing body payload and parameters as well in the background, your business logic function does not need to take care of any request or response object at all.
 
 The payload of the body - if exists - with proper mime-type will be interpret as JSON object and will be parsed and passed to the service function you assign to.
@@ -50,7 +50,7 @@ If [bodyparser](http://www.senchalabs.org/connect/bodyParser.html) or [json](htt
 - [Changelog](#changelog)
 
 ## Assign
-Assign your rest modules by one of the http request functions: head, get, post, put, delete. 
+Assign your rest modules by one of the http request functions: head, get, post, put, delete.
 
 Example:
 
@@ -62,35 +62,35 @@ Example:
 	}
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
 
-After each assign function you might pass the followings: 
-- a path descriptor and 
+After each assign function you might pass the followings:
+- a path descriptor and
 - a function to be called.
 
 ## Path description
 [connect-rest](https://github.com/imrefazekas/connect-rest) supports many options to be used as path description.
 
-Simple path: 
-	
+Simple path:
+
 	'/peek'
 
-Versioned path: 
+Versioned path:
 
 	{ path: '/make', version: '>=1.0.0' }
 
-Multiple path: 
+Multiple path:
 
 	[ '/act', '/do' ]
 
-Multiple versioned path: 
+Multiple versioned path:
 
 	[ { path: '/shake', version: '<2.0.0' }, { path: '/twist', version: '>=2.1.1' } ]
 
-Mandatory variables: 
+Mandatory variables:
 
 	{ path: '/make/:uid', version: '>=1.0.0' }
 
 
-Optional path: 
+Optional path:
 
 	{ path: '/delete/?id', version: '>=1.0.0' }
 
@@ -110,7 +110,7 @@ Complex path:
 ## Rest functions
 
 Every handler function receives
-- a 'request' object containing "headers" and "parameters" values and a "callback" function if the result is composed by asnyc operations 
+- a 'request' object containing "headers" and "parameters" values and a "callback" function if the result is composed by asnyc operations
 - an optional 'content' object which is the JSON-parsed object extracted from the http body's payload.
 - an optional callback function. This is the 'node standard' way to manage callbacks if needed.
 
@@ -201,17 +201,17 @@ or using
 
 	'/inquire/oz/the/great/wizard'
 
-paths. This results to have the parameter 'book' with value 
+paths. This results to have the parameter 'book' with value
 
-	'alice/in/wonderland' or 'oz/the/great/wizard' 
+	'alice/in/wonderland' or 'oz/the/great/wizard'
 
-respectively. 
+respectively.
 
 You can make rather complex mixtures of those options as well:
 
 	'/borrow/:uid/?isbn/:bookTitle'
 
-One can call this with uri: 
+One can call this with uri:
 
 	'borrow/2/AliceInWonderland' or 'borrow/2/HG1232131/AliceInWonderland'
 
@@ -236,14 +236,14 @@ This value can be set through the option object as well:
 Default _context_ is the empty string.
 
 ## Discovery services
-[connect-rest](https://github.com/imrefazekas/connect-rest) provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version. 
+[connect-rest](https://github.com/imrefazekas/connect-rest) provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version.
 
 	var options = {
 	    'discoverPath': 'discover'
 	};
 	connectApp.use( rest.rester( options ) );
 
-This will enable this service - considering the context descrived above - on the path '/api/discover/:version'. Sending a get request to - lets say - this path 
+This will enable this service - considering the context descrived above - on the path '/api/discover/:version'. Sending a get request to - lets say - this path
 
 	http://localhost:8080/api/discover/3.0.0
 
@@ -262,7 +262,7 @@ The assign-methods allows you to pass a third parameter, an object which can be 
 
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN, {'title': 'Alice in Wonderland'} );
 
-That parameter debriefs the client what structure the functionN expects to receive. 
+That parameter debriefs the client what structure the functionN expects to receive.
 To activate this feature, first you have to add a new attribute to the options object:
 
 	var options = {
@@ -276,8 +276,8 @@ This 'protoPath' means that sending a request to the server on path:
 
 	'/api/proto/POST/2.3.0/api/twist?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'
 
-will retrieve the object 
-	
+will retrieve the object
+
 	{'title': 'Alice in Wonderland'}
 
 because the service
@@ -322,7 +322,7 @@ or
 	};
 
 You can set:
-- a string, which will be interpret as the name of the logger seen in the logs, or 
+- a string, which will be interpret as the name of the logger seen in the logs, or
 - passing a bunyan instance to be used.
 
 In the absence of 'logger' property, no logs will be made.
@@ -331,7 +331,7 @@ The [connect-rest](https://github.com/imrefazekas/connect-rest) will use level '
 [Back to Feature list](#features)
 
 ## Reflective publishing
-[connect-rest](https://github.com/imrefazekas/connect-rest) allows you to have an extremely easy and fast way to publish your services. 
+[connect-rest](https://github.com/imrefazekas/connect-rest) allows you to have an extremely easy and fast way to publish your services.
 
 You can define your own services like this in a file (services.js in this example):
 
@@ -351,16 +351,16 @@ and publish them this way:
 	rest.publish( services );
 
 This will discover all functions assigned to the exports having a name which conforms the following regular expression:
-	
+
 	/^[a-zA-Z]([a-zA-Z]|\d|_)*$/g
 
-The logic is simple. If the function has 
+The logic is simple. If the function has
 - 1 parameter: it will be a 'get' method
 - 2 parameters: it will be a 'post' method
 
 and the path will be its name. So, by executing one single statement you will automatically have the following services:
 
-	/health on Get 
+	/health on Get
 	/record on Post
 
 If you have 100 services defined, then 100 rest api you will have automatically. Nice.
@@ -379,7 +379,7 @@ If you have 100 services defined, then 100 rest api you will have automatically.
 		discoverPath: 'discover',
 		protoPath: 'proto',
 		logger: 'connect-rest',
-		domain: restDomain 
+		domain: restDomain
 	};
 
 By passing the restDomain object, [connect-rest](https://github.com/imrefazekas/connect-rest) will assign req and rest object to that domain and in any occurring error, it will be sent to the caller with HTTP status code 500.
@@ -390,7 +390,7 @@ By passing the restDomain object, [connect-rest](https://github.com/imrefazekas/
 
 When assigning routes with rest API you can pass an object too. This object looks like this:
 
-	{ 
+	{
 		contentType: ''
 		validator: ...
 	}
@@ -424,21 +424,14 @@ This process is performed behind the scenes, you do not have do anything special
 			populateInterval: 6000,
 			console: true,
 			listener: function(data){ ... }
-			, newrelic: {
-				platformApiUri: 'https://platform-api.newrelic.com/platform/v1/metrics',
-				licenseKey: 'XXX',
-				pluginName: 'org.vii.connectrest.performancePlugin'
-			}
 		}
 	};
 
 By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs.
 
-The property _console_ - if present - will print the commulated execution times grouped/structured by paths and version to the console. 
+The property _console_ - if present - will print the commulated execution times grouped/structured by paths and version to the console.
 
 The property _listener_ - if present - allows you to pass a function which the populated data will be sent to. This way you can define own function to process the collected measurements.
-
-The property _newrelic_ - if present - activates the [newrelic](https://newrelic.com) services posting all metrics to the newrelic server. You have to give your license key to make it work properly. 
 
 Note: [newrelic](https://newrelic.com) support is preliminary at this moment. Will be improved by time...
 
@@ -447,7 +440,7 @@ Note: [newrelic](https://newrelic.com) support is preliminary at this moment. Wi
 
 	var connect = require('connect');
 	var rest = require('connect-rest');
-	
+
 	var connectApp = connect();
 
 	connectApp.use( connect.query() );
@@ -467,7 +460,7 @@ Note: [newrelic](https://newrelic.com) support is preliminary at this moment. Wi
 	rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
 
 	rest.post( [ '/act', '/do' ], functionN2 );
-	
+
 	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN3 );
 
 [Back to Feature list](#features)
@@ -512,14 +505,14 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 - 0.0.28.29: a case when mandatory parameter follows optional(s) has been fixed
 - 0.0.26-27: async request fix
 - 0.0.23-25: small fix for content type management
-- 0.0.22: response header customization added 
-- 0.0.21: 
+- 0.0.22: response header customization added
+- 0.0.21:
 	- async rest calling allowed by passing a http parameter: callbackURL
 	- and some logging fixes
 - 0.0.20: callback/next function passed to the services methods can receive third parameter: statusCode setting the http status of the response
 - 0.0.19: assign function introduced for bulk http-method assignments for a given rest function
 - 0.0.18: fixes
-- 0.0.16: 
+- 0.0.16:
 	- better optional parameter handling allowing to use optional parameter chain like: /set/?depoartment/?room
 	- rewritten assing services. instead of passing a single validator, one has to pass on optional object: { contentType: '', validator: ...} which allows one to define validator and answer return content mime-type as well.
 - 0.0.15 : Great changes from Joel Grenon, thank you! Standard callbacks introduced, better optional parameter handling and respecting error status code if exists

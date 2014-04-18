@@ -56,11 +56,6 @@ serverDomain.run(function() {
 			populateInterval: 6000,
 			console: false,
 			listener: function(data){ console.log( '%j', data); }
-			/*, newrelic: {
-				platformApiUri: 'https://platform-api.newrelic.com/platform/v1/metrics',
-				licenseKey: 'XXX',
-				pluginName: 'org.vii.connectrest.performancePlugin'
-			}*/
 		}
 	};
 	connectApp.use( rest.rester( options ) );
@@ -78,4 +73,3 @@ serverDomain.run(function() {
 		value( { done: function(){ console.log('Done.', arguments); } } );
 	} );
 });
-
