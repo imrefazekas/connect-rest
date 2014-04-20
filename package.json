@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "0.9.6",
+  "version": "0.9.7",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -38,14 +38,14 @@
     "semver": "~2"
   },
   "devDependencies": {
-    "grunt": "~0.4",
-    "grunt-contrib-jshint": "latest",
-    "grunt-contrib-connect": "latest",
-    "grunt-contrib-nodeunit": "latest",
-    "should": "~3"
+    "chai": "latest",
+    "gulp": "latest",
+    "gulp-jshint": "latest",
+    "gulp-load-plugins": "latest",
+    "gulp-mocha": "latest"
   },
   "engines": {
     "node": ">= 0.10.0"
   },
-  "_id": "connect-rest@0.9.6"
+  "_id": "connect-rest@0.9.7"
 }
