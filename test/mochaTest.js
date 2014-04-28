@@ -23,7 +23,7 @@ describe("connect-rest", function () {
 
 		var options = {
 			context: '/api',
-			logger:{ name: 'test', level: 'info' },
+			logger:{ file: 'test.log', level: 'debug' },
 			apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 			discoverPath: 'discover',
 			protoPath: 'proto'
