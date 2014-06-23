@@ -2,7 +2,9 @@ CONNECT-REST - Exceptionally featureful Restful web services middleware for conn
 
 [![NPM](https://nodei.co/npm/connect-rest.png)](https://nodei.co/npm/connect-rest/)
 
-__Important__ : [connect-rest](https://github.com/imrefazekas/connect-rest) __>v1.0__ and above is compatible with [connect](http://www.senchalabs.org/connect/) __>v3.0__ and above only and all examples below are complying with this rule! For [connect](http://www.senchalabs.org/connect/) __v2__, please use the version __0.9.14__ of [connect-rest](https://github.com/imrefazekas/connect-rest)!
+__Important__ : [connect-rest](https://github.com/imrefazekas/connect-rest) __>v1.0__ is compatible with [connect](http://www.senchalabs.org/connect/) __>v3.0__. All examples/tests are complying with this rule!
+
+For [connect](http://www.senchalabs.org/connect/) __v2__, please use the version __0.9.14__ of [connect-rest](https://github.com/imrefazekas/connect-rest)!
 
 ========
 [connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality.
