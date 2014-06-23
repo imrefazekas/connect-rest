@@ -2,6 +2,8 @@ CONNECT-REST - Exceptionally featureful Restful web services middleware for conn
 
 [![NPM](https://nodei.co/npm/connect-rest.png)](https://nodei.co/npm/connect-rest/)
 
+__Important__ : [connect-rest](https://github.com/imrefazekas/connect-rest) __>v1.0__ and above is compatible with [connect](http://www.senchalabs.org/connect/) __>v3.0__ and above only and all examples below are complying with this rule! For [connect](http://www.senchalabs.org/connect/) __v2__, please use the version __0.9.14__ of [connect-rest](https://github.com/imrefazekas/connect-rest)!
+
 ========
 [connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality.
 
@@ -18,7 +20,8 @@ Just a few examples: (far from incomplete):
 - __async services__: a rest service can call back asynchronously when the answer is made
 - __monitoring/measuring__: every rest service execution can be enabled for measurement to be collected and populated internally or for external monitoring solutions
 
-__!Note__: connect-rest's concept is - as for integration - to provide a connect plugin and to be a framework for your rest services carrying only about content and business logic, nothing else. However, in case of need for interoperability, the need might cause you to use only the path-related features alone. This can be done using [dispatchers](#dispatchers).
+
+__!Note__: connect-rest's concept is to provide a feature-full connect middleware for your rest services carrying only about content and business logic, nothing else. However, in case of need for interoperability, the need might cause you to use only the path-related features alone. This can be done using [dispatchers](#dispatchers).
 
 # Usage
 
@@ -59,26 +62,26 @@ The aim is to give a really feature-rich tool allowing you to focus on the busin
 ## Quick setup
 
 	// requires connect and connect-rest middleware
-	var connect = require('connect');
+	var connect = require('connect'),
+	bodyParser = require('body-parser');
+
 	var rest = require('connect-rest');
 
 	// sets up connect and adds other middlewares to parse query, parameters, content and session
 	// use the ones you need
 	var connectApp = connect();
-		.use( connect.query() )
-		.use( connect.session( { ... } ) )
-		.use( connect.urlencoded() )
-		.use( connect.json() )
+		.use( bodyParser.urlencoded( { extended: true } ) )
+		.use( bodyParser.json() )
 	;
 
 	// initial configuration of connect-rest. all-of-them are optional.
 	// default context is /api, all services are off by default
 	var options = {
-		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ], // to set up api-key restriction
-		discoverPath: 'discover', // activates discovery service
-		protoPath: 'proto', // activates prototype service
-		logger:{ name: 'your appname', level: 'info' }, // activates logger
-		context: '/api' // general context used for URIs of connect-rest
+		context: '/api',
+		logger:{ file: 'mochaTest.log', level: 'debug' },
+		apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+		discoverPath: 'discover',
+		protoPath: 'proto'
 	};
 
 	// adds connect-rest middleware to connect
@@ -671,7 +674,8 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
-- 0.9.1: fixes...
+- 1.0.0: Switch to connect v3!
+- 0.9.x: fixes...
 - 0.9.0: context specification at REST function level is allowed.
 - 0.8.x: fixes...
 - 0.8.0: protector introduced

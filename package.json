@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "0.9.14",
+  "version": "1.0.0",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -30,22 +30,29 @@
   "main": "./lib/connect-rest.js",
   "dependencies": {
     "async": "latest",
-    "winston": "latest",
-    "connect": "~2",
+    "connect": "~3",
     "lodash": "latest",
+    "parseurl": "latest",
+    "qs": "latest",
+    "semver": "~2",
     "underscore.string": "latest",
-    "qs": "~0.6",
-    "semver": "~2"
+    "winston": "latest"
   },
   "devDependencies": {
+    "body-parser": "latest",
     "chai": "latest",
+    "compression": "latest",
+    "connect-timeout": "latest",
+    "cookie-parser": "latest",
+    "cookie-session": "latest",
     "gulp": "latest",
     "gulp-jshint": "latest",
     "gulp-load-plugins": "latest",
-    "gulp-mocha": "latest"
+    "gulp-mocha": "latest",
+    "serve-static": "latest"
   },
   "engines": {
     "node": ">= 0.10.0"
   },
-  "_id": "connect-rest@0.9.14"
+  "_id": "connect-rest@1.0.0"
 }

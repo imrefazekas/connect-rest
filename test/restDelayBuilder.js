@@ -5,6 +5,7 @@ function buildUpRestAPI( rest ){
 		console.log( 'Received:' + JSON.stringify( request ) );
 		return 'ok';
 	});
+
 	rest.get('/empty', function( request ){ var delay = Math.round( Math.random() * 100 + 50 );
 		console.log( 'Received:' + JSON.stringify( request ) );
 		return '';

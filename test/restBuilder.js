@@ -5,6 +5,7 @@ function buildUpRestAPI( rest ){
 		console.log( 'Received:' + request.format() );
 		return 'ok';
 	});
+
 	rest.get('/empty', function( request ){
 		console.log( 'Received:' + request.format() );
 		return '';
@@ -75,7 +76,7 @@ function buildUpRestAPI( rest ){
 
 function getDispatcher(rest){
 	return rest.dispatcher( 'GET', '/dispatcher/:subject', function(req, res, next){
-		res.end( 'Dispatch call made:' + req.params['subject'] );
+		res.end( 'Dispatch call made:' + req.params.subject );
 	} );
 }
 
