@@ -70,6 +70,19 @@ describe("connect-rest", function () {
 			);
 		});
 
+		it('GET for Proxied "empty" service call is', function(done){
+			httphelper.generalCall( 'http://localhost:8080/api/proxyEmpty', 'GET', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
+				function(err, result, status){
+					should.not.exist(err);
+					should.exist(result);
+
+					console.log( result );
+
+					done( );
+				}
+			);
+		});
+
 		it('mandatory parameter mapping is', function(done){
 			httphelper.generalCall( 'http://localhost:8080/api/books/AliceInWonderland/1', 'GET', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
 				function(err, result, status){

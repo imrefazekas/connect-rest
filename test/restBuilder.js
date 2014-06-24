@@ -10,6 +10,9 @@ function buildUpRestAPI( rest ){
 		console.log( 'Received:' + request.format() );
 		return '';
 	});
+
+	rest.proxy( 'get', '/proxyEmpty', 'http://localhost:8080/api/empty', { bypassHeader: true } );
+
 	rest.get('/books/:title/:chapter', function( request ){
 		console.log( 'Received:' + request.format() );
 		return request.parameters;

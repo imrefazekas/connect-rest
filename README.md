@@ -14,6 +14,7 @@ Just a few examples: (far from incomplete):
 - __versioning__: rest services can be versioned via many ways
 - __regular expressions__: path description can be given using regular expression
 - __parameter mappings__: path matchings can be bound as parameters
+- __proxy services__: proxying incoming requests to a remote point passing parameters, headers as you request
 - __service discovery__: built-in rest service allowing one to discover what rest services are available in general or for a given version
 - __"reflective" publishing__: by providing a single object, its methods will be published as rest services automatically by simple logic
 - __dynamic API protection__ by Protectors
@@ -41,6 +42,7 @@ The aim is to give a really feature-rich tool allowing you to focus on the busin
 - [Path description](#path-description)
 - [Versioning](#versioning)
 - [Rest functions](#rest-functions)
+- [Proxy rest services](#proxy-rest-services)
 - [Customize HTTP response](customize-http-response)
 - [Customize answers of REST functions](#customize-answers-of-rest-functions)
 - [API_KEY management](#api_key-management)
@@ -261,6 +263,31 @@ If callback is used as third parameter, needs to be called and pass the error or
 	});
 
 The async way is __strongly encouraged__ to be used unless you have something really computation-free function...
+
+[Back to Feature list](#features)
+
+
+## Proxy Rest Services
+
+One can define proxying REST services easily using [connect-rest](https://github.com/imrefazekas/connect-rest) as follows:
+
+	rest.proxy( 'get', '/proxyEmpty', 'http://just-another-site.com:8080/api/empty', { } );
+
+This will create a REST service on path _'[context]/proxyEmpty'_ answering _'GET'_ calls and proxying all calls to a remote point: _'http://just-another-site.com:8080/api/empty'_.
+
+By default all request parameters will be also sent without any modification. You can prevent this if you set the attribute _'ignoreQuery'_ in the last parameter as follows:
+
+	rest.proxy( 'get', '/proxyEmpty', 'http://just-another-site.com:8080/api/empty', { ignoreQuery: true } );
+
+Considering the wide range of REST calls might look like, it could be useful to bypass all headers to the remote site as the following code shows:
+
+	rest.proxy( 'get', '/proxyEmpty', 'http://just-another-site.com:8080/api/empty', { bypassHeader: true } );
+
+This will send further all API_KEYS and other header set for a request sent to this service.
+
+Of course the need to use different headers might appear when proxying a request to a remote/foreign point, so you can define your own headers as well:
+
+	rest.proxy( 'get', '/proxyEmpty', 'http://just-another-site.com:8080/api/empty', { remoteHeaders: { /* key-pairs here */ } } );
 
 [Back to Feature list](#features)
 
@@ -676,6 +703,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 1.1.0: Proxies added
 - 1.0.0: Switch to connect v3!
 - 0.9.x: fixes...
 - 0.9.0: context specification at REST function level is allowed.
