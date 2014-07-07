@@ -43,7 +43,7 @@ The aim is to give a really feature-rich tool allowing you to focus on the busin
 - [Versioning](#versioning)
 - [Rest functions](#rest-functions)
 - [Proxy rest services](#proxy-rest-services)
-- [Customize HTTP response](customize-http-response)
+- [Customize HTTP response](#customize-http-response)
 - [Customize answers of REST functions](#customize-answers-of-rest-functions)
 - [API_KEY management](#api_key-management)
 - [Unprotected rest service](#unprotected-rest-service)
@@ -263,6 +263,31 @@ If callback is used as third parameter, needs to be called and pass the error or
 	});
 
 The async way is __strongly encouraged__ to be used unless you have something really computation-free function...
+
+The result object can be the followings:
+
+- String
+- Buffer
+- Stream
+- Function
+
+Buffers are converted to Strings or JSONs depending on the mime-types. (see the [Customize HTTP response](#customize-http-response) )
+	
+	rest.get('/handlers/buffer', function( request, content, callback ){
+		return callback(null, new Buffer( 'ok', 'utf-8') );
+	});
+
+Streams are read to a buffer and returned as strings.
+
+	rest.get('/handlers/stream', function( request, content, callback ){
+		return callback(null, fs.createReadStream( './test/data/answer.text', { encoding : 'utf-8'} ) );
+	});
+
+Functions must be async, the callback of their execution must define the String to be sent back.
+
+	rest.get('/handlers/function', function( request, content, callback ){
+		return callback(null, function( cb ){ cb( null, 'ok' ); } );
+	});
 
 [Back to Feature list](#features)
 
@@ -703,6 +728,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 1.2.0: Stream, Buffer and Function can be set as return object
 - 1.1.0: Proxies added
 - 1.0.0: Switch to connect v3!
 - 0.9.x: fixes...
