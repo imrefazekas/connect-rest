@@ -304,6 +304,7 @@ describe("connect-rest", function () {
 				}
 			);
 		});
+
 	});
 
 	after(function(done){

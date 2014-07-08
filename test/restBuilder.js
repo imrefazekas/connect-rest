@@ -84,7 +84,7 @@ function buildUpRestAPI( rest ){
 	rest.get('/handlers/buffer', function( request, content, callback ){
 		console.log( 'Received:' + request.format() );
 		return callback(null, new Buffer( 'ok', 'utf-8') );
-	});
+	}, { contentType:'application/text' } );
 	rest.get('/handlers/stream', function( request, content, callback ){
 		console.log( 'Received:' + request.format() );
 		return callback(null, fs.createReadStream( './test/data/answer.text', { encoding : 'utf-8'} ) );
