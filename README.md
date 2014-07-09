@@ -728,6 +728,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 1.2.x: fixes...
 - 1.2.0: Stream, Buffer and Function can be set as return object
 - 1.1.0: Proxies added
 - 1.0.0: Switch to connect v3!
