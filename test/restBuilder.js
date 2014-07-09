@@ -85,9 +85,9 @@ function buildUpRestAPI( rest ){
 		console.log( 'Received:' + request.format() );
 		return callback(null, new Buffer( 'ok', 'utf-8') );
 	}, { contentType:'application/text' } );
-	rest.get('/handlers/stream', function( request, content, callback ){
+	rest.get('/handlers/stream/:file', function( request, content, callback ){
 		console.log( 'Received:' + request.format() );
-		return callback(null, fs.createReadStream( './test/data/answer.text', { encoding : 'utf-8'} ) );
+		return callback(null, fs.createReadStream( './test/data/'+ request.params.file +'.text', { encoding : 'utf-8'} ), {statusCode:201} );
 	});
 }
 

@@ -293,12 +293,22 @@ describe("connect-rest", function () {
 		});
 
 		it('stream result type is ', function(done){
-			httphelper.generalCall( 'http://localhost:8080/api/handlers/stream', 'GET', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
+			httphelper.generalCall( 'http://localhost:8080/api/handlers/stream/answer', 'GET', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
 				function(err, result, status){
 					should.not.exist(err); should.exist(result);
 
-					should.equal(status.statusCode, 200);
+					should.equal(status.statusCode, 201);
 					should.equal(result, 'ok');
+
+					done( );
+				}
+			);
+		});
+
+		it('failing stream result type is ', function(done){
+			httphelper.generalCall( 'http://localhost:8080/api/handlers/stream/answerFail', 'GET', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
+				function(err, result, status){
+					should.equal(status.statusCode, 500);
 
 					done( );
 				}
