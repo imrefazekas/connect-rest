@@ -132,6 +132,11 @@ Example:
 	// bind the service funciont to only the given http request types
 	rest.assign( ['head','get','post'], [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
 
+#### Reflective assignement
+
+See chapter for details: [Reflective publishing](#reflective-publishing)
+
+
 #### parameters
 
 After each assign function you might need to pass the followings:
@@ -141,6 +146,17 @@ After each assign function you might need to pass the followings:
 ## Path description
 [connect-rest](https://github.com/imrefazekas/connect-rest) supports many options to be used as path description.
 
+Of course simple paths can be defined as follows:
+
+	rest.get('/user/profile', functionN0 );
+
+But I guess you are interested in more complex solutions. Please, fing them below:
+
+### Regular expression
+
+	rest.get( /^\/[tT]([a-zA-Z]){4}$/g, functionN0 );
+
+This will match to URIs of _'/api/tAbba'_ but won't to _'/api/t1abcd8'_.
 
 ### Named parameters
 
@@ -156,6 +172,7 @@ In this case, whatever string is after the 'books', will be interpret as variabl
 So sending a get request to the uri '/api/books/AliceInWonderland/1', will result the following request object:
 
 	{"headers": ...,"parameters":{"title":"AliceInWonderland", "chapter": "1"}}
+
 
 ### Optional parameter
 
@@ -207,6 +224,17 @@ The character '*' can be used for both path and version too to make generic bind
 	{ path: '*', version: '*' }
 
 Be aware, that this path will be matched to all paths within the defined context.
+
+
+### Range matcher
+
+	rest.get( '/convert/@format', function( request, content, callback ){
+		return callback( null, 'ok' );
+	}, { format:[ 'euro', 'usd', 'huf' ] } );
+
+This definition creates a rest service answering to GET requests if the format part of the URI is contained by the array in the option object. The character _'@'_ tells the [connect-rest](https://github.com/imrefazekas/connect-rest) to match the parameter _'format'_ to the array called by the same name.
+
+By calling this service with the following URI _'/api/convert/usd'_ will be executed, but calling with _'/api/convert/gbp'_ no rest will be called and 404 will be returned.
 
 
 ### Special assigns:
@@ -539,6 +567,7 @@ The [connect-rest](https://github.com/imrefazekas/connect-rest) will use level '
 
 [Back to Feature list](#features)
 
+
 ## Reflective publishing
 [connect-rest](https://github.com/imrefazekas/connect-rest) allows you to have an extremely easy and fast way to publish your services.
 
@@ -728,6 +757,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 1.3.0: range-based mapping added
 - 1.2.x: fixes...
 - 1.2.0: Stream, Buffer and Function can be set as return object
 - 1.1.0: Proxies added

@@ -89,6 +89,16 @@ function buildUpRestAPI( rest ){
 		console.log( 'Received:' + request.format() );
 		return callback(null, fs.createReadStream( './test/data/'+ request.params.file +'.text', { encoding : 'utf-8'} ), {statusCode:201} );
 	});
+
+	rest.get( '/convert/@format', function( request, content, callback ){
+		console.log( 'Received:' + request.format() );
+		return callback( null, 'ok' );
+	}, { format:[ 'euro', 'usd', 'huf' ] } );
+
+	rest.get( /^\/[tT]([a-zA-Z]){4}$/g, function( request, content, callback ){
+		console.log( 'Received:' + request.format() );
+		return callback( null, 'regular' );
+	} );
 }
 
 function getDispatcher(rest){
