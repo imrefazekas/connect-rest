@@ -300,7 +300,7 @@ The result object can be the followings:
 - Function
 
 Buffers are converted to Strings or JSONs depending on the mime-types. (see the [Customize HTTP response](#customize-http-response) )
-	
+
 	rest.get('/handlers/buffer', function( request, content, callback ){
 		return callback(null, new Buffer( 'ok', 'utf-8') );
 	});
@@ -731,7 +731,7 @@ __Tip:__ To manage all calls not handled by connect-rest could be also important
 
 (The MIT License)
 
-Copyright (c) 2013 Imre Fazekas
+Copyright (c) 2014 Imre Fazekas
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -757,6 +757,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 1.4.0: logging rewritten
 - 1.3.0: range-based mapping added
 - 1.2.x: fixes...
 - 1.2.0: Stream, Buffer and Function can be set as return object
