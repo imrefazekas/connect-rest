@@ -99,6 +99,11 @@ function buildUpRestAPI( rest ){
 		console.log( 'Received:' + request.format() );
 		return callback( null, 'regular' );
 	} );
+
+	rest.get( { path: '/', context:'', unprotected: true }, function( request, content, callback ){
+		console.log( 'Received:' + request.format() );
+		return callback( null, 'Done.' );
+	}, { contentType:'text/html' } );
 }
 
 function getDispatcher(rest){

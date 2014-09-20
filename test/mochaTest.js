@@ -47,7 +47,6 @@ describe("connect-rest", function () {
 	});
 	// function(serverURL, method, headers, err, result, mimetype, logger, callback){
 	describe("rest", function () {
-
 		it('HEAD call is', function(done){
 			httphelper.generalCall( 'http://localhost:8080/api/peek', 'HEAD', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
 				function(err, result, status){
@@ -346,6 +345,18 @@ describe("connect-rest", function () {
 
 					should.equal(status.statusCode, 200);
 					should.equal(result, 'regular');
+
+					done( );
+				}
+			);
+		});
+
+		it('Index.html short path is ', function(done){
+			httphelper.generalCall( 'http://localhost:8080/', 'GET', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
+				function(err, result, status){
+					should.not.exist(err); should.exist(result);
+
+					should.equal(status.statusCode, 200);
 
 					done( );
 				}
