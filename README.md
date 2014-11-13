@@ -52,6 +52,7 @@ The aim is to give a really feature-rich tool allowing you to focus on the busin
 - [Orchestrating the contexts](#orchestrating-the-contexts)
 - [Discover services](#discover-services)
 - [Prototype services](#prototype-services)
+- [Remove services](#remove-services)
 - [Logging](#logging)
 - [Reflective publishing](#reflective-publishing)
 - [Domain support](#domain-support)
@@ -541,6 +542,27 @@ Giving access method, version and path is mandatory for this feature.
 [Back to Feature list](#features)
 
 
+## Remove services
+One can remove a published service by calling the following function:
+
+	rest.unpost( '/shake' );
+
+That code removes all REST services which would be fired by calling with the URI _'/shake'_.
+The same path matching logic is used to determine if a given REST function should be removed.
+
+Every publishing method available in [connect-rest](https://github.com/imrefazekas/connect-rest) has a removing-pair function:
+
+	unpost, undel, unget ... unassign
+
+There is a second parameter if you want to specify the version of the services you would like to remove:
+
+	rest.unpost( '/shake', 1.0.0 );
+
+... unlinking the service answering to the given URI with the given version.
+
+[Back to Feature list](#features)
+
+
 ## Logging
 In the option object passed to the constructor, there is an optional parameter 'logger', which enables the logging functionality:
 
@@ -757,6 +779,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 1.5.0: remove rest function
 - 1.4.0: logging rewritten
 - 1.3.0: range-based mapping added
 - 1.2.x: fixes...
