@@ -100,6 +100,15 @@ function buildUpRestAPI( rest ){
 		return callback( null, 'regular' );
 	} );
 
+	rest.get( { path : '/ships', unprotected: true }, function(req, content, callback){
+		console.log("Looking for ships..." );
+		callback( null, 'Done.' );
+	});
+	rest.get( { path : '/ships/id/:id', unprotected : true }, function(req, content, callback){
+		console.log("Looking for ship ID " + req.params.id);
+		callback( null, 'Done.' );
+	});
+
 	rest.get( { path: '/', context:'', unprotected: true }, function( request, content, callback ){
 		console.log( 'Received:' + request.format() );
 		return callback( null, 'Done.' );
