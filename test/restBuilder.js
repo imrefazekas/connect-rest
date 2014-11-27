@@ -109,6 +109,12 @@ function buildUpRestAPI( rest ){
 		callback( null, 'Done.' );
 	});
 
+	rest.get( { path : '/looper', unprotected : true }, function(req, content, callback){
+		setTimeout( function(){
+			callback( null, 'Done.' );
+		}, 2000);
+	}, { contentType:'text/html' } );
+
 	rest.get( { path: '/', context:'', unprotected: true }, function( request, content, callback ){
 		console.log( 'Received:' + request.format() );
 		return callback( null, 'Done.' );

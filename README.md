@@ -491,7 +491,7 @@ __You can orchestrate the contexts of your architecture as it pleases you.__
 [connect-rest](https://github.com/imrefazekas/connect-rest) provides a built-in service: discover. Via a simple get request, it allows you - by specifying a version - to discover the plublished REST apis matching the given version.
 
 	var options = {
-	    'discoverPath': 'discover'
+		'discoverPath': 'discover'
 	};
 	connectApp.use( rest.rester( options ) );
 
@@ -518,10 +518,10 @@ That parameter debriefs the client what structure the functionN expects to recei
 To activate this feature, first you have to add a new attribute to the options object:
 
 	var options = {
-	    'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-	    'discoverPath': 'discover',
-	    'protoPath': 'proto',
-	    'logger': 'connect-rest'
+		'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+		'discoverPath': 'discover',
+		'protoPath': 'proto',
+		'logger': 'connect-rest'
 	};
 
 This 'protoPath' means that sending a request to the server on path:
@@ -567,17 +567,17 @@ There is a second parameter if you want to specify the version of the services y
 In the option object passed to the constructor, there is an optional parameter 'logger', which enables the logging functionality:
 
 	var options = {
-    	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-    	'discoverPath': 'discover',
-    	'logger': 'connect-rest'
+		'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+		'discoverPath': 'discover',
+		'logger': 'connect-rest'
 	};
 
 or
 
 	var options = {
-	    'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-	    'discoverPath': 'discover',
-	    'logger': loggerInstance
+		'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+		'discoverPath': 'discover',
+		'logger': loggerInstance
 	};
 
 You can set:

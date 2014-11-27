@@ -14,7 +14,7 @@ var httphelper = require('../lib/http-helper');
 
 var app = connect()
 	.use( compression() )
-	.use( timeout( 5000 ) )
+	.use( timeout( 2000 ) )
 	.use( cookieParser( 'secretPass' ) )
 	.use( cookieSession( {
 		name: 'demo.sid',
@@ -31,7 +31,8 @@ var options = {
 	logger:{ file: 'mochaTest.log', level: 'debug' },
 	apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 	discoverPath: 'discover',
-	protoPath: 'proto'
+	protoPath: 'proto',
+	loose: { after: 1000 }
 };
 app.use( rest.rester( options ) );
 app.use( restBuilder.getDispatcher( rest ) );
