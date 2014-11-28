@@ -74,10 +74,9 @@ var rest = require('connect-rest');
 
 // sets up connect and adds other middlewares to parse query, parameters, content and session
 // use the ones you need
-var connectApp = connect();
-.use( bodyParser.urlencoded( { extended: true } ) )
-.use( bodyParser.json() )
-;
+var connectApp = connect()
+	.use( bodyParser.urlencoded( { extended: true } ) )
+	.use( bodyParser.json() );
 
 // initial configuration of connect-rest. all-of-them are optional.
 // default context is /api, all services are off by default
