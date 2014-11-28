@@ -82,11 +82,11 @@ var connectApp = connect();
 // initial configuration of connect-rest. all-of-them are optional.
 // default context is /api, all services are off by default
 var options = {
-context: '/api',
-logger:{ file: 'mochaTest.log', level: 'debug' },
-apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-discoverPath: 'discover',
-protoPath: 'proto'
+	context: '/api',
+	logger:{ file: 'mochaTest.log', level: 'debug' },
+	apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+	discoverPath: 'discover',
+	protoPath: 'proto'
 };
 
 // adds connect-rest middleware to connect
