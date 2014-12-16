@@ -1,4 +1,6 @@
-var should = require("chai").should();
+var chai = require('chai'),
+	should = chai.should(),
+	expect = chai.expect;
 var http = require('http');
 
 var connect = require('connect');
