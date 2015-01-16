@@ -694,25 +694,38 @@ and the path will be its name. So, by executing one single statement you will au
 If you have 100 services defined, then 100 rest api you will have automatically. Nice.
 
 ## Domain support
-[connect-rest](https://github.com/imrefazekas/connect-rest) adds support for domain-based error handling. To the options object you can pass a domain too:
+[connect-rest](https://github.com/imrefazekas/connect-rest) adds support for domain-based error handling. To the options object you can pass a boolean value requesting the lib to create domain as  [NodeJS docs defines](http://nodejs.org/api/domain.html#domain_domain):
 
 ```javascript
-var createDomain = require('domain').create;
-...
-var superDomain = createDomain();
-...
-var restDomain = createDomain();
-superDomain.add( restDomain );
 var options = {
 	apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 	discoverPath: 'discover',
 	protoPath: 'proto',
 	logger: 'connect-rest',
-	domain: restDomain
+	domain: true
 };
 ```
 
-By passing the restDomain object, [connect-rest](https://github.com/imrefazekas/connect-rest) will assign req and rest object to that domain and in any occurring error, it will be sent to the caller with HTTP status code 500.
+or you can have a more sophisticated version by passing a complete object as follows:
+
+
+```javascript
+var options = {
+	apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
+	discoverPath: 'discover',
+	protoPath: 'proto',
+	logger: 'connect-rest',
+	domain: {
+		closeWorker: function(req, res){... },
+		closeRequest: function(req, res){... }
+	}
+};
+```
+
+Where the function __closeWorker__ is an optional function which is called when error occurred and supposed to close the current worker instance if app is running in a node cluster.
+
+The function __closeRequest__ is an optional function which is called to close the request object on error if you want to perform custom response message. By default [connect-rest](https://github.com/imrefazekas/connect-rest) sets the error code 500 and returns a simple error message 'There was a problem!'.
+
 
 [Back to Feature list](#features)
 
