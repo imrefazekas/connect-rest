@@ -31,7 +31,8 @@ describe("connect-rest", function () {
 			logger:{ file: 'mochaTest.log', level: 'debug' },
 			apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 			discoverPath: 'discover',
-			protoPath: 'proto'
+			protoPath: 'proto',
+			domain: true
 		};
 		app.use( rest.rester( options ) );
 		app.use( restBuilder.getDispatcher( rest ) );
