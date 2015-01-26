@@ -6,10 +6,10 @@ __Important__ : [connect-rest](https://github.com/imrefazekas/connect-rest) __>v
 
 For [connect](http://www.senchalabs.org/connect/) __v2__, please use the version __0.9.14__ of [connect-rest](https://github.com/imrefazekas/connect-rest)!
 
+Version 1.7.0 is not fully compatible with 1.6.x and below due to the redesigned protector concept.
+
 ========
 [connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality.
-
-__!Note__: Version 1.7.0 is not fully compatible with 1.6.x and below due to the redesigned protector concept.
 
 Just a few examples: (far from incomplete):
 - __execution branches__: a single service can have multiple paths and a single incoming request can invoke multiple services
