@@ -480,10 +480,11 @@ Protector is a function which can be passed when creating a rest services and de
 So the protector function called in every rest call when the given path is evaluated and matched and boolean return value of the function tells to the [connect-rest](https://github.com/imrefazekas/connect-rest) to allow the rest function's execution to take place or blocked by some security reason.
 
 ```javascript
-rest.get( { path: '/special', protector: function(req, pathname, version){ return true; } }, functionN0);
+rest.get( { path: '/special', protector: function( req, res, pathname, path, callback ){ callback(); } }, functionN0);
 ```
 
-The _req_ object, the _pathname_ and api call _version_ is passed and the returning boolean version tells if call is allowed to be performed.
+A protector function receives all parameters to able to respond the query the case requires it. For example an A&A protector should manage the necessary measurements and might drop the request.
+Remember: it is designed to be async, the callback should be used to notify the [connect-rest](https://github.com/imrefazekas/connect-rest) if the protector handled the request or the process can performed forward. By passing a single exception as first parameter, the REST service won't be called, and it will be considered as "terminated" by the protector itself.
 You can have such functions to define session-based dynamic protection or differentiate between widely available rest calls and restricted business-sensitive feature.
 
 [Back to Feature list](#features)

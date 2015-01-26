@@ -31,7 +31,7 @@ function buildUpRestAPI( rest ){
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) );
 		return callback(null, request.params, { minify: true } );
 	});
-	rest.get( { path: '/eset/?rid/?facet', version: '*', protector: function(){ return true; } }, function( request, content, callback ){
+	rest.get( { path: '/eset/?rid/?facet', version: '*', protector: function( req, res, pathname, path, callback ){ callback(); } }, function( request, content, callback ){
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) );
 		return callback(null, request.params, { minify: true } );
 	});
