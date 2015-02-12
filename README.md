@@ -467,6 +467,17 @@ So having such option, a call should look like this:
 
 otherwise error response will be sent with status code 401 claiming: 'API_KEY is required.'.
 
+You can restrict access on service-level. When you call
+
+```javascript
+rest.get( { path: '/shake', version: '>=2.0.0' }, function( request, content ){
+	return 'OK';
+}, { apiKeys:['1234-1234-1234-1234'] } );
+```
+
+That will require to use the API_KEY _'1234-1234-1234-1234'_ when call that REST service.
+This will help you refine your access control on service basis.
+
 
 ## Unprotected REST service
 When you are using API_KEYs, you still might want to have 'exceptions'.
