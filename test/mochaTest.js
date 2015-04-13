@@ -165,7 +165,8 @@ describe("connect-rest", function () {
 					should.not.exist(err); should.exist(result);
 					should.equal(status.statusCode, 201);
 
-					result.ids.should.eql( ['8','9'] );
+					console.log( '>>>>', result );
+					result['ids[]'].should.eql( ['8','9'] );
 
 					done( );
 				}
