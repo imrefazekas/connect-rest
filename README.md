@@ -1,5 +1,7 @@
 CONNECT-REST - Exceptionally featureful Restful web services middleware for connect node.js
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/imrefazekas/connect-rest?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+
 [![NPM](https://nodei.co/npm/connect-rest.png)](https://nodei.co/npm/connect-rest/)
 
 __Important__ : [connect-rest](https://github.com/imrefazekas/connect-rest) __>v1.0__ is compatible with [connect](http://www.senchalabs.org/connect/) __>v3.0__. All examples/tests are complying with this rule!
