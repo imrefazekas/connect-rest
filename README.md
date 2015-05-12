@@ -889,6 +889,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 1.8.0: OPTIONS method supported
 - 1.6.0: REST services can possess own API key set
 - 1.5.0: remove rest function
 - 1.4.0: logging rewritten
