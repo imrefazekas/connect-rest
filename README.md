@@ -11,6 +11,8 @@ For [connect](http://www.senchalabs.org/connect/) __v2__, please use the version
 Version 1.7.0 is not fully compatible with 1.6.x and below due to the redesigned protector concept.
 
 ========
+
+[![Join the chat at https://gitter.im/imrefazekas/connect-rest](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/imrefazekas/connect-rest?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality.
 
 Just a few examples: (far from incomplete):
