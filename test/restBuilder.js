@@ -18,7 +18,7 @@ function buildUpRestAPI( rest ){
 	rest.get('/books/:title/:chapter', function( request ){
 		console.log( 'Received:' + request.format() );
 		return request.parameters;
-	});
+	}, {options: true} );
 	rest.post('/store/?id', function( request, content, callback ){
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) );
 		return callback(null, { params: request.parameters, content: content} );
