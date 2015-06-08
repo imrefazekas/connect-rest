@@ -85,6 +85,16 @@ describe("connect-rest", function () {
 			);
 		});
 
+		it('OPTIONS call', function(done){
+			httphelper.generalCall( 'http://localhost:8080/api/books/AliceInWonderland/1', 'OPTIONS', { }, null, null, 'application/json', logger,
+				function(err, result, status){
+					should.not.exist(err);
+
+					done( );
+				}
+			);
+		});
+
 		it('mandatory parameter mapping is', function(done){
 			httphelper.generalCall( 'http://localhost:8080/api/books/AliceInWonderland/1', 'GET', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
 				function(err, result, status){
