@@ -106,8 +106,8 @@ rest.post( [ '/act', '/do' ], functionN2 );
 
 rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN3 );
 
-[Back to Feature list](#features)
 ```
+[Back to Feature list](#features)
 
 ## Assign
 
