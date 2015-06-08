@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "1.8.5",
+  "version": "1.8.6",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -52,5 +52,5 @@
   "engines": {
     "node": ">= 0.10.0"
   },
-  "_id": "connect-rest@1.8.5"
+  "_id": "connect-rest@1.8.6"
 }
