@@ -32,7 +32,13 @@ describe("connect-rest", function () {
 			apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 			discoverPath: 'discover',
 			protoPath: 'proto',
-			domain: true
+			domain: true,
+			headers: {
+				'Access-Control-Allow-Origin': '*',
+				'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
+				'Access-Control-Allow-Headers': 'api-key, x-api-key, x-warper-jwt, Accept, Origin, Content-Type',
+				'Access-Control-Expose-Headers': 'x-warper-jwt'
+			}
 		};
 		app.use( rest.rester( options ) );
 		app.use( restBuilder.getDispatcher( rest ) );
@@ -55,7 +61,7 @@ describe("connect-rest", function () {
 				function(err, result, status){
 					should.not.exist( err ); should.exist( result );
 					should.equal(status.statusCode, 200);
-
+					console.log( '>>>>>', status );
 					done( );
 				}
 			);
@@ -376,6 +382,7 @@ describe("connect-rest", function () {
 				}
 			);
 		});
+
 	});
 
 	after(function(done){
