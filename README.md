@@ -1,12 +1,8 @@
 CONNECT-REST - Exceptionally featureful Restful web services middleware for connect node.js
 
-[![Join the chat at https://gitter.im/imrefazekas/connect-rest](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/imrefazekas/connect-rest?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/imrefazekas/connect-rest](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/imrefazekas/connect-rest?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![NPM](https://nodei.co/npm/connect-rest.png)](https://nodei.co/npm/connect-rest/) [![Code Climate](https://codeclimate.com/github/imrefazekas/connect-rest/badges/gpa.svg)](https://codeclimate.com/github/imrefazekas/connect-rest)
 
 [![npm version](https://badge.fury.io/js/connect-rest.svg)](http://badge.fury.io/js/connect-rest)
-
-[![NPM](https://nodei.co/npm/connect-rest.png)](https://nodei.co/npm/connect-rest/)
-
-[![Code Climate](https://codeclimate.com/github/imrefazekas/connect-rest/badges/gpa.svg)](https://codeclimate.com/github/imrefazekas/connect-rest)
 
 __Important__ : [connect-rest](https://github.com/imrefazekas/connect-rest) __>v1.0__ is compatible with [connect](http://www.senchalabs.org/connect/) __>v3.0__. All examples/tests are complying with this rule!
 
