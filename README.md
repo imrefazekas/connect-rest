@@ -2,6 +2,8 @@ CONNECT-REST - Exceptionally featureful Restful web services middleware for conn
 
 [![Join the chat at https://gitter.im/imrefazekas/connect-rest](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/imrefazekas/connect-rest?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![npm version](https://badge.fury.io/js/connect-rest.svg)](http://badge.fury.io/js/connect-rest)
+
 [![NPM](https://nodei.co/npm/connect-rest.png)](https://nodei.co/npm/connect-rest/)
 
 [![Code Climate](https://codeclimate.com/github/imrefazekas/connect-rest/badges/gpa.svg)](https://codeclimate.com/github/imrefazekas/connect-rest)
