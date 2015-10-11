@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "1.9.5",
+  "version": "2.0.0",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -22,18 +22,17 @@
     "email": "mail@imrefazekas.me"
   },
   "license": "MIT",
-  "main": "./lib/connect-rest.js",
+  "main": "./lib/rest-services.js",
   "dependencies": {
     "async": "latest",
-    "connect": "~3",
-    "lodash": "~3",
+    "isa.js": "~1",
     "semver": "~2",
-    "underscore.string": "latest",
     "winston": "latest"
   },
   "devDependencies": {
     "body-parser": "latest",
     "chai": "latest",
+    "connect": "~3",
     "compression": "latest",
     "connect-timeout": "latest",
     "cookie-parser": "latest",
@@ -45,7 +44,7 @@
     "serve-static": "latest"
   },
   "engines": {
-    "node": ">= 0.10.0"
+    "node": ">= 4.0.0"
   },
-  "_id": "connect-rest@1.9.5"
+  "_id": "connect-rest@2.0.0"
 }

@@ -7,6 +7,8 @@ __Important__ : [connect-rest](https://github.com/imrefazekas/connect-rest) __>v
 
 For [connect](http://www.senchalabs.org/connect/) __v2__, please use the version __0.9.14__ of [connect-rest](https://github.com/imrefazekas/connect-rest)!
 
+From version 2.0.0 connect-rest requires NodeJS 4.0.0 or higher!
+
 Version 1.7.0 is not fully compatible with 1.6.x and below due to the redesigned protector concept.
 
 ========
@@ -14,7 +16,7 @@ Version 1.7.0 is not fully compatible with 1.6.x and below due to the redesigned
 [connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality.
 
 Just a few examples: (far from incomplete):
-- __execution branches__: a single service can have multiple paths and a single incoming request can invoke multiple services
+- __execution branches__: a single service can have multiple paths and handlers
 - __versioning__: rest services can be versioned via many ways
 - __regular expressions__: path description can be given using regular expression
 - __parameter mappings__: path matchings can be bound as parameters
@@ -25,10 +27,10 @@ Just a few examples: (far from incomplete):
 - __Multiple contexts__ for flexible orchestrating
 - __customizable HTTP-layer management__: HTTP status code, mime-types, headers, minifying can be set at service and execution level
 - __async services__: a rest service can call back asynchronously when the answer is made
-- __monitoring/measuring__: every rest service execution can be enabled for measurement to be collected and populated internally or for external monitoring solutions
+- __multiple return format__: handlers may return with strings, objects, streams and buffers, connect-rest will manage them adequately.
 
 
-__!Note__: connect-rest's concept is to provide a feature-full connect middleware for your rest services carrying only about content and business logic, nothing else. However, in case of need for interoperability, the need might cause you to use only the path-related features alone. This can be done using [dispatchers](#dispatchers).
+__!Note__: connect-rest's concept is to provide a feature-full high-level connect middleware for your rest services carrying __only about content and business logic__, nothing else. However, in case of need for interoperability, the need might cause you to use only the path-related features alone. This can be done using [dispatchers](#dispatchers).
 
 # Usage
 
@@ -62,7 +64,6 @@ The aim is to give a really feature-rich tool allowing you to focus on the busin
 - [Domain support](#domain-support)
 - [Answering async rest requests](#answering-async-rest-requests)
 - [Dispatchers](#dispatchers)
-- [Monitoring](#monitoring)
 - [More examples](#more-examples)
 - [License](#license)
 - [Changelog](#changelog)
@@ -772,27 +773,6 @@ This simple code makes is pretty straightforward. In case of a _'GET'_ HTTP requ
 [Back to Feature list](#features)
 
 
-## Monitoring
-
-[connect-rest](https://github.com/imrefazekas/connect-rest) allows you to monitor and measure the execution of the published rest services. Every service execution measure the execution time and reports to a bus transparently. The commulated data is populated regularly as configured.
-
-```javascript
-var options = {
-	...,
-	monitoring: {
-		populateInterval: 6000,
-		console: true,
-		listener: function(data){ ... }
-	}
-};
-```
-
-By adding a monitoring to the options of the library, the monitoring can be activated. The population interval is defined via the _populateInterval_ property measured in millisecs.
-
-The property _console_ - if present - will print the cumulated execution times grouped/structured by paths and version to the console.
-
-The property _listener_ - if present - allows you to pass a function which the populated data will be sent to. This way you can define own function to process the collected measurements.
-
 
 ## More examples
 
@@ -889,6 +869,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 2.0.0: Moved to Node4 and ES6
 - 1.8.0: OPTIONS method supported
 - 1.6.0: REST services can possess own API key set
 - 1.5.0: remove rest function

@@ -78,7 +78,7 @@ function buildUpRestAPI( rest ){
 	} );
 
 	rest.get('/handlers/function', function( request, content, callback ){
-		console.log( 'Received:' + request.format() );
+		console.log( 'Received:::' + request.format() );
 		return callback(null, function( cb ){ cb( null, 'ok' ); } );
 	});
 	rest.get('/handlers/buffer', function( request, content, callback ){
@@ -86,7 +86,7 @@ function buildUpRestAPI( rest ){
 		return callback(null, new Buffer( 'ok', 'utf-8') );
 	}, { contentType:'application/text' } );
 	rest.get('/handlers/stream/:file', function( request, content, callback ){
-		console.log( 'Received:' + request.format() );
+		console.log( 'Received::' + request.format(), request.params );
 		return callback(null, fs.createReadStream( './test/data/'+ request.params.file +'.text', { encoding : 'utf-8'} ), {statusCode:201} );
 	});
 

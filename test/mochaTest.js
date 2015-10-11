@@ -1,3 +1,5 @@
+'use strict';
+
 var chai = require('chai'),
 	should = chai.should(),
 	expect = chai.expect;
@@ -6,7 +8,8 @@ var http = require('http');
 var connect = require('connect');
 var bodyParser = require('body-parser');
 
-var rest = require('../lib/connect-rest');
+var Rest = require('../lib/rest-services');
+var rester;
 var restBuilder = require('./restBuilder');
 var httphelper = require('../lib/http-helper');
 
@@ -28,11 +31,10 @@ describe("connect-rest", function () {
 
 		var options = {
 			context: '/api',
-			logger:{ file: 'mochaTest.log', level: 'debug' },
+			logger: { file: 'mochaTest.log', level: 'debug' },
 			apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 			discoverPath: 'discover',
 			protoPath: 'proto',
-			domain: true,
 			headers: {
 				'Access-Control-Allow-Origin': '*',
 				'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
@@ -40,10 +42,11 @@ describe("connect-rest", function () {
 				'Access-Control-Expose-Headers': 'x-warper-jwt'
 			}
 		};
-		app.use( rest.rester( options ) );
-		app.use( restBuilder.getDispatcher( rest ) );
+		rester = Rest( options );
+		app.use( rester.processRequest() );
+		//app.use( restBuilder.getDispatcher( rest ) );
 
-		restBuilder.buildUpRestAPI( rest );
+		restBuilder.buildUpRestAPI( rester );
 
 		var port = process.env.PORT || 8080;
 		server = http.createServer(app);
@@ -56,6 +59,7 @@ describe("connect-rest", function () {
 	});
 	// function(serverURL, method, headers, err, result, mimetype, logger, callback){
 	describe("rest", function () {
+		/*
 		it('HEAD call is', function(done){
 			httphelper.generalCall( 'http://localhost:8080/api/peek', 'HEAD', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
 				function(err, result, status){
@@ -382,7 +386,7 @@ describe("connect-rest", function () {
 				}
 			);
 		});
-
+		*/
 	});
 
 	after(function(done){

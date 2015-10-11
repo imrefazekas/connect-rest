@@ -17,12 +17,14 @@
 		"octalLiterals": false,                     // enable octal literals
 		"regexUFlag": false,                        // enable the regular expression u flag
 		"regexYFlag": false,                        // enable the regular expression y flag
-		"spread": false, 							// enable the spread operator
-		"superInFunctions": false,					// enable super references inside of functions
+		"restParams": true,                         // enable the rest parameters
+		"spread": true,                             // enable the spread operator
+		"superInFunctions": false,                  // enable super references inside of functions
 		"templateStrings": true,                   // enable template strings
 		"unicodeCodePointEscapes": false,           // enable code point escapes
 		"globalReturn": false,						// allow return statements in the global scope
-		"jsx": false                                // enable JSX
+		"jsx": false,                                // enable JSX
+		"experimentalObjectRestSpread": false		// enable support for the experimental object rest/spread properties
 	},
 
 	"env": {
