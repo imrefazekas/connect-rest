@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 var Rest = require('../lib/rest-services');
 var rester;
 var restBuilder = require('./restBuilder');
-var httphelper = require('../lib/http-helper');
+var httphelper = require('../lib/util/HTTP-Helper');
 
 function DummyLogger(){ }
 DummyLogger.prototype.info = function() { console.log( arguments ); };
@@ -42,9 +42,9 @@ describe("connect-rest", function () {
 				'Access-Control-Expose-Headers': 'x-warper-jwt'
 			}
 		};
-		rester = Rest( options );
+		rester = Rest.create( options );
 		app.use( rester.processRequest() );
-		//app.use( restBuilder.getDispatcher( rest ) );
+		app.use( restBuilder.getDispatcher( Rest ) );
 
 		restBuilder.buildUpRestAPI( rester );
 
@@ -59,7 +59,7 @@ describe("connect-rest", function () {
 	});
 	// function(serverURL, method, headers, err, result, mimetype, logger, callback){
 	describe("rest", function () {
-		/*
+
 		it('HEAD call is', function(done){
 			httphelper.generalCall( 'http://localhost:8080/api/peek', 'HEAD', {'x-api-key':'849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
 				function(err, result, status){
@@ -386,7 +386,7 @@ describe("connect-rest", function () {
 				}
 			);
 		});
-		*/
+
 	});
 
 	after(function(done){
