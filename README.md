@@ -75,7 +75,7 @@ The aim is to give a really feature-rich tool allowing you to focus on the busin
 var connect = require('connect'),
 bodyParser = require('body-parser');
 
-var rest = require('connect-rest');
+var Rest = require('connect-rest');
 
 // sets up connect and adds other middlewares to parse query, parameters, content and session
 // use the ones you need
@@ -92,9 +92,10 @@ var options = {
 	discoverPath: 'discover',
 	protoPath: 'proto'
 };
+var rest = Rest.create( options );
 
 // adds connect-rest middleware to connect
-connectApp.use( rest.rester( options ) );
+connectApp.use( rest.processRequest() );
 
 // defines a few sample rest services
 rest.get('/books/:title/:chapter', functionN0 );
