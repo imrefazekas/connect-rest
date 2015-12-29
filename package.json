@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -26,7 +26,7 @@
   "dependencies": {
     "async": "latest",
     "isa.js": "~1",
-    "semver": "~2",
+    "semver": "~5",
     "winston": "latest"
   },
   "devDependencies": {
@@ -45,6 +45,5 @@
   },
   "engines": {
     "node": ">= 4.0.0"
-  },
-  "_id": "connect-rest@2.0.5"
+  }
 }
