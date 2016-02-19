@@ -1,29 +1,25 @@
-var rest = require('../../lib/connect-rest');
-var httphelper = require('../../lib/http-helper');
+let rest = require('../../lib/connect-rest')
 
-var http = require('http');
-var connect = require('connect');
-var assert = require('assert');
-var async = require('async');
-var _ = require('underscore');
+let http = require('http')
+let connect = require('connect')
 
-var connectApp = connect();
-global.server = connectApp;
+let connectApp = connect()
+global.server = connectApp
 
-connectApp.use( connect.query() );
-var options = {
+connectApp.use( connect.query() )
+let options = {
 	discoverPath: 'discover',
 	protoPath: 'proto',
 	logger: 'connect-rest',
 	logLevel: 'debug'
-};
-connectApp.use( rest.rester( options ) );
+}
+connectApp.use( rest.rester( options ) )
 
-var server = http.createServer( connectApp );
+let server = http.createServer( connectApp )
 
-server.listen( 8095 );
+server.listen( 8095 )
 
-rest.post('/service', function( request, content, callback ){
-	console.log( 'Service Received:', request );
-	return callback(null, {result:'Async call is done!'});
-});
+rest.post('/service', function ( request, content, callback ) {
+	console.log( 'Service Received:', request )
+	return callback(null, {result: 'Async call is done!'})
+})

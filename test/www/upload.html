@@ -32,7 +32,7 @@
 			<p>Drag an image from your desktop on to the drop zone above to see the browser both render the preview, but also upload automatically to this server.</p>
 		</article>
 		<script>
-			var holder = document.getElementById('holder'),
+			let holder = document.getElementById('holder'),
 			tests = {
 				filereader: typeof FileReader != 'undefined',
 				dnd: 'draggable' in document.createElement('span'),
@@ -66,9 +66,9 @@
 
 			function previewfile(file) {
 				if (tests.filereader === true && acceptedTypes[file.type] === true) {
-					var reader = new FileReader();
+					let reader = new FileReader();
 					reader.onload = function (event) {
-						var image = new Image();
+						let image = new Image();
 						image.src = event.target.result;
 						image.width = 250; // a fake resize
 						holder.appendChild(image);
@@ -82,15 +82,15 @@
 			}
 
 			function readfiles(files) {
-				var formData = tests.formdata ? new FormData() : null;
-				for (var i = 0; i < files.length; i++) {
+				let formData = tests.formdata ? new FormData() : null;
+				for (let i = 0; i < files.length; i++) {
 					if (tests.formdata) formData.append('file', files[i]);
 					previewfile(files[i]);
 				}
 
 				// now post a new XHR request
 				if (tests.formdata) {
-					var xhr = new XMLHttpRequest();
+					let xhr = new XMLHttpRequest();
 					xhr.open('POST', '/api/upload?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9');
 					xhr.onload = function() {
 						progress.value = progress.innerHTML = 100;
@@ -99,7 +99,7 @@
 					if (tests.progress) {
 						xhr.upload.onprogress = function (event) {
 							if (event.lengthComputable) {
-								var complete = (event.loaded / event.total * 100 | 0);
+								let complete = (event.loaded / event.total * 100 | 0);
 								progress.value = progress.innerHTML = complete;
 							}
 						}
