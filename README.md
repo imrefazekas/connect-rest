@@ -11,6 +11,8 @@ From version 2.0.0 connect-rest requires NodeJS 4.0.0 or higher!
 
 Version 1.7.0 is not fully compatible with 1.6.x and below due to the redesigned protector concept.
 
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
 ========
 
 [connect-rest](https://github.com/imrefazekas/connect-rest) is a featureful very easy-to-use middleware for [connect](http://www.senchalabs.org/connect/) for building REST APIs. The library has a stunning feature list beyond basic rest functionality.
