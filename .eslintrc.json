@@ -10,7 +10,8 @@
   "env": {
     "es6": true,
     "node": true,
-    "mongo": true
+    "mongo": true,
+	"mocha": true
   },
   "rules": {
     "arrow-parens": [2, "always"],
