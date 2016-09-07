@@ -13,6 +13,7 @@ let restBuilder = require('./restBuilder')
 let httphelper = require('../lib/util/HTTP-Helper')
 
 function DummyLogger () { }
+DummyLogger.prototype.log = function () { console.log( arguments ) }
 DummyLogger.prototype.info = function () { console.log( arguments ) }
 DummyLogger.prototype.debug = function () { console.log( arguments ) }
 DummyLogger.prototype.error = function () { console.error( arguments ) }
@@ -31,8 +32,8 @@ describe('connect-rest', function () {
 			context: '/api',
 			logger: { file: 'mochaTest.log', level: 'debug' },
 			apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-			discoverPath: 'discover',
-			protoPath: 'proto',
+			discover: { path: '/discover', secure: false },
+			proto: { path: '/proto', secure: false },
 			headers: {
 				'Access-Control-Allow-Origin': '*',
 				'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
@@ -57,7 +58,6 @@ describe('connect-rest', function () {
 	})
 	// function (serverURL, method, headers, err, result, mimetype, logger, callback) {
 	describe('rest', function () {
-
 		it('HEAD call is', function (done) {
 			httphelper.generalCall( 'http://localhost:8080/api/peek', 'HEAD', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
 				function (err, result, status) {
@@ -207,6 +207,34 @@ describe('connect-rest', function () {
 					result.should.have.property('entity', 'Shira')
 					result.should.have.property('version', '1.0')
 					result.should.have.property('subject', 'request')
+
+					done( )
+				}
+			)
+		})
+
+		it('prototype services are', function (done) {
+			httphelper.generalCall( 'http://localhost:8080/api/proto/GET/1.0/api/books/AliceInWonderland/1', 'GET', {}, null, null, 'application/json', logger,
+				function (err, result, status) {
+					should.not.exist(err)
+					should.exist(result)
+
+					result.should.have.property('answer', 'parameters')
+
+					done( )
+				}
+			)
+		})
+
+		it('discover service are', function (done) {
+			httphelper.generalCall( 'http://localhost:8080/api/discover/*', 'GET', {}, null, null, 'application/json', logger,
+				function (err, result, status) {
+					should.not.exist(err)
+					should.exist(result)
+
+					result.should.have.property('GET')
+					result.should.have.property('POST')
+					result.should.have.property('OPTIONS')
 
 					done( )
 				}

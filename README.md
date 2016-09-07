@@ -91,8 +91,8 @@ var options = {
 	context: '/api',
 	logger:{ file: 'mochaTest.log', level: 'debug' },
 	apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-	discoverPath: 'discover',
-	protoPath: 'proto'
+	// discover: { path: 'discover', secure: true },
+	// proto: { path: 'proto', secure: true }
 };
 var rest = Rest.create( options );
 
@@ -553,7 +553,7 @@ __You can orchestrate the contexts of your architecture as it pleases you.__
 
 ```javascript
 var options = {
-	'discoverPath': 'discover'
+	'discover: { path': 'discover', secure: true }
 };
 connectApp.use( rest.rester( options ) );
 ```
@@ -576,11 +576,13 @@ would retrieve all services which can be called using version 3.0.0 (non-version
 }
 ```
 
+The option secure tells connect-rest if security should be active for this service.
+
 ## Prototype services
-The assign-methods allows you to pass a third parameter, an object which can be considered as a prototype of the expected parameter of the service when a client wants to make a call.
+The assign-methods allows you to set an extra object in the third parameter. An object which can be considered as a prototype of the expected parameter of the service when a client wants to make a call.
 
 ```javascript
-rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN, {'title': 'Alice in Wonderland'} );
+rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN, { prototypeObject: {'title': 'Alice in Wonderland'} } );
 ```
 
 That parameter debriefs the client what structure the functionN expects to receive.
@@ -589,13 +591,12 @@ To activate this feature, first you have to add a new attribute to the options o
 ```javascript
 var options = {
 	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
-	'discoverPath': 'discover',
-	'protoPath': 'proto',
+	'proto: { path': 'proto', secure: true },
 	'logger': 'connect-rest'
 };
 ```
 
-This 'protoPath' means that sending a request to the server on path:
+This 'proto' object tells connect-rest that the given path is accepting requests to retrieve prototypes:
 
 ```javascript
 '/api/proto/POST/2.3.0/api/twist?api_key=849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'
@@ -613,6 +614,9 @@ because the service
 
 can be called and there is an assigned prototype object to it.
 Giving access method, version and path is mandatory for this feature.
+
+The option secure tells connect-rest if security should be active for this service.
+
 
 [Back to Feature list](#features)
 
