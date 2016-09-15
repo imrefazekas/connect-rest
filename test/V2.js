@@ -5,7 +5,8 @@ let connect = require('connect')
 let bodyParser = require('body-parser')
 
 let Rest = require('../lib/rest-services')
-let httphelper = require('../lib/util/HTTP-Helper')
+let Httphelper = require('../lib/util/HttpHelper')
+let httphelper = new Httphelper()
 let restBuilder = require('./restBuilder')
 
 let chai = require('chai'),

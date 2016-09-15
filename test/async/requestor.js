@@ -1,5 +1,6 @@
 let rest = require('../../lib/connect-rest')
-let httphelper = require('../../lib/http-helper')
+let Httphelper = require('../../lib/HttpHelper')
+let httphelper = new Httphelper()
 
 let http = require('http')
 let querystring = require('querystring')

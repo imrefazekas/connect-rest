@@ -10,7 +10,8 @@ let bodyParser = require('body-parser')
 let Rest = require('../lib/rest-services')
 let rester
 let restBuilder = require('./restBuilder')
-let httphelper = require('../lib/util/HTTP-Helper')
+let Httphelper = require('../lib/util/HttpHelper')
+let httphelper = new Httphelper()
 
 function DummyLogger () { }
 DummyLogger.prototype.log = function () { console.log( arguments ) }
