@@ -1,6 +1,7 @@
 'use strict'
 
 let fs = require('fs')
+let Proback = require('proback.js')
 
 function buildUpRestAPI ( rest ) {
 	// rest.context( '/api' )
@@ -33,7 +34,7 @@ function buildUpRestAPI ( rest ) {
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
 		return callback(null, request.params, { minify: true } )
 	})
-	rest.get( { path: '/eset/?rid/?facet', version: '*', protector: function ( req, res, pathname, path, callback ) { callback() } }, function ( request, content, callback ) {
+	rest.get( { path: '/eset/?rid/?facet', version: '*', protector: function ( req, res, pathname, path, callback ) { return Proback.quicker( 'ok', callback ) } }, function ( request, content, callback ) {
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
 		return callback(null, request.params, { minify: true } )
 	})
