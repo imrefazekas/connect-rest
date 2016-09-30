@@ -75,15 +75,15 @@ The aim is to give a really feature-rich tool allowing you to focus on the busin
 ```javascript
 // requires connect and connect-rest middleware
 var connect = require('connect'),
-bodyParser = require('body-parser');
+bodyParser = require('body-parser')
 
-var Rest = require('connect-rest');
+var Rest = require('connect-rest')
 
 // sets up connect and adds other middlewares to parse query, parameters, content and session
 // use the ones you need
 var connectApp = connect()
 	.use( bodyParser.urlencoded( { extended: true } ) )
-	.use( bodyParser.json() );
+	.use( bodyParser.json() )
 
 // initial configuration of connect-rest. all-of-them are optional.
 // default context is /api, all services are off by default
@@ -93,14 +93,14 @@ var options = {
 	apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 	// discover: { path: 'discover', secure: true },
 	// proto: { path: 'proto', secure: true }
-};
-var rest = Rest.create( options );
+}
+var rest = Rest.create( options )
 
 // adds connect-rest middleware to connect
-connectApp.use( rest.processRequest() );
+connectApp.use( rest.processRequest() )
 
 // defines a few sample rest services
-rest.get('/books/:title/:chapter', functionN0 );
+rest.get('/books/:title/:chapter', functionN0 )
 
 rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
 
@@ -523,7 +523,8 @@ or through the option object as well when you add the middleware to the connect 
 var options = {
 	'context': '/api'
 };
-connectApp.use( rest.rester( options ) );
+var rest = Rest.create( options );
+connectApp.use( rest.processRequest() )
 ```
 
 Default _context_ is the '/api' string.
@@ -555,7 +556,8 @@ __You can orchestrate the contexts of your architecture as it pleases you.__
 var options = {
 	'discover: { path': 'discover', secure: true }
 };
-connectApp.use( rest.rester( options ) );
+var rest = Rest.create( options )
+connectApp.use( rest.processRequest() )
 ```
 
 This will enable this service - considering the context described above - on the path '/api/discover/:version'. Sending a get request to - let's say - this path
@@ -771,7 +773,7 @@ This process is performed behind the scenes, you do not have do anything special
 In some cases, you might face with a situation where other 3rd party connect library has to be used and the case might require for path-related logic to be used. [connect-rest](https://github.com/imrefazekas/connect-rest) is designed to be able to use as simple path processing helper library as well.
 
 ```javascript
-connectApp.use( rest.dispatcher( 'GET', '/dispatcher/:subject', function(req, res, next){
+connectApp.use( Rest.dispatcher( 'GET', '/dispatcher/:subject', function(req, res, next){
 	res.end( 'Dispatch call made:' + req.params['subject'] );
 } ) );
 ```
@@ -834,7 +836,8 @@ Not a typical or strictly REST-conform scenario, but you might end up with the n
 __Tip:__ To manage all calls not handled by connect-rest could be also important. The following code demonstrates how to define a small middleware, which is executed when no REST function is matched.
 
 ```javascript
-app.use( rest.rester( options ) );
+var rest = Rest.create( options )
+app.use( rest.processRequest() )
 app.use( function(req, res, next){
 	if(req.session)
 		req.session.destroy();
