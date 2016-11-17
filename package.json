@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "2.10.6",
+  "version": "2.10.7",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -26,7 +26,7 @@
   "dependencies": {
     "assign.js": "^2.3.1",
     "isa.js": "^1.7.6",
-	"proback.js": "^1.6.5",
+	"proback.js": "^1.7.0",
     "semver": "^5.3.0",
     "winston": "^2.3.0"
   },
