@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "2.10.3",
+  "version": "2.10.4",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -37,7 +37,7 @@
     "connect": "~3",
     "connect-timeout": "^1.7.0",
     "cookie-parser": "^1.4.3",
-    "cookie-session": "^2.0.0-alpha.1",
+    "cookie-session": "^2.0.0-alpha.2",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-load-plugins": "^1.4.0",
