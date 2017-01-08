@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "2.11.0",
+  "version": "2.11.1",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -24,7 +24,7 @@
   "license": "MIT",
   "main": "./lib/rest-services.js",
   "dependencies": {
-    "assign.js": "^2.4.0",
+    "assign.js": "^2.5.0",
     "isa.js": "^1.8.2",
 	"proback.js": "^1.7.1",
     "semver": "^5.3.0",
