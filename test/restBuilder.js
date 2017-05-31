@@ -119,8 +119,7 @@ function buildUpRestAPI ( rest ) {
 	}, { contentType: 'text/html' } )
 
 	rest.get( { path: '/', context: '', unprotected: true }, function ( request, content, callback ) {
-		console.log( 'Received:' + request.format() )
-		return callback( null, 'Done.' )
+		return callback( null, 'Done, done.', { headers: { ETag: '10c24bc-4ab-457e1c1f' } } )
 	}, { contentType: 'text/html' } )
 }
 

@@ -31,7 +31,7 @@ describe('connect-rest', function () {
 
 		let options = {
 			context: '/api',
-			logger: { file: 'mochaTest.log', level: 'debug' },
+			logger: { level: 'debug' },
 			apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 			discover: { path: '/discover', secure: false },
 			proto: { path: '/proto', secure: false },

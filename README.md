@@ -671,7 +671,9 @@ var options = {
 
 You can set:
 - a string, which will be interpret as the name of the logger seen in the logs, or
-- passing a logger instance to be used. By default, connect-rest is using [winston](https://github.com/flatiron/winston) as logging library.
+- passing a logger instance to be used.
+
+By default, connect-rest is using [pino](https://github.com/pinojs/pino) as logging library. Here is [why...](https://github.com/pinojs/pino#benchmarks). Keep the compatibility to pino if you are passing own logging solution.
 
 In the absence of 'logger' property, no logs will be made.
 The [connect-rest](https://github.com/imrefazekas/connect-rest) will use level 'info' for entry and exit points of services and 'debug' for the milestones of all internal processes.

@@ -24,7 +24,7 @@ let app = connect()
 
 let options = {
 	context: '/api',
-	logger: { file: 'mochaTest.log', level: 'debug' },
+	logger: { level: 'debug' },
 	apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 	discoverPath: 'discover',
 	protoPath: 'proto'
