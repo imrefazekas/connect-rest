@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "2.12.5",
+  "version": "2.12.6",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -24,22 +24,22 @@
   "license": "MIT",
   "main": "./lib/rest-services.js",
   "dependencies": {
-    "assign.js": "^2.7.5",
-    "isa.js": "^1.9.0",
-    "pino": "^4.5.3",
-    "proback.js": "^1.8.0",
-    "semver": "^5.3.0"
+    "assign.js": "^2.7.6",
+    "isa.js": "^1.9.1",
+    "pino": "^4.7.1",
+    "proback.js": "^1.8.1",
+    "semver": "^5.4.1"
   },
   "devDependencies": {
     "body-parser": "^1.17.2",
-    "chai": "^4.0.0",
-    "compression": "^1.6.2",
+    "chai": "^4.1.0",
+    "compression": "^1.7.0",
     "connect": "~3",
     "connect-timeout": "^1.9.0",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.2",
     "gulp": "^3.9.1",
-    "gulp-eslint": "^3.0.1",
+    "gulp-eslint": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-mocha": "^4.3.1",
     "serve-static": "^1.12.3"
