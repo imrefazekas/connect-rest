@@ -25,14 +25,14 @@
   "main": "./lib/rest-services.js",
   "dependencies": {
     "assign.js": "^2.7.6",
-    "isa.js": "^1.9.1",
+    "isa.js": "^2.0.0",
     "pino": "^4.7.1",
-    "proback.js": "^1.8.1",
+    "proback.js": "^2.1.3",
     "semver": "^5.4.1"
   },
   "devDependencies": {
     "body-parser": "^1.17.2",
-    "chai": "^4.1.0",
+    "chai": "^4.1.1",
     "compression": "^1.7.0",
     "connect": "~3",
     "connect-timeout": "^1.9.0",
@@ -42,7 +42,7 @@
     "gulp-eslint": "^4.0.0",
     "gulp-load-plugins": "^1.5.0",
     "gulp-mocha": "^4.3.1",
-    "serve-static": "^1.12.3"
+    "serve-static": "^1.12.4"
   },
   "engines": {
     "node": ">= 6.0.0"
