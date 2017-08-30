@@ -1,125 +1,134 @@
-'use strict'
-
 let fs = require('fs')
 let Proback = require('proback.js')
 
 function buildUpRestAPI ( rest ) {
 	// rest.context( '/api' )
 
-	rest.head('/peek', function ( request ) {
+	rest.head('/peek', async function ( request ) {
 		console.log( 'Received:' + request.format() )
 		return 'ok'
 	})
 
-	rest.get('/empty', function ( request ) {
+	rest.get('/empty', async function ( request ) {
 		console.log( 'Received:' + request.format() )
 		return ''
 	})
 
-	rest.proxy( 'get', '/proxyEmpty', 'http://localhost:8080/api/empty', { bypassHeader: true } )
+	rest.proxy( 'get', '/proxyEmpty', { url: 'http://localhost:8080/api/empty', method: 'get', bypassHeader: true } )
 
-	rest.get('/books/:title/:chapter', function ( request ) {
+	rest.get('/books/:title/:chapter', async function ( request ) {
 		console.log( 'Received:' + request.format() )
 		return request.parameters
 	}, { options: true, prototypeObject: { answer: 'parameters' } } )
-	rest.post('/store/?id', function ( request, content, callback ) {
+
+	rest.post('/store/?id', async function ( request, content ) {
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
-		return callback(null, { params: request.parameters, content: content} )
+		return { params: request.parameters, content: content}
 	})
-	rest.get('/inquire/*book', function ( request, content, callback ) {
+
+	rest.get('/inquire/*book', async function ( request, content ) {
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
-		return callback(null, 'ok')
+		return 'ok'
 	})
-	rest.get( '/set/?rid/?facet', function ( request, content, callback ) {
+
+	rest.get( '/set/?rid/?facet', async function ( request, content ) {
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
-		return callback(null, request.params, { minify: true } )
+		return { result: request.params, options: { minify: true } }
 	})
-	rest.get( { path: '/eset/?rid/?facet', version: '*', protector: function ( req, res, pathname, path, callback ) { return Proback.quicker( 'ok', callback ) } }, function ( request, content, callback ) {
+
+	rest.get( { path: '/eset/?rid/?facet', version: '*', protector: function ( req, res, pathname, path, callback ) { return Proback.quicker( 'ok', callback ) } }, async function ( request, content ) {
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
-		return callback(null, request.params, { minify: true } )
+		return { result: request.params, options: { minify: true } }
 	})
-	rest.get( '/minify', function ( request, content, callback ) {
+
+	rest.get( '/minify', async function ( request, content, callback ) {
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
-		return callback(null, '{ "key"     :    "value" }', { minify: true } )
+		return { result: '{ "key"     :    "value" }', options: { minify: true } }
 	})
-	rest.post( { path: '/make', version: '>=1.0.0' }, function ( request, content, callback ) {
+
+	rest.post( { path: '/make', version: '>=1.0.0' }, async function ( request, content ) {
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
-		return callback(null, 'ok')
+		return 'ok'
 	})
-	rest.post( [ '/act', '/do' ], function ( request, content, callback ) {
-		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
-		return callback( null, 'ok' )
+
+	rest.get( { path: '/irritate', version: '>=1.0.0' }, async function ( request, content ) {
+		throw new Error('Your call irritates me...')
 	})
-	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], function ( request, content, callback ) {
+
+	rest.post( [ '/act', '/do' ], async function ( request, content, callback ) {
 		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
-		return callback(null, 'ok')
+		return 'ok'
+	})
+
+	rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], async function ( request, content ) {
+		console.log( 'Received:' + request.format() + ' ' + JSON.stringify(content) )
+		return 'ok'
 	}, {'title': 'Alice in Wonderland'} )
 
-	rest.get( '/data/items', function ( request, content, callback ) {
+	rest.get( '/data/items', async function ( request, content ) {
 		console.log( 'Received::' + request.format() + ' ' + JSON.stringify(content) )
-		return callback(null, request.parameters, {statusCode: 201} )
+		return { result: request.parameters, options: {statusCode: 201} }
 	}, { contentType: 'application/json', validator: function (req, res) { return true } } )
 
-	rest.get( '/call/:system/?entity/?version/:subject', function ( request, content, callback ) {
+	rest.get( '/call/:system/?entity/?version/:subject', async function ( request, content ) {
 		console.log( 'Received::' + JSON.stringify( request.parameters ) + ' ' + JSON.stringify(content) )
-		return callback(null, request.parameters, {statusCode: 201} )
+		return { result: request.parameters, options: {statusCode: 201} }
 	}, { contentType: 'application/json' } )
 
-	rest.get( { path: '/unprotected', unprotected: true }, function ( request, content, callback ) {
+	rest.get( { path: '/unprotected', unprotected: true }, async function ( request, content ) {
 		console.log( 'Called unprotected zone...')
-		return callback(null, 'Welcome guest...', {statusCode: 200} )
+		return { result: 'Welcome guest...', options: {statusCode: 200} }
 	}, { contentType: 'application/json' } )
 
-	rest.post( '/upload', function ( request, content, callback ) {
+	rest.post( '/upload', async function ( request, content ) {
 		console.log( 'Upload called:' + request.format() + ' ' + JSON.stringify(content) )
-		return callback(null, 'ok')
+		return 'ok'
 	} )
 
-	rest.get( { path: '/workspace', context: '/pages', unprotected: true }, function ( request, content, callback ) {
+	rest.get( { path: '/workspace', context: '/pages', unprotected: true }, async function ( request, content ) {
 		console.log( 'Calling under spec context')
-		return callback(null, 'ok')
+		return 'ok'
 	} )
 
-	rest.get('/handlers/function', function ( request, content, callback ) {
+	rest.get('/handlers/function', async function ( request, content ) {
 		console.log( 'Received:::' + request.format() )
-		return callback(null, function ( cb ) { cb( null, 'ok' ) } )
+		return async function ( ) { return 'ok' }
 	})
-	rest.get('/handlers/buffer', function ( request, content, callback ) {
+	rest.get('/handlers/buffer', async function ( request, content ) {
 		console.log( 'Received:' + request.format() )
-		return callback(null, new Buffer( 'ok', 'utf-8') )
+		return new Buffer( 'ok', 'utf-8')
 	}, { contentType: 'application/text' } )
-	rest.get('/handlers/stream/:file', function ( request, content, callback ) {
+	rest.get('/handlers/stream/:file', async function ( request, content ) {
 		console.log( 'Received::' + request.format(), request.params )
-		return callback(null, fs.createReadStream( './test/data/' + request.params.file + '.text', { encoding: 'utf-8'} ), {statusCode: 201} )
+		return { result: fs.createReadStream( './test/data/' + request.params.file + '.text', { encoding: 'utf-8'} ), options: {statusCode: 201} }
 	})
 
-	rest.get( '/convert/@format', function ( request, content, callback ) {
+	rest.get( '/convert/@format', async function ( request, content ) {
 		console.log( 'Received:' + request.format() )
-		return callback( null, 'ok' )
+		return 'ok'
 	}, { format: [ 'euro', 'usd', 'huf' ] } )
 
-	rest.get( /^\/[tT]([a-zA-Z]){4}$/g, function ( request, content, callback ) {
+	rest.get( /^\/[tT]([a-zA-Z]){4}$/g, async function ( request, content ) {
 		console.log( 'Received:' + request.format() )
-		return callback( null, 'regular' )
+		return 'regular'
 	} )
 
-	rest.get( { path: '/ships', unprotected: true }, function (req, content, callback) {
+	rest.get( { path: '/ships', unprotected: true }, async function (req, content) {
 		console.log( 'Looking for ships...' )
-		callback( null, 'Done.' )
+		return 'Done.'
 	})
-	rest.get( { path: '/ships/id/:id', unprotected: true }, function (req, content, callback) {
+	rest.get( { path: '/ships/id/:id', unprotected: true }, async function (req, content) {
 		console.log('Looking for ship ID ' + req.params.id)
-		callback( null, 'Done.' )
+		return 'Done.'
 	})
 
-	rest.get( { path: '/looper', unprotected: true }, function (req, content, callback) {
-		setTimeout( function () {
-			callback( null, 'Done.' )
-		}, 2000)
+	rest.get( { path: '/looper', unprotected: true }, async function (req, content) {
+		await Proback.timeout( 2000 )
+		return 'Done.'
 	}, { contentType: 'text/html' } )
 
-	rest.get( { path: '/', context: '', unprotected: true }, function ( request, content, callback ) {
-		return callback( null, 'Done, done.', { headers: { ETag: '10c24bc-4ab-457e1c1f' } } )
+	rest.get( { path: '/', context: '', unprotected: true }, async function ( request, content ) {
+		return { result: 'Done, done.', options: { headers: { ETag: '10c24bc-4ab-457e1c1f' } } }
 	}, { contentType: 'text/html' } )
 }
 

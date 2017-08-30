@@ -1,5 +1,3 @@
-'use strict'
-
 let gulp = global.gulp = require('gulp')
 
 let plugins = require('gulp-load-plugins')( { scope: ['devDependencies'] } )
@@ -7,8 +5,8 @@ let plugins = require('gulp-load-plugins')( { scope: ['devDependencies'] } )
 gulp.task( 'lint', function (callback) {
 	return gulp.src( 'lib/*.js' )
 		.pipe( plugins.eslint() )
-        .pipe( plugins.eslint.format() )
-        .pipe( plugins.eslint.failAfterError() )
+		.pipe( plugins.eslint.format() )
+		.pipe( plugins.eslint.failAfterError() )
 } )
 
 gulp.task( 'mocha', function (callback) {

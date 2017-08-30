@@ -1,5 +1,3 @@
-'use strict'
-
 let should = require('chai').should()
 let http = require('http')
 

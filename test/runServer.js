@@ -1,5 +1,3 @@
-'use strict'
-
 let http = require('http')
 
 let connect = require('connect'),

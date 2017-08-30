@@ -7,6 +7,8 @@ __Important__ : [connect-rest](https://github.com/imrefazekas/connect-rest) __>v
 
 For [connect](http://www.senchalabs.org/connect/) __v2__, please use the version __0.9.14__ of [connect-rest](https://github.com/imrefazekas/connect-rest)!
 
+__! Note !__ From version 3.0.0, connect-rest requires NodeJS 8.0.0 or higher and async/await based!
+
 From version 2.0.0 connect-rest requires NodeJS 4.0.0 or higher!
 
 Version 1.7.0 is not fully compatible with 1.6.x and below due to the redesigned protector concept.
@@ -100,15 +102,17 @@ var rest = Rest.create( options )
 connectApp.use( rest.processRequest() )
 
 // defines a few sample rest services
-rest.get('/books/:title/:chapter', functionN0 )
+rest.get('/books/:title/:chapter', asyncFunctionN0 )
 
-rest.post( { path: '/make', version: '>=1.0.0' }, functionN1 );
+rest.post( { path: '/make', version: '>=1.0.0' }, asyncFunctionN1 )
 
-rest.post( [ '/act', '/do' ], functionN2 );
+rest.post( [ '/act', '/do' ], asyncFunctionN2 )
 
-rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN3 );
-
+rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], asyncFunctionN3 )
 ```
+
+__All service functions must be async!__
+
 [Back to Feature list](#features)
 
 ## Assign
@@ -118,13 +122,13 @@ You can assign your rest modules by specifying the needed _http_ request functio
 
 Example:
 ```javascript
-function service( request, content, callback ){
-	console.log( 'Received headers:' + JSON.stringify( request.headers ) );
-	console.log( 'Received parameters:' + JSON.stringify( request.parameters ) );
-	console.log( 'Received JSON object:' + JSON.stringify( content ) );
-	callback(null, 'ok');
+async function service( request, content ){
+	console.log( 'Received headers:' + JSON.stringify( request.headers ) )
+	console.log( 'Received parameters:' + JSON.stringify( request.parameters ) )
+	console.log( 'Received JSON object:' + JSON.stringify( content ) )
+	return 'ok'
 }
-rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
+rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service )
 ```
 
 #### assign function
@@ -132,14 +136,14 @@ Other way to assign is to use the __assign function__ directly.
 
 Example:
 ```javascript
-function service( request, content, callback ){
+async function service( request, content ){
 	...
 }
 // bind the service funciont to all http request types
-rest.assign( '*', [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
+rest.assign( '*', [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service )
 ...
 // bind the service funciont to only the given http request types
-rest.assign( ['head','get','post'], [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service );
+rest.assign( ['head','get','post'], [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], service )
 ```
 
 #### Reflective assignement
@@ -158,25 +162,25 @@ After each assign function you might need to pass the followings:
 
 Of course simple paths can be defined as follows:
 ```javascript
-rest.get('/user/profile', functionN0 );
+rest.get('/user/profile', asyncFunctionN0 )
 ```
 
 But I guess you are interested in more complex solutions. Please, fing them below:
 
 ### Regular expression
 ```javascript
-rest.get( /^\/[tT]([a-zA-Z]){4}$/g, functionN0 );
+rest.get( /^\/[tT]([a-zA-Z]){4}$/g, asyncFunctionN0 )
 ```
 
 This will match to URIs of _'/api/tAbba'_ but won't to _'/api/t1abcd8'_.
 
 ### Named parameters
 ```javascript
-rest.get('/books/:title', functionN0 );
+rest.get('/books/:title', asyncFunctionN0 )
 ```
 or
 ```javascript
-rest.get('/books/:title/:chapter', functionN0 );
+rest.get('/books/:title/:chapter', asyncFunctionN0 )
 ```
 You can define parametrized paths for services to accept REST variables from the caller.
 In this case, whatever string is after the 'books', will be interpret as variable(s) and passed to the service function via the request object.
@@ -188,7 +192,7 @@ So sending a get request to the uri '/api/books/AliceInWonderland/1', will resul
 
 ### Optional parameter
 ```javascript
-rest.post('/store/?id', functionN );
+rest.post('/store/?id', asyncFunctionN )
 ```
 
 This definition allows you to define one optional parameter at the end of the path. It might be called using
@@ -204,7 +208,7 @@ In latter case, the '108' will be set as a parameter in the request object with 
 
 ### General matcher
 ```javascript
-rest.get('/inquire/*book', functionM );
+rest.get('/inquire/*book', asyncFunctionM )
 ```
 This definition gives you the possibility to define a general matcher allowing to have been called with anything after the string
 ```javascript
@@ -241,9 +245,9 @@ Be aware, that this path will be matched to all paths within the defined context
 
 ### Range matcher
 ```javascript
-rest.get( '/convert/@format', function( request, content, callback ){
-	return callback( null, 'ok' );
-}, { format:[ 'euro', 'usd', 'huf' ] } );
+rest.get( '/convert/@format', function( request, content ){
+	return 'ok'
+}, { format:[ 'euro', 'usd', 'huf' ] } )
 ```
 This definition creates a rest service answering to GET requests if the format part of the URI is contained by the array in the option object. The character _'@'_ tells the [connect-rest](https://github.com/imrefazekas/connect-rest) to match the parameter _'format'_ to the array called by the same name.
 
@@ -269,7 +273,7 @@ The parameters are processed in the path definition order and any missing option
 ## Versioning
 As for versioning, the syntax is [semantic versioning](http://semver.org), the same you use for [npm](https://npmjs.org)
 ```javascript
-rest.get( { path: '/special', version: '1.0.0' }, functionN0);
+rest.get( { path: '/special', version: '1.0.0' }, asyncFunctionN0)
 ```
 So you can use different version specificaiton depending on your need:
 ```
@@ -288,24 +292,17 @@ Only the requests defining the right version number will match the defined paths
 
 ## Rest functions
 
-A rest function is a normal JS function you can define easily.
+A rest function is an async JS function you can define easily.
 
 Every handler function receives
 - a 'request' object containing "headers", "parameters", "files", "session" properties
 - an optional 'content' object which is the object extracted from the http body's payload.
-- an optional callback function. This is the 'node standard' way to manage callbacks if needed.
-
-If callback is used as third parameter, needs to be called and pass the error or result object. Otherwise the return value of rest functions will be sent back to the client as a json string.
 
 ```javascript
-rest.get( { path: '/personal/:uid', version: '1.0.0' }, function( request, content, callback ){
-	callback( null, { name: 'John Doe' } );
-});
-rest.get( '/purchases/:uid', function( request, content ){
-	return { purchases: [ ... ] };
-});
+rest.get( { path: '/personal/:uid', version: '1.0.0' }, async function( request, content ){
+	return { name: 'John Doe' }
+})
 ```
-The async way is __strongly encouraged__ to be used unless you have something really computation-free function...
 
 The result object can be the followings:
 
@@ -313,25 +310,29 @@ The result object can be the followings:
 - Buffer
 - Stream
 - Function
+- { result: String | Buffer | Stream | Function, options: object }
 
 Buffers are converted to Strings or JSONs depending on the mime-types. (see the [Customize HTTP response](#customize-http-response) )
 ```javascript
-rest.get('/handlers/buffer', function( request, content, callback ){
-	return callback(null, new Buffer( 'ok', 'utf-8') );
-});
+rest.get('/handlers/buffer', async function( request, content ){
+	return new Buffer( 'ok', 'utf-8')
+})
 ```
 Streams are read to a buffer and returned as strings.
 ```javascript
-rest.get('/handlers/stream', function( request, content, callback ){
-	return callback(null, fs.createReadStream( './test/data/answer.text', { encoding : 'utf-8'} ) );
-});
+rest.get('/handlers/stream', async function( request, content ){
+	return fs.createReadStream( './test/data/answer.text', { encoding : 'utf-8'} ) )
+})
 ```
-Functions must be async, the callback of their execution must define the String to be sent back.
+Functions must be async, execution must define the String to be sent back.
 ```javascript
-rest.get('/handlers/function', function( request, content, callback ){
-	return callback(null, function( cb ){ cb( null, 'ok' ); } );
-});
+rest.get('/handlers/function', async function( request, content ){
+	return async function( ){ return 'ok' }
+})
 ```
+
+If the return object has a 'result' and an 'options' attribute, the result attribute will be considered as return value and options is meant to control HTTP status code or data conversion. See below for details...
+
 [Back to Feature list](#features)
 
 
@@ -340,7 +341,7 @@ rest.get('/handlers/function', function( request, content, callback ){
 One can define proxying REST services easily using [connect-rest](https://github.com/imrefazekas/connect-rest) as follows:
 
 ```javascript
-rest.proxy( 'get', '/proxyEmpty', 'http://just-another-site.com:8080/api/empty', { } );
+rest.proxy( 'get', '/proxyEmpty', { url: 'http://just-another-site.com:8080/api/empty', method: 'get' } )
 ```
 
 This will create a REST service on path _'[context]/proxyEmpty'_ answering _'GET'_ calls and proxying all calls to a remote point: _'http://just-another-site.com:8080/api/empty'_.
@@ -348,13 +349,13 @@ This will create a REST service on path _'[context]/proxyEmpty'_ answering _'GET
 By default all request parameters will be also sent without any modification. You can prevent this if you set the attribute _'ignoreQuery'_ in the last parameter as follows:
 
 ```javascript
-rest.proxy( 'get', '/proxyEmpty', 'http://just-another-site.com:8080/api/empty', { ignoreQuery: true } );
+rest.proxy( 'get', '/proxyEmpty', { url: 'http://just-another-site.com:8080/api/empty', ignoreQuery: true } )
 ```
 
 Considering the wide range of REST calls might look like, it could be useful to bypass all headers to the remote site as the following code shows:
 
 ```javascript
-rest.proxy( 'get', '/proxyEmpty', 'http://just-another-site.com:8080/api/empty', { bypassHeader: true } );
+rest.proxy( 'get', '/proxyEmpty', { url: 'http://just-another-site.com:8080/api/empty', bypassHeader: true } )
 ```
 
 This will send further all API_KEYS and other header set for a request sent to this service.
@@ -362,7 +363,7 @@ This will send further all API_KEYS and other header set for a request sent to t
 Of course the need to use different headers might appear when proxying a request to a remote/foreign point, so you can define your own headers as well:
 
 ```javascript
-rest.proxy( 'get', '/proxyEmpty', 'http://just-another-site.com:8080/api/empty', { remoteHeaders: { /* key-pairs here */ } } );
+rest.proxy( 'get', '/proxyEmpty', { url: 'http://just-another-site.com:8080/api/empty', remoteHeaders: { /* key-pairs here */ } } )
 ```
 
 [Back to Feature list](#features)
@@ -370,10 +371,7 @@ rest.proxy( 'get', '/proxyEmpty', 'http://just-another-site.com:8080/api/empty',
 
 ## Customize HTTP response
 
-If one defines a rest function possessing 3 parameters, the third is the callback allowing 3 parameters to send.
-The first and second parameters are the conventional error and result objects.
-
-The third one is an object aimed to contain to refine the HTTP response sent back to the client. This includes mime-types, status code, etc.
+Connect-rest allows you to pass a composed object as return value to control HTTP response like status code.
 
 
 ### Status codes
@@ -384,42 +382,42 @@ As for status code, all you need to do is this:
 Error case:
 
 ```javascript
-rest.get( '/invalidPath', function( request, content, callback ){
-	var error = new Error('invalid path');
+rest.get( '/invalidPath', async function( request, content ){
+	let error = new Error('invalid path')
 	error.statusCode = 404;
-	return callback( error );
+	throw error
 });
 ```
 
 Special case when no error occurred, yet the http request's status has to be set:
 
 ```javascript
-rest.get( '/special', function( request, content, callback ){
-	return callback( null, 'Processing...', { statusCode: 202 } );
-});
+rest.get( '/special', async function( request, content ){
+	return { result: 'Processing...', options: { statusCode: 202 } }
+})
 ```
 
 [Back to Feature list](#features)
 
 ### Response headers
 
-To refine the headers in the response HTML, the way is the same as above: customize the third parameter of the callback function.
+To refine the headers in the response HTML, the way is the same as above: customize the 'options' object of the return value.
 
 ```javascript
-rest.get( '/special', function( request, content, callback ){
-	return callback( null, 'Content.', { headers: { ETag: "10c24bc-4ab-457e1c1f" } } );
-});
+rest.get( '/special', function( request, content ){
+	return { result: 'Content.', options: { headers: { ETag: "10c24bc-4ab-457e1c1f" } } }
+})
 ```
 
 ### Minify response JSON
 
-You can make the response JSON object minified by passing a single boolean parameter to the callback's third optional parameter:
+You can make the response JSON object minified by passing a single boolean parameter to the 'options' object:
 
 ```javascript
-rest.get( '/special', function( request, content, callback ){
+rest.get( '/special', function( request, content ){
 	...
-	return callback( null, '{ "key"     :    "value" }', { minify: true } );
-});
+	return { result: '{ "key"     :    "value" }', options: { minify: true } }
+})
 ```
 
 This will send
@@ -461,7 +459,7 @@ The option passed to the [connect-rest](https://github.com/imrefazekas/connect-r
 var options = {
 	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ]
 	...
-};
+}
 ```
 
 If property 'apiKeys' is present, the associated array of strings will be used as the list of api keys demanded regarding every incoming calls.
@@ -476,9 +474,9 @@ otherwise error response will be sent with status code 401 claiming: 'API_KEY is
 You can restrict access on service-level. When you call
 
 ```javascript
-rest.get( { path: '/shake', version: '>=2.0.0' }, function( request, content ){
-	return 'OK';
-}, { apiKeys:['1234-1234-1234-1234'] } );
+rest.get( { path: '/shake', version: '>=2.0.0' }, async function( request, content ){
+	return 'OK'
+}, { apiKeys:['1234-1234-1234-1234'] } )
 ```
 
 That will require to use the API_KEY _'1234-1234-1234-1234'_ when call that REST service.
@@ -491,7 +489,7 @@ Functions which can be served out of the border os API_KEY restriction.
 You can turn off that protection for a given service like this:
 
 ```javascript
-rest.get( { path: '/special', unprotected: true }, functionN0);
+rest.get( { path: '/special', unprotected: true }, asyncFunctionN0)
 ```
 
 ## Protector
@@ -499,11 +497,11 @@ Protector is a function which can be passed when creating a rest services and de
 So the protector function called in every rest call when the given path is evaluated and matched and boolean return value of the function tells to the [connect-rest](https://github.com/imrefazekas/connect-rest) to allow the rest function's execution to take place or blocked by some security reason.
 
 ```javascript
-rest.get( { path: '/special', protector: function( req, res, pathname, path, callback ){ callback(); } }, functionN0);
+rest.get( { path: '/special', protector: async function( req, res, pathname, path ){ return 'ok' } }, asyncFunctionN0);
 ```
 
 A protector function receives all parameters to able to respond the query the case requires it. For example an A&A protector should manage the necessary measurements and might drop the request.
-Remember: it is designed to be async, the callback should be used to notify the [connect-rest](https://github.com/imrefazekas/connect-rest) if the protector handled the request or the process can performed forward. By passing a single exception as first parameter, the REST service won't be called, and it will be considered as "terminated" by the protector itself.
+Remember: it is designed to be async, trowing exception in the async function will notify the [connect-rest](https://github.com/imrefazekas/connect-rest) to not handle the request.
 You can have such functions to define session-based dynamic protection or differentiate between widely available rest calls and restricted business-sensitive feature.
 
 [Back to Feature list](#features)
@@ -514,7 +512,7 @@ You can have such functions to define session-based dynamic protection or differ
 You can define it dynamically:
 
 ```javascript
-rest.context( '/api' ); // means that every rest calls need to be sent to '/api/X' path.
+rest.context( '/api' ) // means that every rest calls need to be sent to '/api/X' path.
 ```
 
 or through the option object as well when you add the middleware to the connect object:
@@ -522,8 +520,8 @@ or through the option object as well when you add the middleware to the connect 
 ```javascript
 var options = {
 	'context': '/api'
-};
-var rest = Rest.create( options );
+}
+var rest = Rest.create( options )
 connectApp.use( rest.processRequest() )
 ```
 
@@ -535,7 +533,7 @@ The [connect-rest](https://github.com/imrefazekas/connect-rest) also allows you 
 Let me show you:
 
 ```javascript
-rest.get( { path: '/workspace', context: '/pages' }, functionN0);
+rest.get( { path: '/workspace', context: '/pages' }, asyncFunctionN0)
 ```
 
 This REST function can be called by sending a _GET_ request to the address of
@@ -555,7 +553,7 @@ __You can orchestrate the contexts of your architecture as it pleases you.__
 ```javascript
 var options = {
 	'discover: { path': 'discover', secure: true }
-};
+}
 var rest = Rest.create( options )
 connectApp.use( rest.processRequest() )
 ```
@@ -584,7 +582,7 @@ The option secure tells connect-rest if security should be active for this servi
 The assign-methods allows you to set an extra object in the third parameter. An object which can be considered as a prototype of the expected parameter of the service when a client wants to make a call.
 
 ```javascript
-rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], functionN, { prototypeObject: {'title': 'Alice in Wonderland'} } );
+rest.post( [ { path: '/shake', version: '>=2.0.0' }, { path: '/twist', version: '>=2.1.1' } ], asyncFunctionN, { prototypeObject: {'title': 'Alice in Wonderland'} } )
 ```
 
 That parameter debriefs the client what structure the functionN expects to receive.
@@ -595,7 +593,7 @@ var options = {
 	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 	'proto: { path': 'proto', secure: true },
 	'logger': 'connect-rest'
-};
+}
 ```
 
 This 'proto' object tells connect-rest that the given path is accepting requests to retrieve prototypes:
@@ -627,7 +625,7 @@ The option secure tells connect-rest if security should be active for this servi
 One can remove a published service by calling the following function:
 
 ```javascript
-rest.unpost( '/shake' );
+rest.unpost( '/shake' )
 ```
 
 That code removes all REST services which would be fired by calling with the URI _'/shake'_.
@@ -640,7 +638,7 @@ Every publishing method available in [connect-rest](https://github.com/imrefazek
 There is a second parameter if you want to specify the version of the services you would like to remove:
 
 ```javascript
-rest.unpost( '/shake', 1.0.0 );
+rest.unpost( '/shake', 1.0.0 )
 ```
 
 ... unlinking the service answering to the given URI with the given version.
@@ -656,7 +654,7 @@ var options = {
 	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 	'discoverPath': 'discover',
 	'logger': 'connect-rest'
-};
+}
 ```
 
 or
@@ -666,7 +664,7 @@ var options = {
 	'apiKeys': [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 	'discoverPath': 'discover',
 	'logger': loggerInstance
-};
+}
 ```
 
 You can set:
@@ -688,10 +686,10 @@ You can define your own services like this in a file (services.js in this exampl
 
 ```javascript
 function health( request ){
-	return 'ok';
-};
+	return 'ok'
+}
 function record( request, content ){
-	return 'saved';
+	return 'saved'
 }
 exports.health = health;
 exports.record = record;
@@ -699,9 +697,9 @@ exports.record = record;
 and publish them this way:
 
 ```javascript
-var services = require('./services');
+var services = require('./services')
 ...
-rest.publish( services );
+rest.publish( services )
 ```
 
 This will discover all functions assigned to the exports having a name which conforms the following regular expression:
@@ -731,7 +729,7 @@ var options = {
 	protoPath: 'proto',
 	logger: 'connect-rest',
 	domain: true
-};
+}
 ```
 
 or you can have a more sophisticated version by passing a complete object as follows:
@@ -747,7 +745,7 @@ var options = {
 		closeWorker: function(req, res){... },
 		closeRequest: function(req, res){... }
 	}
-};
+}
 ```
 
 Where the function __closeWorker__ is an optional function which is called when error occurred and supposed to close the current worker instance if app is running in a node cluster.
@@ -776,8 +774,8 @@ In some cases, you might face with a situation where other 3rd party connect lib
 
 ```javascript
 connectApp.use( Rest.dispatcher( 'GET', '/dispatcher/:subject', function(req, res, next){
-	res.end( 'Dispatch call made:' + req.params['subject'] );
-} ) );
+	res.end( 'Dispatch call made:' + req.params['subject'] )
+} ) )
 ```
 This simple code makes is pretty straightforward. In case of a _'GET'_ HTTP request coming to the url _'/dispatcher'_, the given function is executed. That function can be any third party connect lib you want to use.
 
@@ -797,8 +795,8 @@ Example, how to __restrict rest api calls__ to only those who logged in already,
 var protectBySession = function(req, pathname, version){
 	return req.session && req.session.uid;
 };
-rest.get( { path: '/model/person', unprotected: true, protector: protectBySession, version: '1.0.0' }, function( request, content, callback ){
-	callback( null, personModel );
+rest.get( { path: '/model/person', unprotected: true, protector: protectBySession, version: '1.0.0' }, async function( request, content ){
+	return personModel
 });
 ```
 
@@ -809,21 +807,20 @@ __Dynamic templating__ is a typical scenario, no versioning is needed, nore api_
 var allower = function(req, pathname, version){
 	return true;
 };
-rest.get( { path: '/?page/?id', unprotected: true, protector: allower, context: '/pages' }, function( request, content, callback ){
+rest.get( { path: '/?page/?id', unprotected: true, protector: allower, context: '/pages' }, async function( request, content ){
 	// render some page
-	renderer.render( request.parameters.page, request.parameters.id, function(err, res){
-		callback( err, res );
-	} );
-}, { contentType:'text/html' } );
+	let res = await renderer.render( request.parameters.page, request.parameters.id )
+	return res
+}, { contentType:'text/html' } )
 ```
 
 A fairly complex REST path which is needed in some cases and a custom return status code:
 
 ```javascript
-rest.get( '/call/:system/?entity/?version/:subject/*', function( request, content, callback ){
+rest.get( '/call/:system/?entity/?version/:subject/*', async function( request, content ){
 	// Do some business logic
-	return callback(null, 'Done.', {statusCode:201} );
-}, { contentType:'application/json' } );
+	return { result: 'Done.', options: {statusCode:201} }
+}, { contentType:'application/json' } )
 ```
 
 In this case you call this path by the following uris:
@@ -842,13 +839,13 @@ var rest = Rest.create( options )
 app.use( rest.processRequest() )
 app.use( function(req, res, next){
 	if(req.session)
-		req.session.destroy();
+		req.session.destroy()
 	// render error page by some renderer...
 	renderer.render( 'error', {}, function(err, html){
-		res.writeHead( 500, { 'Content-Type' : 'text/html' } );
+		res.writeHead( 500, { 'Content-Type' : 'text/html' } )
 		res.end( html );
-	} );
-} );
+	} )
+} )
 ```
 
 ## License
@@ -881,6 +878,7 @@ See <https://github.com/imrefazekas/connect-rest/issues>.
 
 ## Changelog
 
+- 3.0.0: Moved to Node8 
 - 2.0.0: Moved to Node4 and ES6
 - 1.8.0: OPTIONS method supported
 - 1.6.0: REST services can possess own API key set

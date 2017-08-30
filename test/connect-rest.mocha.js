@@ -1,4 +1,4 @@
-'use strict'
+const assert = require('assert')
 
 let chai = require('chai'),
 	should = chai.should()
@@ -10,8 +10,6 @@ let bodyParser = require('body-parser')
 let Rest = require('../lib/rest-services')
 let rester
 let restBuilder = require('./restBuilder')
-let Httphelper = require('../lib/util/HttpHelper')
-let httphelper = new Httphelper()
 
 function DummyLogger () { }
 DummyLogger.prototype.log = function () { console.log( arguments ) }
@@ -19,6 +17,13 @@ DummyLogger.prototype.info = function () { console.log( arguments ) }
 DummyLogger.prototype.debug = function () { console.log( arguments ) }
 DummyLogger.prototype.error = function () { console.error( arguments ) }
 let logger = new DummyLogger()
+
+let Httphelper = require('../lib/util/HttpHelper')
+let httpHelper = new Httphelper( {
+	logger: logger
+}, {
+	headers: {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}
+} )
 
 describe('connect-rest', function () {
 
@@ -31,7 +36,7 @@ describe('connect-rest', function () {
 
 		let options = {
 			context: '/api',
-			logger: { level: 'debug' },
+			logger: { level: 'trace' },
 			apiKeys: [ '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9' ],
 			discover: { path: '/discover', secure: false },
 			proto: { path: '/proto', secure: false },
@@ -57,380 +62,239 @@ describe('connect-rest', function () {
 			done()
 		})
 	})
-	// function (serverURL, method, headers, err, result, mimetype, logger, callback) {
+
 	describe('rest', function () {
-		it('HEAD call is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/peek', 'HEAD', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist( err )
-					should.exist( result )
-					should.equal(status.statusCode, 200)
-					console.log( '>>>>>', status )
-					done( )
-				}
-			)
+		it('HEAD call is', async function () {
+			try {
+				let res = await httpHelper.head( 'http://localhost:8080/api/peek' )
+				should.equal(res.status.statusCode, 200)
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('GET for "empty" service call is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/empty', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					done( )
-				}
-			)
+		it('GET for "empty" service call is', async function () {
+			try {
+				let res = await httpHelper.get( 'http://localhost:8080/api/empty' )
+				should.exist( res.result)
+				should.equal(res.status.statusCode, 200)
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('GET for Proxied "empty" service call is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/proxyEmpty', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					console.log( result )
-
-					done( )
-				}
-			)
+		it('GET for Proxied "empty" service call is', async function () {
+			try {
+				let res = await httpHelper.get( 'http://localhost:8080/api/proxyEmpty' )
+				should.exist(res.result)
+				should.equal(res.status.statusCode, 200)
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('OPTIONS call', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/books/AliceInWonderland/1', 'OPTIONS', { }, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-
-					done( )
-				}
-			)
+		it('Service is throwing an error', async function () {
+			try {
+				let res = await httpHelper.get( 'http://localhost:8080/api/irritate' )
+				should.exist(res.result)
+				should.equal(res.status.statusCode, 500)
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('mandatory parameter mapping is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/books/AliceInWonderland/1', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					result.should.have.property('title', 'AliceInWonderland')
-					result.should.have.property('chapter', '1')
-
-					done( )
-				}
-			)
+		it('OPTIONS call', async function () {
+			try {
+				let res = await httpHelper.options( 'http://localhost:8080/api/books/AliceInWonderland/1' )
+				should.exist(res.result)
+				should.equal(res.status.statusCode, 200)
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('optional parameter mapping v1 is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/store', 'POST', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, {'message': 'ok'}, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.not.exist( result.params.id )
-
-					done( )
-				}
-			)
+		it('mandatory parameter mapping is', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/books/AliceInWonderland/1' )
+				should.equal(result.status.statusCode, 200)
+				should.exist(result.result)
+				result.result.should.have.property('title', 'AliceInWonderland')
+				result.result.should.have.property('chapter', '1')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('optional parameter mapping v2 is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/store/108', 'POST', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, {'message': 'ok'}, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					result.params.should.have.property('id', '108' )
-
-					done( )
-				}
-			)
+		it('optional parameter mapping v1 is', async function () {
+			try {
+				let result = await httpHelper.post( 'http://localhost:8080/api/store', null, {'message': 'ok'} )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 200)
+				should.not.exist( result.result.params.id )
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('versioning is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/make', 'POST', {'accept-version': '1.1.0'}, null, {'message': 'ok'}, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					done( )
-				}
-			)
+		it('optional parameter mapping v2 is', async function () {
+			try {
+				let result = await httpHelper.post( 'http://localhost:8080/api/store/108', null, {'message': 'ok'} )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 200)
+				result.result.params.should.have.property('id', '108' )
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('missing parameter mapping v1 is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/set', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					done( )
-				}
-			)
+		it('versioning is', async function () {
+			try {
+				let result = await httpHelper.headers( {'accept-version': '1.1.0'} ).post( 'http://localhost:8080/api/make', null, {'message': 'ok'} )
+				should.equal(result.status.statusCode, 200)
+				should.exist(result.result)
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('missing parameter mapping v2 is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/set/abraka/dabra', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					result.should.have.property('rid', 'abraka')
-					result.should.have.property('facet', 'dabra')
-
-					done( )
-				}
-			)
+		it('missing parameter mapping v1 is', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/set' )
+				should.equal(result.status.statusCode, 200)
+				should.exist(result.result)
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('array-typed parameter mapping is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/data/items?ids%5B%5D=8&ids%5B%5D=9', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-					should.equal(status.statusCode, 201)
-
-					console.log( '>>>>', result )
-					result['ids[]'].should.eql( ['8', '9'] )
-
-					done( )
-				}
-			)
+		it('missing parameter mapping v2 is', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/set/abraka/dabra' )
+				should.equal(result.status.statusCode, 200)
+				should.exist(result.result)
+				result.result.should.have.property('rid', 'abraka')
+				result.result.should.have.property('facet', 'dabra')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('complete parameter mapping is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/call/Skynet/Shira/1.0/request', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 201)
-
-					result.should.have.property('system', 'Skynet')
-					result.should.have.property('entity', 'Shira')
-					result.should.have.property('version', '1.0')
-					result.should.have.property('subject', 'request')
-
-					done( )
-				}
-			)
+		it('array-typed parameter mapping is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/data/items?ids%5B%5D=8&ids%5B%5D=9' )
+				console.log( '>>>>', result )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 201)
+				result.result['ids[]'].should.eql( ['8', '9'] )
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('prototype services are', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/proto/GET/1.0/api/books/AliceInWonderland/1', 'GET', {}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					result.should.have.property('answer', 'parameters')
-
-					done( )
-				}
-			)
+		it('complete parameter mapping is', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/call/Skynet/Shira/1.0/request' )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 201)
+				result.result.should.have.property('system', 'Skynet')
+				result.result.should.have.property('entity', 'Shira')
+				result.result.should.have.property('version', '1.0')
+				result.result.should.have.property('subject', 'request')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('discover service are', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/discover/*', 'GET', {}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					result.should.have.property('GET')
-					result.should.have.property('POST')
-					result.should.have.property('OPTIONS')
-
-					done( )
-				}
-			)
+		it('prototype services are', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/proto/GET/1.0.0/api/books/AliceInWonderland/1' )
+				should.exist(result.result)
+				result.result.should.have.property('answer', 'parameters')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('versionless paremeter mapping is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/call/Skynet/Shira/request', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 201)
-
-					result.should.have.property('system', 'Skynet')
-					result.should.have.property('subject', 'request')
-
-					done( )
-				}
-			)
+		it('discover service are', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/discover/*' )
+				should.exist(result.result)
+				result.result.should.have.property('GET')
+				result.result.should.have.property('POST')
+				result.result.should.have.property('OPTIONS')
+			} catch (err) { assert.fail( err ) }
 		})
+		it('versionless paremeter mapping is', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/call/Skynet/Shira/request' )
+				should.exist(result.result)
 
-		it('lazy calling is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/call/Skynet/request', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
+				should.equal(result.status.statusCode, 201)
 
-					should.equal(status.statusCode, 201)
-
-					result.should.have.property('system', 'Skynet')
-					result.should.have.property('subject', 'request')
-
-					done( )
-				}
-			)
+				result.result.should.have.property('system', 'Skynet')
+				result.result.should.have.property('subject', 'request')
+			} catch (err) { assert.fail( err ) }
 		})
+		it('lazy calling is', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/call/Skynet/request' )
+				should.exist(result.result)
 
-		it('embedded parameter mapping is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/eset/abraka/dabra', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
+				should.equal(result.status.statusCode, 201)
 
-					result.should.have.property('rid', 'abraka')
-					result.should.have.property('facet', 'dabra')
-
-					done( )
-				}
-			)
+				result.result.should.have.property('system', 'Skynet')
+				result.result.should.have.property('subject', 'request')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('unprotected zone calling is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/unprotected', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 200)
-					should.equal(result, 'Welcome guest...')
-
-					done( )
-				}
-			)
+		it('embedded parameter mapping is', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/eset/abraka/dabra' )
+				should.exist(result.result)
+				result.result.should.have.property('rid', 'abraka')
+				result.result.should.have.property('facet', 'dabra')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('dispatcher is', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/dispatcher/call', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.equal(result, 'Dispatch call made:call')
-					done( err )
-				}
-			)
+		it('unprotected zone calling is', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/unprotected' )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 200)
+				should.equal(result.result, 'Welcome guest...')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('unprotected dynamic binding call is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/pages/workspace', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 200)
-					should.equal(result, 'ok')
-
-					done( )
-				}
-			)
+		it('dispatcher is', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/dispatcher/call' )
+				should.equal(result.result, 'Dispatch call made:call')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('function result type is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/handlers/function', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 200)
-					should.equal(result, 'ok')
-
-					done( )
-				}
-			)
+		it('unprotected dynamic binding call is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/pages/workspace' )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 200)
+				should.equal(result.result, 'ok')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('buffer result type is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/handlers/buffer', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 200)
-					should.equal(result, 'ok')
-
-					done( )
-				}
-			)
+		it('function result type is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/handlers/function' )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 200)
+				should.equal(result.result, 'ok')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('stream result type is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/handlers/stream/answer', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 201)
-					should.equal(result, 'ok')
-
-					done( )
-				}
-			)
+		it('buffer result type is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/handlers/buffer' )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 200)
+				should.equal(result.result, 'ok')
+			} catch (err) { assert.fail( err ) }
 		})
+		it('stream result type is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/handlers/stream/answer' )
+				should.exist(result.result)
 
-		it('failing stream result type is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/handlers/stream/answerFail', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.equal(status.statusCode, 500)
-
-					done( err )
-				}
-			)
+				should.equal(result.status.statusCode, 201)
+				should.equal(result.result, 'ok')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('Rang parameter mapping is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/convert/huf', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 200)
-					should.equal(result, 'ok')
-
-					done( )
-				}
-			)
+		it('failing stream result type is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/handlers/stream/answerFail' )
+				should.equal(result.status.statusCode, 500)
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('Over range parameter mapping is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/convert/gbp', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 404)
-
-					done( )
-				}
-			)
+		it('Rang parameter mapping is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/convert/huf' )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 200)
+				should.equal(result.result, 'ok')
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('Regular path mapping is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/api/tAbba', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 200)
-					should.equal(result, 'regular')
-
-					done( )
-				}
-			)
+		it('Over range parameter mapping is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/convert/gbp' )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 404)
+			} catch (err) { assert.fail( err ) }
 		})
-
-		it('Index.html short path is ', function (done) {
-			httphelper.generalCall( 'http://localhost:8080/', 'GET', {'x-api-key': '849b7648-14b8-4154-9ef2-8d1dc4c2b7e9'}, null, null, 'application/json', logger,
-				function (err, result, status) {
-					should.not.exist(err)
-					should.exist(result)
-
-					should.equal(status.statusCode, 200)
-
-					done( )
-				}
-			)
+		it('Regular path mapping is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/api/tAbba' )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 200)
+				should.equal(result.result, 'regular')
+			} catch (err) { assert.fail( err ) }
 		})
-
+		it('Index.html short path is ', async function () {
+			try {
+				let result = await httpHelper.get( 'http://localhost:8080/' )
+				should.exist(result.result)
+				should.equal(result.status.statusCode, 200)
+			} catch (err) { assert.fail( err ) }
+		})
 	})
 
 	after(function (done) {
