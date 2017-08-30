@@ -3,15 +3,7 @@ CONNECT-REST - Exceptionally featureful Restful web services middleware for conn
 [![Join the chat at https://gitter.im/imrefazekas/connect-rest](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/imrefazekas/connect-rest?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![npm version](https://badge.fury.io/js/connect-rest.svg)](http://badge.fury.io/js/connect-rest)
  [![Code Climate](https://codeclimate.com/github/imrefazekas/connect-rest/badges/gpa.svg)](https://codeclimate.com/github/imrefazekas/connect-rest)
 
-__Important__ : [connect-rest](https://github.com/imrefazekas/connect-rest) __>v1.0__ is compatible with [connect](http://www.senchalabs.org/connect/) __>v3.0__. All examples/tests are complying with this rule!
-
-For [connect](http://www.senchalabs.org/connect/) __v2__, please use the version __0.9.14__ of [connect-rest](https://github.com/imrefazekas/connect-rest)!
-
-__! Note !__ From version 3.0.0, connect-rest requires NodeJS 8.0.0 or higher and async/await based!
-
-From version 2.0.0 connect-rest requires NodeJS 4.0.0 or higher!
-
-Version 1.7.0 is not fully compatible with 1.6.x and below due to the redesigned protector concept.
+__! Note !__ From version 3.0.0, [connect-rest](https://github.com/imrefazekas/connect-rest) requires NodeJS 8.0.0 or higher and async/await based! For node <8.0.0 please use older version of the lib.
 
 [![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
