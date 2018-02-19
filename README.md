@@ -1,6 +1,6 @@
 CONNECT-REST - Exceptionally featureful Restful web services middleware for connect / node.js
 
-[![Join the chat at Discord](https://vignette.wikia.nocookie.net/logopedia/images/d/dd/Discord_Icon.svg)](https://discord.gg/pjHUaMU)
+[Join the chat at Discord](https://discord.gg/pjHUaMU)
 
 [![npm version](https://badge.fury.io/js/connect-rest.svg)](http://badge.fury.io/js/connect-rest)
  [![Code Climate](https://codeclimate.com/github/imrefazekas/connect-rest/badges/gpa.svg)](https://codeclimate.com/github/imrefazekas/connect-rest)
