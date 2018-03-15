@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "3.0.13",
+  "version": "3.0.14",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -28,7 +28,7 @@
     "axios": "^0.18.0",
     "form-data": "^2.3.2",
     "isa.js": "^2.2.0",
-    "pino": "^4.13.0",
+    "pino": "^4.14.0",
     "proback.js": "^2.1.6",
     "semver": "^5.5.0"
   },
