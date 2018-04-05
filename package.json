@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "3.0.15",
+  "version": "3.0.16",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
