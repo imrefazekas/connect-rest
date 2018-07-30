@@ -24,26 +24,22 @@
   "license": "MIT",
   "main": "./lib/rest-services.js",
   "dependencies": {
-    "assign.js": "^2.8.0",
+    "assign.js": "^2.8.1",
     "axios": "^0.18.0",
     "form-data": "^2.3.2",
-    "isa.js": "^2.2.1",
-    "pino": "^4.16.0",
-    "proback.js": "^2.1.6",
+    "isa.js": "^2.2.2",
+    "pino": "^4.17.6",
+    "proback.js": "^2.1.7",
     "semver": "^5.5.0"
   },
   "devDependencies": {
-    "body-parser": "^1.18.2",
+    "body-parser": "^1.18.3",
     "chai": "^4.1.2",
-    "compression": "^1.7.2",
+    "compression": "^1.7.3",
     "connect": "~3",
     "connect-timeout": "^1.9.0",
     "cookie-parser": "^1.4.3",
     "cookie-session": "^2.0.0-beta.3",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^4.0.2",
-    "gulp-load-plugins": "^1.5.0",
-    "gulp-mocha": "^5.0.0",
     "serve-static": "^1.13.2"
   },
   "engines": {
