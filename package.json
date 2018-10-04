@@ -1,6 +1,6 @@
 {
   "name": "connect-rest",
-  "version": "3.0.22",
+  "version": "3.0.23",
   "description": "Exceptionally featureful RESTful web services middleware for Connect.",
   "keywords": [
     "connect",
@@ -24,18 +24,18 @@
   "license": "MIT",
   "main": "./lib/rest-services.js",
   "dependencies": {
-    "assign.js": "^2.8.5",
+    "assign.js": "^2.8.6",
     "axios": "^0.18.0",
     "form-data": "^2.3.2",
     "isa.js": "^2.2.2",
-    "pino": "^5.6.1",
-    "pino-pretty": "^2.2.0",
+    "pino": "^5.6.3",
+    "pino-pretty": "^2.2.1",
     "proback.js": "^2.1.7",
     "semver": "^5.5.1"
   },
   "devDependencies": {
     "body-parser": "^1.18.3",
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "compression": "^1.7.3",
     "connect": "~3",
     "connect-timeout": "^1.9.0",
