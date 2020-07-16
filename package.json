@@ -28,8 +28,8 @@
     "axios": "^0.19.2",
     "form-data": "^3.0.0",
     "isa.js": "^2.2.12",
-    "pino": "^6.3.0",
-    "pino-pretty": "^4.0.0",
+    "pino": "~6",
+    "pino-pretty": "^4.0.3",
     "proback.js": "^2.1.10",
     "semver": "^7.3.2"
   },
